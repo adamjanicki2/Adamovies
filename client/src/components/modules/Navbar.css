@@ -1,0 +1,157 @@
+.Navbar-container {
+    padding-top: var(--s);
+    padding-bottom: var(--s);
+    padding-left: var(--m);
+    padding-right: var(--m);
+    background-color: var(--offblack);
+    border-radius: 0px 0px 8px 8px;
+    position:sticky;
+    top:0;
+    transition: all .7s ease-in;
+    z-index: 99;
+  }
+  .scrolled{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: lightblue;
+  }
+  
+  .Navbar-title {
+    color: var(--yellow);
+    font-size: 40px;
+    font-family: 'Inter';
+  }
+
+  .Navbar-title:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all .25s ease-in-out;
+  }
+  .Navbar-routeContainer {
+    margin-left: var(--xxl);
+  }
+  .Navbar-name{
+    margin-right: 12px;
+    margin-left: var(--s);
+    color: var(--offblack);
+    opacity: 0.95;
+    text-decoration: none;
+    font-size: 24px;
+  }
+
+  .Navbar-name:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: all .25s ease-in-out;
+    color: #fff;
+    opacity: 1.0;
+  }
+  .Navbar-route {
+    color: var(--yellow);
+    opacity: 0.95;
+    text-decoration: none;
+    font-size: 24px;
+  }
+  
+  .Navbar-route:hover {
+    color: var(--yellow);
+    opacity: 0.75;
+    border-bottom: 5px solid var(--offblack);
+    border-radius: 4px;
+  }
+
+  .Navbar-route {
+    transition: all .1s;
+  }
+  
+  .Navbar-route:visited {
+    opacity: 0.95;
+    border-bottom: 5px solid var(--offblack);
+    border-radius: 4px;
+
+  }
+  
+  .Route-clicked {
+    color: var(--offwhite);
+    border-bottom: 5px solid var(--offblack);
+    border-radius: 4px;
+  }
+
+  .Navbar-route.Navbar-login {
+    opacity: 1;
+  }
+  
+  .Route-container {
+    margin-right: var(--xl);
+  }
+
+  .Navbar-route + .Navbar-route {
+    margin-left: var(--xl);
+  }
+
+  .Navbar-logout {
+    float: right;
+  }
+
+  .Navbar-sticky{
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.Navbar-logo {
+  background-image: url('../../public/img/adamovies45.png');
+  width: 45px;
+  height: 45px;
+  align-items:center;
+  width: fit-content;
+  height: fit-content;
+  padding: 0 0 0 0;
+  margin-top: 10;
+  margin-bottom: -10px;
+  margin-right: var(--m);
+}
+
+.Navbar-pfpContainer{
+  padding-right: var(--m);
+  margin-right: -8px;
+}
+.Navbar-pfp {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--offwhite);
+  }
+
+  .button-log{
+    background-color: var(--offwhite);
+    color: #000;
+    margin-top: 5%;
+    border-radius: 8px;
+    font-family: "Inter";
+    font-size: 20px;
+    margin-right:0px;
+    margin-left:3px;
+    margin-bottom:12px;
+    padding-top:2px;
+    padding-bottom: 2px;
+
+}
+
+.button-log:hover{
+    background-color: #ffcccb;
+    color: var(--offblack);
+    cursor: pointer;
+}
+
+.Navbar-rightside{
+  display:flex;
+  align-items:center;
+}
+
+.Navbar-logocontainer {
+  display:flex;
+  align-items:center;
+  float: left;
+}
