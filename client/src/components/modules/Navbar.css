@@ -3,8 +3,8 @@
     padding-bottom: var(--s);
     padding-left: var(--m);
     padding-right: var(--m);
-    background-color: var(--offblack);
-    border-radius: 0px 0px 8px 8px;
+    background-color: var(--darkpurple);
+    border-radius: 0px 0px 24px 24px;
     position:sticky;
     top:0;
     transition: all .7s ease-in;
@@ -19,14 +19,8 @@
   
   .Navbar-title {
     color: var(--yellow);
-    font-size: 40px;
+    font-size: 42px;
     font-family: 'Inter';
-  }
-
-  .Navbar-title:hover{
-    cursor: pointer;
-    transform: scale(1.05);
-    transition: all .25s ease-in-out;
   }
   .Navbar-routeContainer {
     margin-left: var(--xxl);
@@ -34,7 +28,7 @@
   .Navbar-name{
     margin-right: 12px;
     margin-left: var(--s);
-    color: var(--offblack);
+    color: var(--offwhite);
     opacity: 0.95;
     text-decoration: none;
     font-size: 24px;
@@ -48,17 +42,16 @@
     opacity: 1.0;
   }
   .Navbar-route {
-    color: var(--yellow);
+    color: var(--offwhite);
     opacity: 0.95;
     text-decoration: none;
     font-size: 24px;
   }
   
   .Navbar-route:hover {
-    color: var(--yellow);
-    opacity: 0.75;
-    border-bottom: 5px solid var(--offblack);
-    border-radius: 4px;
+    color: #fff;
+    opacity: 1.0;
+    border-bottom: 2px solid var(--yellow);
   }
 
   .Navbar-route {
@@ -67,15 +60,12 @@
   
   .Navbar-route:visited {
     opacity: 0.95;
-    border-bottom: 5px solid var(--offblack);
-    border-radius: 4px;
-
+    border-bottom: 2px solid var(--yellow);
   }
   
   .Route-clicked {
     color: var(--offwhite);
-    border-bottom: 5px solid var(--offblack);
-    border-radius: 4px;
+    border-bottom: 2px solid var(--yellow);
   }
 
   .Navbar-route.Navbar-login {
@@ -111,6 +101,8 @@
   margin-top: 10;
   margin-bottom: -10px;
   margin-right: var(--m);
+  border: 1px solid var(--offwhite);
+  border-radius: 6px;
 }
 
 .Navbar-pfpContainer{
@@ -118,7 +110,7 @@
   margin-right: -8px;
 }
 .Navbar-pfp {
-  border-radius: 50%;
+  border-radius: 25%;
   width: 36px;
   height: 36px;
   border: 2px solid var(--offwhite);
@@ -140,8 +132,8 @@
 }
 
 .button-log:hover{
-    background-color: #ffcccb;
-    color: var(--offblack);
+    background-color: var(--yellow);
+    color: var(--darkpurple);
     cursor: pointer;
 }
 

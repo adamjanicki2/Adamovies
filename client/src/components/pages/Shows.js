@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../utilities.css";
-import "./Home.css";
-class Home extends Component {
+import "./Reviews.css";
+class Shows extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -15,10 +15,10 @@ class Home extends Component {
     return (
       <>
       <div className='bg'>
-        <h1>Adamovies Homepage</h1>
+        <h1>Adamovies TV Shows page</h1>
       </div>
       </>
     );
   }
 }
-export default Home;
+export default Shows;

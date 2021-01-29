@@ -24,6 +24,8 @@ function getOrCreateUser(user) {
     const newUser = new User({
       name: user.name,
       googleid: user.sub,
+      picture: user.picture,
+      admin: false,
     });
 
     return newUser.save();
@@ -57,9 +59,20 @@ function populateCurrentUser(req, res, next) {
 
 function ensureLoggedIn(req, res, next) {
   if (!req.user) {
-    return res.status(401).send({ err: "not logged in" });
+    return res.status(401).send({ err: "user not logged in" });
   }
 
+  next();
+}
+
+function ensureAdmin(req, res, next) {
+  if (!req.user) {
+    return res.status(401).send({ err: "user not logged in" });
+  }
+  else if (req.user.admin === false){
+    return res.status(401).send({ err: "user is not admin" });
+  }
+  
   next();
 }
 
@@ -68,4 +81,5 @@ module.exports = {
   logout,
   populateCurrentUser,
   ensureLoggedIn,
+  ensureAdmin,
 };
