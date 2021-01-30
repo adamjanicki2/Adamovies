@@ -8,6 +8,8 @@ const UserSchema = new mongoose.Schema({
   currently_watching: String,
   favorite_movie: String,
   favorite_show: String,
+  last_login: Number,
+  username: String,
 });
 
 module.exports = mongoose.model("user", UserSchema);

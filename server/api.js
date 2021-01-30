@@ -44,16 +44,40 @@ router.get("/get_comments_for_review", (req, res) => {
 });
 
 router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
+  let picture_to_use = null;
+  if (req.user.picture !== null){
+    const SIZE_ = '18';
+    if (req.user.picture.split('/')[req.user.picture.split('/').length - 2] === 's96-c'){
+      let arr = req.user.picture.split('/');
+      arr[arr.length - 2] = arr[arr.length - 2][0]+SIZE_+arr[arr.length - 2].substring(3);
+      picture_to_use = arr.join('/');
+    }else if (req.user.picture.split('=')[req.user.picture.split('=').length - 1] === 's96-c'){
+      let arr = req.user.picture.split('=');
+      arr[arr.length-1] = arr[arr.length - 1][0]+SIZE_+arr[arr.length - 1].substring(3);
+      picture_to_use = arr.join('=');
+    }else{
+      picture_to_use = req.user.picture;
+    }
+  }
   const data = {
     user_name: req.user.name,
     user_id: req.user._id,
     user_googleid: req.user.googleid,
     review_id: req.body.review_id,
     content: req.body.content,
+    picture: picture_to_use,
+    timestamp: Date.now(),
+    username: req.user.username,
   };
   const newComment = new Comment(data);
   newComment.save();
   res.send(data);
+});
+
+router.post("/update_timestamp", (req, res) => {
+  User.updateOne({googleid: req.user.googleid, name: req.user.name}, {last_login: Date.now()}).then((r) => {
+    res.send({msg: 'success'});
+  });
 });
 
 router.post("/new_review", auth.ensureAdmin, (req, res) => {

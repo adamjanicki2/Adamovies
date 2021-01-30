@@ -9,10 +9,11 @@ class SingleComment extends Component {
   render() {
     return (
       <div className={"Comment-body u-inlineBlock "+this.props.color}>
+        <img src={this.props.picture} className='u-inlineBlock comment-pfp'/>
         <div className="u-bold u-inlineBlock">
-          {this.props.commenter}
+          {this.props.commenter+': '} 
         </div>
-        <span className="u-inlineBlock">{": " + this.props.content}</span>
+        <div className="u-inlineBlock comment-block">{' '+this.props.content}</div>
       </div>
     );
   }

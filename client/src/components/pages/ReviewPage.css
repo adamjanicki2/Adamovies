@@ -17,10 +17,14 @@
     margin-top: 20px;
 }
 .review-containercontainer{
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 .Comment-bar {
     margin-bottom: 20px;
+}
+
+.my-comment {
+    text-align: right;
 }

@@ -6,5 +6,8 @@ const comment = new mongoose.Schema({
   user_googleid: String,
   review_id: String,
   content: String,
+  picture: String,
+  timestamp: Number,
+  username: String,
 });
 module.exports = mongoose.model("comment", comment);

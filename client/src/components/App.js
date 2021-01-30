@@ -37,8 +37,10 @@ class App extends Component {
     console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
-      this.setState({ userId: user._id , user_name: user.name, user_picture: user.picture, admin: user.admin});
-      post("/api/initsocket", { socketid: socket.id });
+      post("/api/update_timestamp").then((success) => {
+        this.setState({ userId: user._id , user_name: user.name, user_picture: user.picture, admin: user.admin});
+        post("/api/initsocket", { socketid: socket.id });
+      });
     });
   };
 

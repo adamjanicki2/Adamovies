@@ -44,6 +44,7 @@ class NewInput extends Component {
           value={this.state.value}
           onChange={this.handleChange}
           className="NewPostInput-input"
+          maxLength="200"
         />
         <button
           type="submit"

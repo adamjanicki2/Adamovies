@@ -18,6 +18,7 @@ function verify(token) {
 // gets user from DB, or makes a new account if it doesn't exist yet
 function getOrCreateUser(user) {
   // the "sub" field means "subject", which is a unique identifier for each user
+  update_timestamp(user);
   return User.findOne({ googleid: user.sub }).then((existingUser) => {
     if (existingUser) return existingUser;
 
@@ -29,8 +30,9 @@ function getOrCreateUser(user) {
       currently_watching: 'Not Set',
       favorite_movie: 'Not Set',
       favorite_show: 'Not Set',
+      last_login: Date.now(),
+      username: user.name,
     });
-
     return newUser.save();
   });
 }
@@ -39,7 +41,7 @@ function login(req, res) {
   verify(req.body.token)
     .then((user) => getOrCreateUser(user))
     .then((user) => {
-      // persist user in the session
+      update_timestamp(user);
       req.session.user = user;
       res.send(user);
     })
@@ -47,6 +49,10 @@ function login(req, res) {
       console.log(`Failed to log in: ${err}`);
       res.status(401).send({ err });
     });
+}
+
+function update_timestamp(user) {
+  User.updateOne({googleid: user.googleid, name: user.name}, {last_login: Date.now()});
 }
 
 function logout(req, res) {

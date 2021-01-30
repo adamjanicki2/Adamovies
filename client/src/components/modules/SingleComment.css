@@ -1,9 +1,10 @@
 .Comment-body {
-    margin: 0 0 var(--s);
     border-radius: 5px;
     border: 1px solid var(--darkpurple);
-    padding:3px;
+    margin: 0 0 var(--s);
+    padding: 4px;
 }
+
 
 .Normal-background {
     background-color: #ffffbf;
@@ -11,4 +12,18 @@
 
 .Self-background {
     background-color: #98fb98;
+}
+
+.comment-block {
+    margin-left: 4px;
+}
+
+.comment-pfp {
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-left: 4px;
+    margin-right: 4px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #fff;
 }
