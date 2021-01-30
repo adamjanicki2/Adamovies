@@ -13,17 +13,18 @@ class ReviewPage extends Component {
     this.state = {
       review: undefined,
       comments: undefined,
+      user: undefined,
     };
   }
 
   componentDidMount() {
-    console.log(this.props.userId);
+    
     get(`/api/get_single_review`, { movieId: this.props.movieId }).then((movie) => {
-        this.setState({ review: movie});
-        get('/api/get_comments_for_review', { review_id: movie._id}).then((comments) => {
-            this.setState({review: movie, comments: comments});
-        });
+      get('/api/get_comments_for_review', { review_id: movie._id}).then((comments) => {
+          this.setState({review: movie, comments: comments});
+      });
     });
+
   }
 
   addNewComment = (newComment) => {
@@ -37,7 +38,7 @@ class ReviewPage extends Component {
         return <div></div>;
     }
     const comments_list = this.state.comments && this.state.comments.length > 0? this.state.comments.map((comment) => 
-        <div className={this.props.userId === comment.user_id? 'my-comment' : ''}><SingleComment commenter={comment.username} picture={comment.picture} content={comment.content} color={this.props.userId === comment.user_id? 'Self-background' : 'Normal-background'}/></div>
+        <div className={this.props.userId === comment.user_id? 'my-comment' : ''}><SingleComment userId={comment.user_id} commenter={comment.username} picture={comment.picture} content={comment.content} color={this.props.userId === comment.user_id? 'Self-background' : 'Normal-background'}/></div>
     ) : <div>No comments on this review!</div>
     return (
       <>
@@ -54,7 +55,7 @@ class ReviewPage extends Component {
         <div className='review-content'>
             {this.state.review.content}
         </div>
-        <hr/>
+        <hr className='review-line'/>
         <div>
             <h2>Comments:</h2>
             {this.props.userId? <div className="Comment-bar"><NewComment addNewComment={this.addNewComment} movieId={this.state.review._id} className='Comment-bar'/></div> : <div></div>}

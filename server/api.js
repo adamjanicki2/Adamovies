@@ -14,15 +14,25 @@ router.get("/whoami", (req, res) => {
   if (!req.user) {
     // not logged in
     return res.send({});
+  }else{
+    User.findOne({googleid: req.user.googleid}).then((existing) => {
+      res.send(existing)
+    });
   }
-
-  res.send(req.user);
 });
+
+
 
 router.post("/initsocket", (req, res) => {
   // do nothing if user not logged in
   if (req.user) socketManager.addUser(req.user, socketManager.getSocketFromSocketID(req.body.socketid));
   res.send({});
+});
+
+router.get("/get_single_user", (req, res) => {
+  User.findById(req.query._id).then((user) => {
+    res.send(user);
+  });
 });
 
 router.get("/get_reviews", (req, res) => {
@@ -44,34 +54,36 @@ router.get("/get_comments_for_review", (req, res) => {
 });
 
 router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
-  let picture_to_use = null;
-  if (req.user.picture !== null){
-    const SIZE_ = '18';
-    if (req.user.picture.split('/')[req.user.picture.split('/').length - 2] === 's96-c'){
-      let arr = req.user.picture.split('/');
-      arr[arr.length - 2] = arr[arr.length - 2][0]+SIZE_+arr[arr.length - 2].substring(3);
-      picture_to_use = arr.join('/');
-    }else if (req.user.picture.split('=')[req.user.picture.split('=').length - 1] === 's96-c'){
-      let arr = req.user.picture.split('=');
-      arr[arr.length-1] = arr[arr.length - 1][0]+SIZE_+arr[arr.length - 1].substring(3);
-      picture_to_use = arr.join('=');
-    }else{
-      picture_to_use = req.user.picture;
+  User.findById(req.user._id).then((existing_user) => {
+    let picture_to_use = null;
+    if (req.user.picture !== null){
+      const SIZE_ = '18';
+      if (req.user.picture.split('/')[req.user.picture.split('/').length - 2] === 's96-c'){
+        let arr = req.user.picture.split('/');
+        arr[arr.length - 2] = arr[arr.length - 2][0]+SIZE_+arr[arr.length - 2].substring(3);
+        picture_to_use = arr.join('/');
+      }else if (req.user.picture.split('=')[req.user.picture.split('=').length - 1] === 's96-c'){
+        let arr = req.user.picture.split('=');
+        arr[arr.length-1] = arr[arr.length - 1][0]+SIZE_+arr[arr.length - 1].substring(3);
+        picture_to_use = arr.join('=');
+      }else{
+        picture_to_use = req.user.picture;
+      }
     }
-  }
-  const data = {
-    user_name: req.user.name,
-    user_id: req.user._id,
-    user_googleid: req.user.googleid,
-    review_id: req.body.review_id,
-    content: req.body.content,
-    picture: picture_to_use,
-    timestamp: Date.now(),
-    username: req.user.username,
-  };
-  const newComment = new Comment(data);
-  newComment.save();
-  res.send(data);
+    const data = {
+      user_name: req.user.name,
+      user_id: req.user._id,
+      user_googleid: req.user.googleid,
+      review_id: req.body.review_id,
+      content: req.body.content,
+      picture: picture_to_use,
+      timestamp: Date.now(),
+      username: existing_user.username,
+    };
+    const newComment = new Comment(data);
+    newComment.save();
+    res.send(data);
+  });
 });
 
 router.post("/update_timestamp", (req, res) => {
@@ -85,6 +97,46 @@ router.post("/new_review", auth.ensureAdmin, (req, res) => {
   console.log("NEW REVIEW");
 });
 
+router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
+  if (req.body.updated_uname){
+    User.findOne({username: req.body.new_username}).then((existing_user) => {
+      if (!existing_user || existing_user.googleid === req.body.googleid){
+        User.updateOne({googleid: req.body.googleid}, 
+          {username: req.body.new_username,
+            currently_watching: req.body.new_c,
+            favorite_movie: req.body.new_m,
+            favorite_show: req.body.new_s,
+            bio: req.body.bio,
+          }).then((updated) => {
+            Comment.updateMany({user_id: req.user._id}, {username: req.body.new_username}).then((_success) => {
+              res.send({is_valid: true});
+            });
+          });
+      }else{
+        //invalid uname
+        res.send({is_valid: false});
+      }
+    });
+  }
+  else{
+    User.updateOne({googleid: req.body.googleid}, 
+      {currently_watching: req.body.new_c,
+        favorite_movie: req.body.new_m,
+        favorite_show: req.body.new_s,
+        bio: req.body.bio,
+      }).then((updated) => {
+        res.send({is_valid: true});
+      });
+  }
+    
+  
+});
+
+router.get("/tempy", (req, res) => {
+  User.findOne({name: 'Adam Janicki'}).then((ex) => {
+    res.send(!ex);
+  })
+});
 // router.get("/tempy", (req, res) => {
 //   const dict = {
 //   admin_name: req.user.name,

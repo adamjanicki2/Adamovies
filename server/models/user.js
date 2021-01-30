@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
   favorite_show: String,
   last_login: Number,
   username: String,
+  bio: String,
 });
 
 module.exports = mongoose.model("user", UserSchema);

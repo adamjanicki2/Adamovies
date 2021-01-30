@@ -27,3 +27,13 @@
     height: 18px;
     border: 1px solid #fff;
 }
+
+.comment-username {
+
+}
+
+.comment-username:hover {
+    cursor: pointer;
+    color: #0269a4;
+    transform: scale(1.01);
+}

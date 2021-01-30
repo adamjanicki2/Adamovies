@@ -28,3 +28,9 @@
 .my-comment {
     text-align: right;
 }
+
+.review-line {
+    margin-top: 20px;
+    border: 1px solid #555;
+    border-radius: 1px;
+}
