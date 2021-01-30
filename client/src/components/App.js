@@ -6,6 +6,7 @@ import Movies from "./pages/Movies.js";
 import Shows from "./pages/Shows.js";
 import Profile from "./pages/Profile.js";
 import Navbar from "./modules/Navbar.js";
+import ReviewPage from "./pages/ReviewPage.js";
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -65,6 +66,7 @@ class App extends Component {
           <Home path="/" userId={this.state.userId}/>
           <Movies path='/movies' userId={this.state.userId}/>
           <Shows path='/tvshows' userId={this.state.userId}/>
+          <ReviewPage path='/review/:movieId' userId={this.state.userId}/>
           <Profile path='/myprofile' userId={this.state.userId}/>
           <NotFound default />
         </Router>

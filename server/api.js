@@ -25,6 +25,24 @@ router.post("/initsocket", (req, res) => {
   res.send({});
 });
 
+router.get("/get_reviews", (req, res) => {
+  Review.find(req.query).then((reviews) => {
+    res.send(reviews);
+  });
+});
+
+router.get("/get_single_review", (req, res) => {
+  Review.findById(req.query.movieId).then((result) => {
+    res.send(result);
+  });
+});
+
+router.get("/get_comments_for_review", (req, res) => {
+  Comment.find({review_id: req.query.review_id}).then((comments) => {
+    res.send(comments);
+  });
+});
+
 router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
   res.send("NEW COMMENT");
   console.log("NEW COMMENT");
