@@ -14,7 +14,7 @@ class Navbar extends Component {
     }
 
     componentDidMount (){
-     
+
     };
     
     navigate_home() {
@@ -42,8 +42,7 @@ class Navbar extends Component {
       return (
         <nav className="Navbar-container">
           <img src={logo} className='Navbar-logo u-inlineBlock'/>
-          <div className="Navbar-title u-inlineBlock">Adamovies</div>
-          {/* Routing: */}
+          <div className="Navbar-title u-inlineBlock">ADAMOVIES</div>
           <div className="Navbar-routeContainer u-inlineBlock">
 
               <Link to="/" className={this.props.location.pathname === '/'? "Navbar-route Route-clicked":"Navbar-route"}>
@@ -57,6 +56,13 @@ class Navbar extends Component {
               <Link to="/tvshows" className={this.props.location.pathname === '/tvshows'? "Navbar-route Route-clicked":"Navbar-route"} >
                 TV Shows
               </Link>
+
+              {this.props.admin === true? (
+                <Link to="/post_review" className={this.props.location.pathname === '/post_review'? "Navbar-route Route-clicked":"Navbar-route"} >
+                Post
+              </Link>
+              ) : (<div></div>)}
+
           </div>
 
 

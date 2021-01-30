@@ -26,6 +26,9 @@ function getOrCreateUser(user) {
       googleid: user.sub,
       picture: user.picture,
       admin: false,
+      currently_watching: 'Not Set',
+      favorite_movie: 'Not Set',
+      favorite_show: 'Not Set',
     });
 
     return newUser.save();

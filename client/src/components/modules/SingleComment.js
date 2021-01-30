@@ -8,7 +8,7 @@ class SingleComment extends Component {
 
   render() {
     return (
-      <div className="Comment-body u-inlineBlock">
+      <div className={"Comment-body u-inlineBlock "+this.props.color}>
         <div className="u-bold u-inlineBlock">
           {this.props.commenter}
         </div>

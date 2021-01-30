@@ -1,21 +1,31 @@
 import React, { Component } from "react";
 import "../../utilities.css";
 import "./Reviews.css";
+import SingleReview from "../modules/SingleReview.js";
+import { get } from "../../utilities.js";
 class Shows extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      reviews: [],
+    };
   }
 
   componentDidMount() {
-
+    get("/api/get_reviews", {type: 'show'}).then((reviews) => {
+      this.setState({reviews: reviews});
+    });
   }
 
   render() {
+    const reviews_list = this.state.reviews.length !== 0? this.state.reviews.map((review) => 
+      <SingleReview review={review} />
+    ) : <div></div>;
     return (
       <>
       <div className='bg'>
-        <h1>Adamovies TV Shows page</h1>
+        <h1 className="u-textCenter">TV Shows</h1>
+        <div>{reviews_list}</div>
       </div>
       </>
     );

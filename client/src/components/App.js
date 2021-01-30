@@ -7,6 +7,7 @@ import Shows from "./pages/Shows.js";
 import Profile from "./pages/Profile.js";
 import Navbar from "./modules/Navbar.js";
 import ReviewPage from "./pages/ReviewPage.js";
+import PostReview from "./pages/PostReview.js";
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -20,13 +21,14 @@ class App extends Component {
       userId: undefined,
       user_name: '',
       user_picture: null,
+      admin: null,
     };
   }
 
   componentDidMount() {
     get("/api/whoami").then((user) => {
       if (user._id) {
-        this.setState({ userId: user._id, user_name: user.name, user_picture: user.picture });
+        this.setState({ userId: user._id, user_name: user.name, user_picture: user.picture, admin: user.admin });
       }
     });
   }
@@ -35,13 +37,13 @@ class App extends Component {
     console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
-      this.setState({ userId: user._id , user_name: user.name, user_picture: user.picture});
+      this.setState({ userId: user._id , user_name: user.name, user_picture: user.picture, admin: user.admin});
       post("/api/initsocket", { socketid: socket.id });
     });
   };
 
   handleLogout = () => {
-    this.setState({ userId: undefined, user_name: "", user_picture: null });
+    this.setState({ userId: undefined, user_name: "", user_picture: null, admin: null });
     post("/api/logout");
     navigate('/');
   };
@@ -56,6 +58,7 @@ class App extends Component {
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
             userId={this.state.userId}
+            admin={this.state.admin}
             name={this.state.user_name}
             picture={this.state.user_picture}
             location={locationProps.location}
@@ -68,6 +71,7 @@ class App extends Component {
           <Shows path='/tvshows' userId={this.state.userId}/>
           <ReviewPage path='/review/:movieId' userId={this.state.userId}/>
           <Profile path='/myprofile' userId={this.state.userId}/>
+          {this.state.admin === true && <PostReview path="/post_review" userId={this.state.userId} admin={this.state.admin} />}
           <NotFound default />
         </Router>
         </div>

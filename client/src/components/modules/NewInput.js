@@ -51,7 +51,7 @@ class NewInput extends Component {
           value="Submit"
           onClick={this.handleSubmit}
         >
-          Submit
+          Comment
         </button>
       </div>
     );
@@ -66,15 +66,13 @@ class NewComment extends Component {
 
   addComment = (value) => {
     const body = { review_id: this.props.movieId, content: value };
-    // post("/api/comment", body).then((comment) => {
-    //   // display this comment on the screen
-    //   this.props.addNewComment(comment);
-    // });
-    console.log("comment submitted");
+    post("/api/new_comment", body).then((comment) => {
+      this.props.addNewComment(comment);
+    });
   };
 
   render() {
-    return <NewInput defaultText="New Comment" onSubmit={this.addComment} />;
+    return <NewInput defaultText="Add New Comment" onSubmit={this.addComment} />;
   }
 }
 

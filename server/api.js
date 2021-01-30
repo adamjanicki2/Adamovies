@@ -44,8 +44,16 @@ router.get("/get_comments_for_review", (req, res) => {
 });
 
 router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
-  res.send("NEW COMMENT");
-  console.log("NEW COMMENT");
+  const data = {
+    user_name: req.user.name,
+    user_id: req.user._id,
+    user_googleid: req.user.googleid,
+    review_id: req.body.review_id,
+    content: req.body.content,
+  };
+  const newComment = new Comment(data);
+  newComment.save();
+  res.send(data);
 });
 
 router.post("/new_review", auth.ensureAdmin, (req, res) => {
@@ -55,18 +63,18 @@ router.post("/new_review", auth.ensureAdmin, (req, res) => {
 
 // router.get("/tempy", (req, res) => {
 //   const dict = {
-//     admin_name: req.user.name,
+//   admin_name: req.user.name,
 //   admin_id: req.user._id,
 //   admin_googleid: req.user.googleid,
-//   type: 'movie',
-//   title: 'Batman Begins',
-//   release_year: 2005,
-//   rating: 89,
-//   content: "Batman Begins is an awesome film.",
-//   trailer_link: "https://www.youtube.com/watch?v=_Ogfr-CTzR8",
+//   type: 'show',
+//   title: 'Mr. Robot',
+//   release_year: 2015,
+//   rating: 98,
+//   content: "Mr. Robot is an incredible, show; one of my favorites! The mind-blowing factor of this show is just off the charts, which is part of why I love it so much.",
+//   trailer_link: "https://www.youtube.com/watch?v=U94litUpZuc",
 //   timestamp: Date.now(),
-//   img_url: "https://www.iceposter.com/thumbs/MOV_cd0ef9f5_b.jpg",
-//   director: "Christopher Nolan",
+//   img_url: "https://i.pinimg.com/736x/e2/d7/cb/e2d7cb2140fc60469092c0c3a471a63e.jpg",
+//   director: "Sam Esmail",
 //   };
 //   const n = new Review(dict);
 //   n.save();

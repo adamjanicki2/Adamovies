@@ -9,7 +9,9 @@ class Profile extends Component {
       name: null,
       picture: null,
       admin: null,
-
+      currently_watching: null,
+      fav_mov: null,
+      fav_show: null,
     };
   }
 
@@ -30,7 +32,7 @@ class Profile extends Component {
           picture_to_use = user.picture;
         }
       }
-      this.setState({name: user.name, picture: picture_to_use, admin: user.admin});
+      this.setState({name: user.name, picture: picture_to_use, admin: user.admin, currently_watching: user.currently_watching, fav_show: user.favorite_show, fav_mov: user.favorite_movie});
     });
   }
 
@@ -41,6 +43,9 @@ class Profile extends Component {
         <h1 className='u-textCenter'>Profile</h1>
         <img src={this.state.picture} className='Profile-picture'/>
         <h2 className='u-textCenter'>Welcome, {this.state.name}</h2>
+        <h3 className='u-textCenter'>Currenly Watching: {this.state.currently_watching}</h3>
+        <h3 className='u-textCenter'>Favorite Movie: {this.state.fav_mov}</h3>
+        <h3 className='u-textCenter'>Favorite Show: {this.state.fav_show}</h3>
       </div>
       </>
     ) : (<h1 className='u-textCenter'>Sign In to view profile!</h1>);

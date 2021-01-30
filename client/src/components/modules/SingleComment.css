@@ -1,3 +1,14 @@
 .Comment-body {
     margin: 0 0 var(--s);
+    border-radius: 5px;
+    border: 1px solid var(--darkpurple);
+    padding:3px;
+}
+
+.Normal-background {
+    background-color: #ffffbf;
+}
+
+.Self-background {
+    background-color: #98fb98;
 }
