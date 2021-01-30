@@ -82,6 +82,7 @@ router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
     };
     const newComment = new Comment(data);
     newComment.save();
+    socketManager.getIo().emit(req.body.review_id, data);
     res.send(data);
   });
 });

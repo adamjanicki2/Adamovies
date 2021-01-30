@@ -28,6 +28,6 @@
 }
 
 .NewPostInput-button:hover {
-  color: var(--white);
-  background-color: var(--yellow);
+  color: var(--yellow);
+  background-color: #fff;
 }

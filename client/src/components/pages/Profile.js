@@ -96,91 +96,85 @@ class Profile extends Component {
   };
 
   render() {
-    let html = this.state.name !== null? (
-      <>
-      <div className='bg'>
-        <h1 className='u-textCenter'>Profile</h1>
-        <img src={this.state.picture} className='Profile-picture'/>
-        <h2 className='u-textCenter'>Welcome, {this.state.name}</h2>
-        
-        {this.state.status === true? <div className='u-flex Input-container'>
-          <h3>Username: </h3>
-
-          <input 
+    if (!this.state.name){
+        return (<h1 className='u-textCenter'>Sign In to view profile!</h1>);
+    }
+    return (
+        <>
+        <div className='bg'>
+          <h1 className='u-textCenter'>{this.state.name.split(' ')[0]}'s Profile</h1>
+          <img src={this.state.picture} className='Profile-picture'/>
+          <div className='username-box'>{this.state.status? <input 
             type="text"
             placeholder="username"
             value={this.state.username? this.state.username : ''}
             onChange={this.changeUsername}
-            className="Input-input"
+            className="Input-input u-textCenter"
             maxLength="20"
-          /> 
-        </div> : <div className='u-flex Input-container'><h3>Username: {this.state.username}</h3></div>}
-        
-        {this.state.status === true? <div className='u-flex Input-container'>
-          <h3>Currently Watching: </h3>
-
-          <input
+          />
+          : <h1 className='u-textCenter profile-uname'>{this.state.username}</h1>}</div>
+          
+          <hr className='profile-line'/>
+          <div className="u-flex">
+          <div className="Profile-subContainer u-textCenter">
+            <h1 className="Profile-subTitle">Currently Watching</h1>
+            {this.state.status? <input 
             type="text"
-            placeholder="Currently Watching"
+            placeholder="Bio"
             value={this.state.currently_watching? this.state.currently_watching : ''}
             onChange={this.changeCurrently}
             className="Input-input"
             maxLength="20"
-          /> 
-        </div> : <div className='u-flex Input-container'><h3>Currently Watching: {this.state.currently_watching}</h3></div>}
-        
-        {this.state.status === true? <div className='u-flex Input-container'>
-          <h3>Favorite Movie: </h3>
-          <input 
+          /> : <h2>{this.state.currently_watching}</h2>}
+          </div>
+          <div className="Profile-subContainer u-textCenter">
+            <h4 className="Profile-subTitle">Favorite Movie</h4>
+            {this.state.status? <input 
             type="text"
             placeholder="Favorite Movie"
             value={this.state.fav_mov? this.state.fav_mov : ''}
             onChange={this.changeMov}
             className="Input-input"
             maxLength="20"
-          /> 
-        </div> : <div className='u-flex Input-container'><h3>Favorite Movie: {this.state.fav_mov}</h3></div>}
-        
-        {this.state.status === true? <div className='u-flex Input-container'>
-          <h3>Favorite TV Show: </h3>
-
-          <input 
+          /> : <h2>{this.state.fav_mov}</h2>}
+          </div>
+          <div className="Profile-subContainer u-textCenter">
+            <h4 className="Profile-subTitle">Favorite TV Show</h4>
+            {this.state.status? <input 
             type="text"
             placeholder="Favorite Show"
             value={this.state.fav_show? this.state.fav_show : ''}
             onChange={this.changeShow}
             className="Input-input"
             maxLength="20"
-          /> 
-        </div> : <div className='u-flex Input-container'><h3>Favorite TV Show: {this.state.fav_show}</h3></div>}
-
-        {this.state.status === true? <div className='u-flex Input-container'>
-          <h3>Bio: </h3>
-          <input 
+          /> : <h2>{this.state.fav_show}</h2>}
+          </div>
+          <div className="Profile-subContainer u-textCenter">
+            <h1 className="Profile-subTitle">Bio</h1>
+            {this.state.status? <input 
             type="text"
             placeholder="Bio"
             value={this.state.bio? this.state.bio : ''}
             onChange={this.changeBio}
             className="Input-input"
             maxLength="80"
-          /> 
-        </div> : <div className='u-flex Input-container'><h3>Bio: {this.state.bio}</h3></div>}
-        
-        <div className='button-container'>
-        <button
-          type="submit"
-          className="status-button"
-          value="Submit"
-          onClick={this.buttonClicked}
-          >
-          {this.state.status? 'Save Changes': 'Edit Profile'}
-        </button>
+          /> : <h2>{this.state.bio}</h2>}
+          </div>
+        </div>
 
+        <div className='button-container'>
+          <button
+            type="submit"
+            className="status-button"
+            value="Submit"
+            onClick={this.buttonClicked}
+            >
+            {this.state.status? 'Save Changes': 'Edit Profile'}
+          </button>
         </div>
       </div>
-      </>
-    ) : (<h1 className='u-textCenter'>Sign In to view profile!</h1>);
-    return html;
+        </>
+      ) 
   }
 }
 export default Profile;

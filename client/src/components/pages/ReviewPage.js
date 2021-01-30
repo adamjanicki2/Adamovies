@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { get } from "../../utilities.js";
-
+import { socket } from "../../client-socket.js";
 import "../../utilities.css";
 import "./ReviewPage.css";
 import "../modules/SingleReview.css";
@@ -24,14 +24,12 @@ class ReviewPage extends Component {
           this.setState({review: movie, comments: comments});
       });
     });
-
-  }
-
-  addNewComment = (newComment) => {
-    this.setState({
-      comments: this.state.comments.concat([newComment]),
+    socket.on(this.props.movieId, (data) => {
+      this.setState((previous_state) => ({
+        comments: previous_state.comments.concat(data),
+      }));
     });
-  };
+  }
 
   render() {
     if (!this.state.review) {
@@ -58,7 +56,7 @@ class ReviewPage extends Component {
         <hr className='review-line'/>
         <div>
             <h2>Comments:</h2>
-            {this.props.userId? <div className="Comment-bar"><NewComment addNewComment={this.addNewComment} movieId={this.state.review._id} className='Comment-bar'/></div> : <div></div>}
+            {this.props.userId? <div className="Comment-bar"><NewComment movieId={this.state.review._id} className='Comment-bar'/></div> : <div></div>}
             {comments_list}
         </div>
         </div>

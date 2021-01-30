@@ -67,9 +67,7 @@ class NewComment extends Component {
 
   addComment = (value) => {
     const body = { review_id: this.props.movieId, content: value };
-    post("/api/new_comment", body).then((comment) => {
-      this.props.addNewComment(comment);
-    });
+    post("/api/new_comment", body);
   };
 
   render() {
