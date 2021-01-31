@@ -24,7 +24,7 @@ class Home extends Component {
     }
     const reviews_list = this.state.recent_reviews.length !== 0? this.state.recent_reviews.map((review) => 
       <SingleReview review={review} />
-    ) : <div>No Recent Reviews!</div>;
+    ) : <div className='u-textCenter'>No Recent Reviews!</div>;
     return (
       <>
       <div className='bg'>

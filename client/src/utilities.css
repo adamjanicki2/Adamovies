@@ -64,6 +64,11 @@ form {
   cursor: pointer;
 }
 
+.u-pointer:hover{
+  text-decoration: underline;
+
+}
+
 .bg {
   background-color: var(--offwhite);
   height: 100%;
@@ -75,4 +80,9 @@ form {
   text-align: center;
   font-weight: 400;
   font-size: 40px;
+}
+
+.u-linked {
+  color: #0269a4;
+  text-decoration: none;
 }

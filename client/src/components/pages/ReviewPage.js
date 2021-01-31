@@ -6,6 +6,8 @@ import "./ReviewPage.css";
 import "../modules/SingleReview.css";
 import { NewComment } from "../modules/NewInput.js";
 import SingleComment from "../modules/SingleComment.js";
+import { navigate } from "@reach/router";
+
 class ReviewPage extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +32,13 @@ class ReviewPage extends Component {
       }));
     });
   }
-
+  navigateProfile = (admin_id, self_id) => {
+    if (admin_id === self_id){
+      navigate("/myprofile");
+    }else{
+      navigate(`/user/${admin_id}`);
+    }
+  };
   render() {
     if (!this.state.review) {
         return <div></div>;
@@ -51,7 +59,7 @@ class ReviewPage extends Component {
         <div className='review-container'>
             <div className="u-flex">
               <div className="Review-subContainer u-textCenter"><h1 className='Review-subTitle'>{convertDate(this.state.review.timestamp)}</h1></div>
-              <div className="Review-subContainer u-textCenter"><h1 className='Review-subTitle'>{this.state.review.admin_username}</h1></div>
+              <div className="Review-subContainer u-textCenter"><h1 className='Review-subTitle u-pointer' onClick={() => {this.navigateProfile(this.state.review.admin_id, this.props.userId)}}>{this.state.review.admin_username}</h1></div>
               <div className="Review-subContainer u-textCenter"><h1 className='Review-subTitle'>Adameter: {this.state.review.rating}%</h1></div>
             </div>
             <h2>Review: </h2>

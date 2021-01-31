@@ -82,7 +82,6 @@ class Profile extends Component {
   buttonClicked = () => {
     if (this.state.info_updated && this.state.status){
       post("/api/update_profile", {bio: this.state.bio, updated_uname: this.state.update_uname, googleid: this.state.googleid, new_username: this.state.username, new_m: this.state.fav_mov, new_s: this.state.fav_show, new_c: this.state.currently_watching}).then((updated)=>{
-        console.log(updated);
         if (updated.is_valid){
           this.setState({status: !this.state.status, info_updated: false});
         }else{

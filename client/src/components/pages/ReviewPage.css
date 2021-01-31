@@ -58,4 +58,6 @@
     font-weight: 333;
     font-size: 30px;
     margin: var(--m) var(--s);
+    text-decoration: none;
+    color: (--offblack);
   }
