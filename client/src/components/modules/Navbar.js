@@ -41,11 +41,13 @@ class Navbar extends Component {
 
       return (
         <nav className="Navbar-container">
-          <img src={logo} className='Navbar-logo u-inlineBlock'/>
-          <div className="Navbar-title u-inlineBlock">ADAMOVIES</div>
-          <div className="u-inlineBlock">
-
-              <Link to="/" className={this.props.location.pathname === '/'? "Navbar-route Route-clicked":"Navbar-route"}>
+          <div className="nav-container">
+            <div className="nav-titlecontainer ">
+              <img src={logo} className='Navbar-logo'/>
+              <div className="Navbar-title">ADAMOVIES</div>
+            </div>
+            <div className="link-container">
+            <Link to="/" className={this.props.location.pathname === '/'? "Navbar-route Route-clicked":"Navbar-route"}>
                 Home
               </Link>
             
@@ -61,41 +63,34 @@ class Navbar extends Component {
                 <Link to="/post_review" className={this.props.location.pathname === '/post_review'? "Navbar-route Route-clicked":"Navbar-route"} >
                 Post
               </Link>}
-              
-          </div>
-
-
-          <div className='Navbar-logout u-inlineBlock Navbar-rightside'>
-          {this.props.userId !== undefined? 
-          <div className='Navbar-rightside Navbar-profilelink' onClick={() => {navigate('/myprofile')}}>
-            <div className="u-inlineBlock">
-              <img src={picture_to_use} className='Navbar-pfp'/>
             </div>
-            <h2 className="Navbar-name">{this.props.name.split(" ")[0]}</h2>
-          </div>
-          :<div/>}
-          {this.props.userId !== undefined? (
-            <GoogleLogout
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText="Logout"
-              render={renderProps => (
-                <button onClick={renderProps.onClick} disabled={renderProps.disabled} className='button-log'>Sign Out</button>
+            <div className="log-container">
+              {this.props.userId && <img src={picture_to_use} className='Navbar-pfp'/>}
+              {this.props.userId && <h2 onClick={() => {navigate('/myprofile')}} className="Navbar-name Navbar-profilelink">{this.props.name.split(" ")[0]}</h2>}
+              {this.props.userId !== undefined? (
+                <GoogleLogout
+                clientId={GOOGLE_CLIENT_ID}
+                buttonText="Logout"
+                render={renderProps => (
+                  <button onClick={renderProps.onClick} disabled={renderProps.disabled} className='button-log'>Sign Out</button>
+                )}
+                onLogoutSuccess={this.props.handleLogout}
+                onFailure={(err) => console.log(err)}
+              />
+              ) : (
+                <GoogleLogin
+                clientId={GOOGLE_CLIENT_ID}
+                buttonText="Login"
+                render={renderProps => (
+                  <button onClick={renderProps.onClick} disabled={renderProps.disabled} className='button-log'>Sign In</button>
+                  )}
+                onSuccess={this.props.handleLogin}
+                onFailure={(err) => console.log(err)}              
+              />
               )}
-              onLogoutSuccess={this.props.handleLogout}
-              onFailure={(err) => console.log(err)}
-            />
-          ) : (
-            <GoogleLogin
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText="Login"
-              render={renderProps => (
-                <button onClick={renderProps.onClick} disabled={renderProps.disabled} className='button-log'>Sign In</button>
-              )}
-              onSuccess={this.props.handleLogin}
-              onFailure={(err) => console.log(err)}              
-            />
-          )}
+            </div>
           </div>
+          
         </nav>
       );
     }

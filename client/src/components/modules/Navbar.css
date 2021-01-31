@@ -11,12 +11,6 @@
     z-index: 99;
     height: fit-content;
   }
-  .scrolled{
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: lightblue;
-  }
   
   .Navbar-title {
     margin-right: 2%;
@@ -24,9 +18,7 @@
     font-size: 42px;
     font-family: 'Orbitron';
   }
-  .Navbar-routeContainer {
-    margin-left: 2%;
-  }
+  
   .Navbar-name{
     margin-right: 12px;
     margin-left: var(--m);
@@ -41,7 +33,7 @@
   }
   .Navbar-profilelink:hover {
     cursor: pointer;
-    transform: scale(1.01);
+    transform: scale(1.05);
     transition: all .25s ease-in-out;
     color: #fff;
     opacity: 1.0;
@@ -86,10 +78,6 @@
     margin-left: var(--xl);
   }
 
-  .Navbar-logout {
-    float: right;
-  }
-
   .Navbar-sticky{
     position: fixed;
     top: 0;
@@ -111,10 +99,7 @@
   border-radius: 6px;
 }
 
-.Navbar-pfpContainer{
-  padding-right: var(--m);
-  margin-right: -8px;
-}
+
 .Navbar-pfp {
   border-radius: 25%;
   width: 36px;
@@ -141,14 +126,32 @@
     opacity: 0.88;
     cursor: pointer;
 }
-
-.Navbar-rightside{
-  display:flex;
-  align-items:center;
+.nav-container {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: flex-start;
 }
 
-.Navbar-logocontainer {
-  display:flex;
-  align-items:center;
-  float: left;
+.log-container {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+.link-container {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 1%;
+  padding-right: 1%;
+  margin-right: auto;
+}
+
+.nav-titlecontainer {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 1%;
+  padding-right: 1%;
 }
