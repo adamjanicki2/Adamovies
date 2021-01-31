@@ -43,7 +43,7 @@ class Navbar extends Component {
         <nav className="Navbar-container">
           <img src={logo} className='Navbar-logo u-inlineBlock'/>
           <div className="Navbar-title u-inlineBlock">ADAMOVIES</div>
-          <div className="Navbar-routeContainer u-inlineBlock">
+          <div className="u-inlineBlock">
 
               <Link to="/" className={this.props.location.pathname === '/'? "Navbar-route Route-clicked":"Navbar-route"}>
                 Home
@@ -57,12 +57,11 @@ class Navbar extends Component {
                 TV Shows
               </Link>
 
-              {this.props.admin === true? (
+              {this.props.admin === true &&
                 <Link to="/post_review" className={this.props.location.pathname === '/post_review'? "Navbar-route Route-clicked":"Navbar-route"} >
                 Post
-              </Link>
-              ) : (<div></div>)}
-
+              </Link>}
+              
           </div>
 
 

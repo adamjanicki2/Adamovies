@@ -1,9 +1,9 @@
 .Profile-picture {
-    margin-top: 20px;
     border-radius: 25%;
     max-width: 500px;
     max-height: 500px;
     display:block;
+    margin-top: 2.5%;
     margin-left: auto;
     margin-right: auto;
     border: 8px solid var(--offblack);
@@ -88,7 +88,7 @@
   .username-box{
     margin-left: auto;
     margin-right:auto;
-    margin-top: 24px;
-    margin-bottom: 20px;
+    margin-top: 2%;
+    margin-bottom: 2%;
     width: fit-content;
   }

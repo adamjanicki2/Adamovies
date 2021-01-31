@@ -9,6 +9,7 @@
     top:0;
     transition: all .7s ease-in;
     z-index: 99;
+    height: fit-content;
   }
   .scrolled{
     position: fixed;
@@ -18,12 +19,13 @@
   }
   
   .Navbar-title {
+    margin-right: 2%;
     color: var(--yellow);
     font-size: 42px;
     font-family: 'Orbitron';
   }
   .Navbar-routeContainer {
-    margin-left: var(--xxl);
+    margin-left: 2%;
   }
   .Navbar-name{
     margin-right: 12px;

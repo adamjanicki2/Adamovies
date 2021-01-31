@@ -148,6 +148,12 @@ router.get("/recent_reviews", (req, res) => {
 
 
 
+router.get("/tempy", (req, res) => {
+  // Review.updateMany({}, {season: 0, episode: 0}).then((success) => {
+  //   res.send({mesg: 'success!'});
+  // })
+});
+
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ error_msg: "API route not found" });

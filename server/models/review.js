@@ -7,6 +7,8 @@ const review = new mongoose.Schema({
   admin_username: String,
   type: String,
   title: String,
+  season: Number, 
+  episode: Number,
   release_year: Number,
   rating: Number,
   content: String,

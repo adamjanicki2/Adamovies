@@ -53,7 +53,7 @@ class ReviewPage extends Component {
             <h1>{this.state.review.rating}%</h1>
             <img src={this.state.review.img_url} className='Poster-img'/>
             <h2>Director: {this.state.review.director}</h2>
-            <a href={this.state.review.trailer_link} target="_blank">View Trailer</a>
+            <a className="u-linked" href={this.state.review.trailer_link} target="_blank">View Trailer</a>
         </div>
         <div className="review-containercontainer">
         <div className='review-container'>
