@@ -12,6 +12,7 @@ class Movies extends Component {
   }
 
   componentDidMount() {
+    document.title = "Adamovies | Movies";
     get("/api/get_reviews", {type: 'movie'}).then((reviews) => {
       this.setState({reviews: reviews});
     });
@@ -24,7 +25,7 @@ class Movies extends Component {
     return (
       <>
       <div className='bg'>
-        <h1 className="u-textCenter">Movies</h1>
+        <h1 className="u-pageHeader">Movies</h1>
         <div>{reviews_list}</div>
       </div>
       </>

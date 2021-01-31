@@ -38,6 +38,7 @@ class Profile extends Component {
           picture_to_use = user.picture;
         }
       }
+      document.title = "Adamovies | My Profile"
       this.setState({name: user.name, googleid: user.googleid, username: user.username, picture: picture_to_use, admin: user.admin, currently_watching: user.currently_watching, fav_show: user.favorite_show, fav_mov: user.favorite_movie, bio: user.bio});
     });
   }
@@ -103,6 +104,7 @@ class Profile extends Component {
         <>
         <div className='bg'>
           <h1 className='u-textCenter'>{this.state.name.split(' ')[0]}'s Profile</h1>
+          {this.state.admin && <h1 className="u-textCenter">Thanks for being an admin!</h1>}
           <img src={this.state.picture} className='Profile-picture'/>
           <div className='username-box'>{this.state.status? <input 
             type="text"

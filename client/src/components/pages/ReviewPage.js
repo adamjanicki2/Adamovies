@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { get } from "../../utilities.js";
+import { get, convertDate } from "../../utilities.js";
 import { socket } from "../../client-socket.js";
 import "../../utilities.css";
 import "./ReviewPage.css";
 import "../modules/SingleReview.css";
 import { NewComment } from "../modules/NewInput.js";
 import SingleComment from "../modules/SingleComment.js";
-
 class ReviewPage extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +20,7 @@ class ReviewPage extends Component {
     
     get(`/api/get_single_review`, { movieId: this.props.movieId }).then((movie) => {
       get('/api/get_comments_for_review', { review_id: movie._id}).then((comments) => {
+        document.title = "Adamovies | "+movie.title + " ("+movie.release_year+")"
           this.setState({review: movie, comments: comments});
       });
     });
@@ -36,7 +36,7 @@ class ReviewPage extends Component {
         return <div></div>;
     }
     const comments_list = this.state.comments && this.state.comments.length > 0? this.state.comments.map((comment) => 
-        <div className={this.props.userId === comment.user_id? 'my-comment' : ''}><SingleComment userId={comment.user_id} commenter={comment.username} picture={comment.picture} content={comment.content} color={this.props.userId === comment.user_id? 'Self-background' : 'Normal-background'}/></div>
+        <div className="comment-single"><SingleComment timestamp={comment.timestamp} userId={comment.user_id} commenter={comment.username} picture={comment.picture} content={comment.content} color={this.props.userId === comment.user_id? 'Self-background' : 'Normal-background'}/></div>
     ) : <div>No comments on this review!</div>
     return (
       <>
@@ -45,11 +45,17 @@ class ReviewPage extends Component {
             <h1>{this.state.review.rating}%</h1>
             <img src={this.state.review.img_url} className='Poster-img'/>
             <h2>Director: {this.state.review.director}</h2>
-            <a href={this.state.review.trailer_link} target="_blank">Trailer Link</a>
+            <a href={this.state.review.trailer_link} target="_blank">View Trailer</a>
         </div>
         <div className="review-containercontainer">
         <div className='review-container'>
-        <h2>Review:</h2>
+            <div className="u-flex">
+              <div className="Review-subContainer u-textCenter"><h1 className='Review-subTitle'>{convertDate(this.state.review.timestamp)}</h1></div>
+              <div className="Review-subContainer u-textCenter"><h1 className='Review-subTitle'>{this.state.review.admin_username}</h1></div>
+              <div className="Review-subContainer u-textCenter"><h1 className='Review-subTitle'>Adameter: {this.state.review.rating}%</h1></div>
+            </div>
+            <h2>Review: </h2>
+            
         <div className='review-content'>
             {this.state.review.content}
         </div>

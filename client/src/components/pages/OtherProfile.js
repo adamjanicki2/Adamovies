@@ -28,6 +28,7 @@ class OtherProfile extends Component {
           picture_to_use = user.picture;
         }
       }
+        document.title = "Adamovies | User: "+user.username
         user.picture = picture_to_use;
         this.setState({user: user});
     });
@@ -40,6 +41,7 @@ class OtherProfile extends Component {
     return (
         <>
         <div className='bg'>
+          {this.state.user.admin && <h1 className="u-textCenter">(Admin)</h1>}
           <img src={this.state.user.picture} className='Profile-picture'/>
           <h1 className='u-textCenter profile-uname'>{this.state.user.username}</h1>
           <hr className='profile-line'/>

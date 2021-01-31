@@ -110,7 +110,13 @@ router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
             bio: req.body.bio,
           }).then((updated) => {
             Comment.updateMany({user_id: req.user._id}, {username: req.body.new_username}).then((_success) => {
-              res.send({is_valid: true});
+              if (req.user.admin){
+                Review.updateMany({admin_id: req.user._id}, {admin_username: req.body.new_username}).then((_success) => {
+                  res.send({is_valid: true});
+                })
+              }else{
+                res.send({is_valid: true});
+              }
             });
           });
       }else{
@@ -133,30 +139,14 @@ router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
   
 });
 
-router.get("/tempy", (req, res) => {
-  User.findOne({name: 'Adam Janicki'}).then((ex) => {
-    res.send(!ex);
-  })
+router.get("/recent_reviews", (req, res) => {
+  Review.find({}).sort({timestamp: -1}).then((sorted_reviews) => {
+    const end_index = sorted_reviews.length > 10? 10 : sorted_reviews.length;
+    res.send(sorted_reviews.slice(0, end_index));
+  });
 });
-// router.get("/tempy", (req, res) => {
-//   const dict = {
-//   admin_name: req.user.name,
-//   admin_id: req.user._id,
-//   admin_googleid: req.user.googleid,
-//   type: 'show',
-//   title: 'Mr. Robot',
-//   release_year: 2015,
-//   rating: 98,
-//   content: "Mr. Robot is an incredible, show; one of my favorites! The mind-blowing factor of this show is just off the charts, which is part of why I love it so much.",
-//   trailer_link: "https://www.youtube.com/watch?v=U94litUpZuc",
-//   timestamp: Date.now(),
-//   img_url: "https://i.pinimg.com/736x/e2/d7/cb/e2d7cb2140fc60469092c0c3a471a63e.jpg",
-//   director: "Sam Esmail",
-//   };
-//   const n = new Review(dict);
-//   n.save();
-//   res.send('success');
-// });
+
+
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

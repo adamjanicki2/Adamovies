@@ -4,6 +4,7 @@ const review = new mongoose.Schema({
   admin_name: String,
   admin_id: String,
   admin_googleid: String,
+  admin_username: String,
   type: String,
   title: String,
   release_year: Number,
