@@ -6,7 +6,7 @@ class SingleReview extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     return (
       <div className="Review-container u-textCenter">
@@ -14,14 +14,16 @@ class SingleReview extends Component {
         {this.props.review.season !== 0 && <h2>Season {this.props.review.season} {this.props.review.episode !== 0? `Episode ${this.props.review.episode}` : ""}</h2>}
         <img src={this.props.review.img_url} className='Poster-img'/>
         <h2>{convertDate(this.props.review.timestamp).split(' ')[0]} | {this.props.review.rating}%</h2>
-        {this.props.admin === true && <Link to={`/edit_review/${this.props.review._id}`} className="u-linked">
-          Edit Review
-        </Link>}
+        <div className='Review-linkcontainer'>
         <Link to={`/review/${this.props.review._id}`} className="u-linked">
             Read {this.props.review.admin_username}'s Review
         </Link>
-        <div></div>
         <a className="u-linked"href={this.props.review.trailer_link} target="_blank">View Trailer</a>
+        {this.props.admin === true && <Link to={`/edit_review/${this.props.review._id}`} className="u-linked">
+          Edit Review
+        </Link>}
+        {this.props.root === true && <div onClick={()=>{this.props.delete_review(this.props.review._id)}}className='u-linked u-pointer'>Delete Review</div>}
+        </div>
       </div>
     );
   }

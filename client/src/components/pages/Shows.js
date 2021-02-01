@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get } from "../../utilities.js";
+import { get, post } from "../../utilities.js";
 import "../../utilities.css";
 import "./Reviews.css";
 import "./Home.css";
@@ -22,6 +22,33 @@ class Shows extends Component {
       this.setState({reviews: reviews, reviews_to_display: [...reviews],});
     });
   }
+
+  delete_review = (review_id) => {
+    if (window.confirm("Click OK to delete this review")){
+      post("/api/delete_review", {review_id: review_id}).then((deleted) => {
+        get("/api/get_reviews", {type: 'show'}).then((reviews) => {
+          this.setState({reviews: reviews, reviews_to_display: this.sortReviews(reviews, this.state.sort_option)});
+        });
+      });
+    }
+  };
+
+  sortReviews = (reviews, newSort) => {
+    if (newSort === 'all' || newSort === 'publishedlowtohigh'){
+      return [...reviews];
+    }else if (newSort === 'publishedhightolow'){
+      return [...reviews].sort((a, b) => a.timestamp > b.timestamp? -1: 1);
+    }
+    else if (newSort === 'releaselowtohigh'){
+      return [...reviews].sort((a, b) => a.release_year > b.release_year? 1: -1);
+    }
+    else if (newSort === 'releasehightolow'){
+      return [...reviews].sort((a, b) => a.release_year > b.release_year? -1: 1);
+    }
+    else if (newSort === 'alphabetically'){
+      return [...reviews].sort((a, b) => a.title > b.title? 1: -1);
+    }
+  };
 
   updateQuery = (newQuery) => {
     const lower = newQuery.toLowerCase();
@@ -73,7 +100,7 @@ class Shows extends Component {
       return (<div></div>);
     }
     const reviews_list = this.state.reviews_to_display.length !== 0? this.state.reviews_to_display.map((review) => 
-      <SingleReview review={review} admin={this.props.admin} root={this.props.root}/>
+      <SingleReview review={review} admin={this.props.admin} root={this.props.root} delete_review={this.delete_review}/>
     ) : <h1 className='u-textCenter'>No Reviews!</h1>;
     return (
       <>

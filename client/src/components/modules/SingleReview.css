@@ -25,3 +25,23 @@
     transform: scale(1.02);
     transition: all .25s ease-in-out;
 }
+
+.Review-linkcontainer {
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    margin-bottom: 8px;
+}
+
+.Not-found {
+    font-size: 80px;
+    font-weight: 333;
+    margin: var(--m) var(--s);
+    text-decoration: none;
+    color: (--offblack);
+}

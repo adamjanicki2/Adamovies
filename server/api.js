@@ -41,6 +41,12 @@ router.post("/delete_comment", auth.ensureRoot, (req, res) => {
   });
 });
 
+router.post("/delete_review", auth.ensureRoot, (req, res) => {
+  Review.findByIdAndDelete(req.body.review_id).then((deleted) =>{
+    res.send({msg: "Deleted review "+req.body.review_id});
+  });
+});
+
 router.post("/update_review", auth.ensureAdmin, (req, res) => {
   const data = {
     content: req.body.content,
