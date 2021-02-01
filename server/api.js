@@ -35,7 +35,7 @@ router.get("/get_single_user", (req, res) => {
   });
 });
 
-router.post("/delete_comment", auth.ensureAdmin, (req, res) => {
+router.post("/delete_comment", auth.ensureRoot, (req, res) => {
   Comment.findByIdAndDelete(req.body.comment_id).then((deleted) => {
     res.send({msg: 'Deleted comment '+req.body.comment_id});
   });

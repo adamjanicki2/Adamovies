@@ -53,7 +53,7 @@ class ReviewPage extends Component {
         return <div></div>;
     }
     const comments_list = this.state.comments && this.state.comments.length > 0? this.state.comments.map((comment) => 
-        <div className="comment-single"><SingleComment self_id={this.props.userId} admin={this.props.admin} commentId={comment._id} handleDeletion={this.handleDeletion} timestamp={comment.timestamp} userId={comment.user_id} commenter={comment.username} picture={comment.picture} content={comment.content} color={this.props.userId === comment.user_id? 'Self-background' : 'Normal-background'}/></div>
+        <div className="comment-single"><SingleComment self_id={this.props.userId} admin={this.props.admin} root={this.props.root} commentId={comment._id} handleDeletion={this.handleDeletion} timestamp={comment.timestamp} userId={comment.user_id} commenter={comment.username} picture={comment.picture} content={comment.content} color={this.props.userId === comment.user_id? 'Self-background' : 'Normal-background'}/></div>
     ) : <div>No comments on this review!</div>
     return (
       <>

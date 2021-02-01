@@ -23,7 +23,7 @@ class Home extends Component {
       return (<div></div>);
     }
     const reviews_list = this.state.recent_reviews.length !== 0? this.state.recent_reviews.map((review) => 
-      <SingleReview review={review} admin={this.props.admin}/>
+      <SingleReview review={review} admin={this.props.admin} root={this.props.root}/>
     ) : <div className='u-textCenter'>No Recent Reviews!</div>;
     return (
       <>

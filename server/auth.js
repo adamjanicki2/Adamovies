@@ -27,6 +27,7 @@ function getOrCreateUser(user) {
       googleid: user.sub,
       picture: user.picture,
       admin: false,
+      root: false,
       currently_watching: 'Not Set',
       favorite_movie: 'Not Set',
       favorite_show: 'Not Set',
@@ -86,10 +87,21 @@ function ensureAdmin(req, res, next) {
   next();
 }
 
+function ensureRoot(req, res, next) {
+  if (!req.user) {
+    return res.status(401).send({ err: "user not logged in" });
+  }
+  else if (req.user.root === false){
+    return res.status(401).send({ err: "user is not root" });
+  }
+  
+  next();
+}
 module.exports = {
   login,
   logout,
   populateCurrentUser,
   ensureLoggedIn,
   ensureAdmin,
+  ensureRoot,
 };

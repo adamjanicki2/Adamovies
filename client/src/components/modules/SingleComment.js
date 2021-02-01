@@ -20,7 +20,7 @@ class SingleComment extends Component {
     const time_to_display = convertDate(this.props.timestamp);
     return (
       <div className={"Comment-body "+this.props.color}>
-        <div className='u-flexInline'>{(this.props.self_id && this.props.admin) && <div className='delete-button' onClick={() => {this.props.handleDeletion(this.props.commentId)}}>Delete</div>} {time_to_display+' |'}</div>
+        <div className='u-flexInline'>{(this.props.self_id && this.props.admin && this.props.root) && <div className='delete-button' onClick={() => {this.props.handleDeletion(this.props.commentId)}}>Delete</div>} {time_to_display+' |'}</div>
         <img src={this.props.picture} className='comment-pfp'/>
         <div className="u-bold comment-username" onClick={() => {this.navigateProfile(this.props.color, this.props.userId)}}>
           {this.props.commenter+':'} 

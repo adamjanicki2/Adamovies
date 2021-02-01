@@ -21,7 +21,7 @@ class Shows extends Component {
 
   render() {
     const reviews_list = this.state.reviews.length !== 0? this.state.reviews.map((review) => 
-      <SingleReview review={review} admin={this.props.admin}/>
+      <SingleReview review={review} admin={this.props.admin} root={this.props.root}/>
     ) : <div></div>;
     return (
       <>

@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
   googleid: String,
   picture: String,
   admin: Boolean,
+  root: Boolean,
   currently_watching: String,
   favorite_movie: String,
   favorite_show: String,
