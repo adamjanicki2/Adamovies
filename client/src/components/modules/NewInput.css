@@ -30,3 +30,7 @@
   color: var(--yellow);
   background-color: #fff;
 }
+
+.search-bar{
+  width: 50%;
+}

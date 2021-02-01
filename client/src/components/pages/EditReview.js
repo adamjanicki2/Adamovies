@@ -99,7 +99,7 @@ class EditReview extends Component {
             value={this.state.title}
             onChange={this.handleChange}
             className="Review-input"
-            maxLength="20"
+            maxLength="40"
           />
           </div>
           {this.state.media_type === 'show' && <div className="Entry-flex">

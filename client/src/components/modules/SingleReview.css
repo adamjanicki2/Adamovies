@@ -16,3 +16,12 @@
     max-width: 90%;
     max-height: 350px;
 }
+
+.Title-link{
+
+}
+.Title-link:hover{
+    cursor: pointer;
+    transform: scale(1.02);
+    transition: all .25s ease-in-out;
+}

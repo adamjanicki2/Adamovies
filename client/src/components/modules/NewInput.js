@@ -77,4 +77,48 @@ class NewComment extends Component {
   }
 }
 
-export { NewComment };
+class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: "",
+    };
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      value: event.target.value,
+    });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.onSubmit && this.props.onSubmit(this.state.value);
+  };
+
+  render() {
+    return (
+      <div className="u-flex search-bar">
+        <input
+          type="text"
+          placeholder={this.props.defaultText}
+          value={this.state.value}
+          onChange={this.handleChange}
+          className="NewPostInput-input"
+          maxLength="200"
+        />
+        <button
+          type="submit"
+          className="NewPostInput-button u-pointer"
+          value="Submit"
+          onClick={this.handleSubmit}
+        >
+          Search
+        </button>
+      </div>
+    );
+  }
+}
+
+export { NewComment, SearchBar };
