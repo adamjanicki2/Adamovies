@@ -1,0 +1,9 @@
+.Reviews-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* border: 3px solid green; */
+    padding-left: 2%;
+    padding-right: 2%;
+    justify-content: center;
+}

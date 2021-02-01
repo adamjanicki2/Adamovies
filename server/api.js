@@ -94,8 +94,26 @@ router.post("/update_timestamp", (req, res) => {
 });
 
 router.post("/new_review", auth.ensureAdmin, (req, res) => {
-  res.send("NEW REVIEW");
-  console.log("NEW REVIEW");
+  const data = {
+    admin_name: req.user.name,
+    admin_id: req.user._id,
+    admin_googleid: req.user.googleid,
+    admin_username: req.user.username,
+    type: req.body.media_type,
+    content: req.body.content,
+    director: req.body.director,
+    rating: parseInt(req.body.rating),
+    title: req.body.title,
+    release_year: parseInt(req.body.release_year),
+    trailer_link: req.body.trailer_link,
+    img_url: req.body.img_url,
+    timestamp: Date.now(),
+    episode: parseInt(req.body.episode),
+    season: parseInt(req.body.season),
+  };
+  const newReview = new Review(data);
+  newReview.save()
+  res.send(data);
 });
 
 router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
@@ -141,7 +159,7 @@ router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
 
 router.get("/recent_reviews", (req, res) => {
   Review.find({}).sort({timestamp: -1}).then((sorted_reviews) => {
-    const end_index = sorted_reviews.length > 10? 10 : sorted_reviews.length;
+    const end_index = sorted_reviews.length > 9? 9 : sorted_reviews.length;
     res.send(sorted_reviews.slice(0, end_index));
   });
 });

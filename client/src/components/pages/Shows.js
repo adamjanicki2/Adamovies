@@ -3,6 +3,7 @@ import "../../utilities.css";
 import "./Reviews.css";
 import SingleReview from "../modules/SingleReview.js";
 import { get } from "../../utilities.js";
+import "./Home.css";
 class Shows extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +27,7 @@ class Shows extends Component {
       <>
       <div className='bg'>
         <h1 className="u-pageHeader">TV Shows</h1>
-        <div>{reviews_list}</div>
+        <div className="Reviews-container">{reviews_list}</div>
       </div>
       </>
     );

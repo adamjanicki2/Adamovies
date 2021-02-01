@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { get } from "../../utilities.js";
 import "../../utilities.css";
 import "./Reviews.css";
+import "./Home.css";
 import SingleReview from "../modules/SingleReview.js";
 class Movies extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class Movies extends Component {
       <>
       <div className='bg'>
         <h1 className="u-pageHeader">Movies</h1>
-        <div>{reviews_list}</div>
+        <div className="Reviews-container">{reviews_list}</div>
       </div>
       </>
     );

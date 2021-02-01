@@ -48,6 +48,10 @@ form {
   display: inline-block;
 }
 
+.u-flexInline {
+  display: inline-flex;
+}
+
 .u-bold {
   font-weight: 600;
 }

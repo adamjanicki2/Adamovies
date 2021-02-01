@@ -9,6 +9,7 @@ import Navbar from "./modules/Navbar.js";
 import ReviewPage from "./pages/ReviewPage.js";
 import PostReview from "./pages/PostReview.js";
 import OtherProfile from "./pages/OtherProfile.js";
+import ReviewSuccess from "./pages/ReviewSuccess.js";
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -76,6 +77,7 @@ class App extends Component {
           {this.state.userId && <Profile path='/myprofile' userId={this.state.userId}/>}
           <OtherProfile path="/user/:userId"/>
           {this.state.admin === true && <PostReview path="/post_review" userId={this.state.userId} admin={this.state.admin} />}
+          {this.state.admin === true && <ReviewSuccess path="review_success"/>}
           <NotFound default />
         </Router>
         </div>

@@ -29,7 +29,9 @@ class Home extends Component {
       <>
       <div className='bg'>
         <h1 className="u-pageHeader">Recent Reviews</h1>
-        {reviews_list}
+        <div className='Reviews-container'>
+          {reviews_list}
+        </div>
       </div>
       </>
     );
