@@ -185,7 +185,7 @@ class PostReview extends Component {
             maxLength='10000'
             value={this.state.review_content}
             className="Review-input"
-            placeholder="Enter your review below!"
+            placeholder="Enter your new review here!"
             onChange={this.handleChange}
             rows='16'
             />

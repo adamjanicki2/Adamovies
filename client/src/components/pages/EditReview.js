@@ -199,7 +199,7 @@ class EditReview extends Component {
             maxLength='10000'
             value={this.state.review_content}
             className="Review-input"
-            placeholder="Enter your review below!"
+            placeholder="Edit your review here!"
             onChange={this.handleChange}
             rows='16'
             />

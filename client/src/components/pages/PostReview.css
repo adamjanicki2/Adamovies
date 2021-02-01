@@ -60,6 +60,7 @@
 .dropdown {
     font-size: 20px;
     font-family: 'Inter';
+    border-radius: 6px;
 }
 
 .Submit-button {
