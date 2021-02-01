@@ -10,6 +10,7 @@ import ReviewPage from "./pages/ReviewPage.js";
 import PostReview from "./pages/PostReview.js";
 import OtherProfile from "./pages/OtherProfile.js";
 import ReviewSuccess from "./pages/ReviewSuccess.js";
+import EditReview from "./pages/EditReview.js";
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -70,14 +71,15 @@ class App extends Component {
           )}
         </Location>
         <Router>
-          <Home path="/" userId={this.state.userId}/>
-          <Movies path='/movies' userId={this.state.userId}/>
-          <Shows path='/tvshows' userId={this.state.userId}/>
+          <Home path="/" userId={this.state.userId} admin={this.state.admin}/>
+          <Movies path='/movies' userId={this.state.userId} admin={this.state.admin}/>
+          <Shows path='/tvshows' userId={this.state.userId} admin={this.state.admin}/>
           <ReviewPage path='/review/:movieId' userId={this.state.userId}/>
           {this.state.userId && <Profile path='/myprofile' userId={this.state.userId}/>}
           <OtherProfile path="/user/:userId"/>
           {this.state.admin === true && <PostReview path="/post_review" userId={this.state.userId} admin={this.state.admin} />}
-          {this.state.admin === true && <ReviewSuccess path="review_success"/>}
+          {this.state.admin === true && <ReviewSuccess path="/review_success"/>}
+          {this.state.admin === true && <EditReview path='/edit_review/:reviewId' userId={this.state.userId}/>}
           <NotFound default />
         </Router>
         </div>

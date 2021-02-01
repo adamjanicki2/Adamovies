@@ -62,3 +62,26 @@
     text-decoration: none;
     color: (--offblack);
   }
+
+  .Review-headercontainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* border: 3px solid green; */
+    /* padding-left: 2%;
+    padding-right: 2%; */
+    justify-content: center;
+  }
+.review-titleentry {
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.admin-name{
+
+}
+.admin-name:hover{
+    cursor: pointer;
+    transition: all .3s ease-in;
+    transform: scale(1.05);
+}

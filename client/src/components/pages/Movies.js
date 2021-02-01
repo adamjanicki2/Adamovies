@@ -21,7 +21,7 @@ class Movies extends Component {
 
   render() {
     const reviews_list = this.state.reviews.length !== 0? this.state.reviews.map((review) => 
-      <SingleReview review={review} />
+      <SingleReview review={review} admin={this.props.admin}/>
     ) : <div></div>;
     return (
       <>

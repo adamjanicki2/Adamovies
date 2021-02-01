@@ -57,10 +57,10 @@ class ReviewPage extends Component {
         </div>
         <div className="review-containercontainer">
         <div className='review-container'>
-            <div className="u-flex">
-              <div className="Review-subContainer u-textCenter"><h1 className='Review-subTitle'>{convertDate(this.state.review.timestamp)}</h1></div>
-              <div className="Review-subContainer u-textCenter"><h1 className='Review-subTitle u-pointer' onClick={() => {this.navigateProfile(this.state.review.admin_id, this.props.userId)}}>{this.state.review.admin_username}</h1></div>
-              <div className="Review-subContainer u-textCenter"><h1 className='Review-subTitle'>Adameter: {this.state.review.rating}%</h1></div>
+            <div className="Review-headercontainer">
+              <div className='review-titleentry'><h1 className='Review-subTitle'>{convertDate(this.state.review.timestamp)}</h1></div>
+              <div className='review-titleentry'><h1 className='Review-subTitle admin-name' onClick={() => {this.navigateProfile(this.state.review.admin_id, this.props.userId)}}>{this.state.review.admin_username}</h1></div>
+              <div className='review-titleentry'><h1 className='Review-subTitle'>Adameter: {this.state.review.rating}%</h1></div>
             </div>
             <h2>Review: </h2>
             

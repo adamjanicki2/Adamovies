@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { get, post } from "../../utilities";
+import { get, post } from "../../utilities.js";
 import { navigate } from '@reach/router';
+import "../../utilities.css";
 class PostReview extends Component {
   constructor(props) {
     super(props);
@@ -64,13 +65,13 @@ class PostReview extends Component {
     return (
       <div className="bg">
         <h1 className="u-textCenter">Welcome back, {this.state.user.name.split(' ')[0]}!</h1>
-        <select name='media_type' onChange={this.handleChange}>
+        <div className="centered-elements"><select name='media_type' className='dropdown' onChange={this.handleChange}>
           <option value='' selected disabled hidden>Select Review Type</option>
           <option value="movie">Movie</option>
           <option value="show">TV Show</option>
-        </select>
+        </select></div>
         {this.state.media_type !== '' && <div className='Post-container'>
-          <div className="u-flexInline">
+          <div className="Entry-flex">
             <h2>Title: </h2>
             <input 
             type="text"
@@ -79,35 +80,35 @@ class PostReview extends Component {
             placeholder={this.state.media_type === "movie"? "Movie Title" : "Show Title"}
             value={this.state.title}
             onChange={this.handleChange}
-            className="Input-input"
+            className="Review-input"
             maxLength="20"
           />
           </div>
-          {this.state.media_type === 'show' && <div className="u-flexInline">
+          {this.state.media_type === 'show' && <div className="Entry-flex">
             <h2>Season: </h2>
             <input 
             type="number"
             name='season'
             value={this.state.season}
             onChange={this.handleChange}
-            className="Input-input"
+            className="Review-input"
             min="0" max="100"
             placeholder='0'
           />
           </div>}
-          {this.state.media_type === 'show' && <div className="u-flexInline">
+          {this.state.media_type === 'show' && <div className="Entry-flex">
             <h2>Episode: </h2>
             <input 
             type="number"
             name='episode'
             value={this.state.episode}
             onChange={this.handleChange}
-            className="Input-input"
+            className="Review-input"
             min="0" max="100"
             placeholder='0'
           />
           </div>}
-          <div className="u-flexInline">
+          <div className="Entry-flex">
             <h2>Rating: </h2>
             <input
             name='rating'
@@ -115,12 +116,12 @@ class PostReview extends Component {
             type="number"
             value={this.state.rating}
             onChange={this.handleChange}
-            className="Input-input"
+            className="Review-input"
             min="0" max="100"
             placeholder='0'
           />
           </div>
-          <div className="u-flexInline">
+          <div className="Entry-flex">
             <h2>Release Year: </h2>
             <input
             name='release_year'
@@ -128,12 +129,12 @@ class PostReview extends Component {
             type="number"
             value={this.state.release_year}
             onChange={this.handleChange}
-            className="Input-input"
+            className="Review-input"
             min="0" max="2100"
             placeholder='0'
           />
           </div>
-          <div className="u-flexInline">
+          <div className="Entry-flex">
             <h2>Director: </h2>
             <input
             name='director'
@@ -141,12 +142,12 @@ class PostReview extends Component {
             type="text"
             value={this.state.director}
             onChange={this.handleChange}
-            className="Input-input"
+            className="Review-input"
             maxLength='20'
             placeholder='Director'
           />
           </div>
-          <div className="u-flexInline">
+          <div className="Entry-flex">
             <h2>Image URL: </h2>
             <input
             name='img_url'
@@ -154,12 +155,12 @@ class PostReview extends Component {
             type="text"
             value={this.state.img_url}
             onChange={this.handleChange}
-            className="Input-input"
+            className="Review-input"
             maxLength='100'
             placeholder='Image URL'
           />
           </div>
-          <div className="u-flexInline">
+          <div className="Entry-flex">
             <h2>Trailer Link: </h2>
             <input
             name='trailer_link'
@@ -167,33 +168,33 @@ class PostReview extends Component {
             type="text"
             value={this.state.trailer_link}
             onChange={this.handleChange}
-            className="Input-input"
+            className="Review-input"
             maxLength='100'
             placeholder='Trailer Link'
           />
           </div>
-          <div className='u-flex'>
+          <div className='Review-flex'>
             <h2>Review: </h2>
             <textarea
             name='review_content'
             required={true}
             maxLength='10000'
             value={this.state.review_content}
-            className="Input-input"
-            placeholder="Enter your review here!"
+            className="Review-input"
+            placeholder="Enter your review below!"
             onChange={this.handleChange}
             rows='16'
             />
           </div>
         </div>}
-        {this.state.media_type !== '' && <button
+        {this.state.media_type !== '' && <div className='centered-elements'><button
           type="submit"
           className="NewPostInput-button u-pointer"
           value="Submit"
           onClick={this.handleSubmit}
         >
           Submit Review
-        </button>}
+        </button></div>}
       </div>
     );
   }

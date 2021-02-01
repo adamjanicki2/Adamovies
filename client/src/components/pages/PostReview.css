@@ -1,4 +1,63 @@
 .Post-container {
     margin: 3%;
-    border: 2px solid red;
+    /* border: 2px solid red; */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    padding: 2%
+}
+.Post-flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 1%
+}
+
+.Entry-flex {
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid red; */
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    margin-left:3%;
+    margin-right: 3%;
+}
+
+.Review-flex {
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid red; */
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.Review-input {
+    flex-grow: 1;
+    font-family: "Inter";
+    border: var(--grey) 1px solid;
+    border-radius: var(--s);
+    transition: box-shadow 0.1s;
+    font-size: 22px;
+    width: 90%;
+  }
+  
+  .Review-input:focus-within {
+    border-color: var(--primary--dim);
+    box-shadow: 0 0 0 var(--xs) rgba(0, 123, 255, 0.25);
+  }
+
+  .centered-elements {
+      display:inline-flex;
+      justify-content: center;
+      align-items: center;
+      width:100%
+  }
+
+.dropdown {
+    font-size: 20px;
+    font-family: 'Inter';
 }

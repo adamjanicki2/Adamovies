@@ -158,8 +158,9 @@ router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/recent_reviews", (req, res) => {
+  const NUMBER_REVIEWS = 12;
   Review.find({}).sort({timestamp: -1}).then((sorted_reviews) => {
-    const end_index = sorted_reviews.length > 9? 9 : sorted_reviews.length;
+    const end_index = sorted_reviews.length > NUMBER_REVIEWS? NUMBER_REVIEWS : sorted_reviews.length;
     res.send(sorted_reviews.slice(0, end_index));
   });
 });
