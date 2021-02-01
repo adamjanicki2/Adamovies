@@ -74,7 +74,7 @@ class App extends Component {
           <Home path="/" userId={this.state.userId} admin={this.state.admin}/>
           <Movies path='/movies' userId={this.state.userId} admin={this.state.admin}/>
           <Shows path='/tvshows' userId={this.state.userId} admin={this.state.admin}/>
-          <ReviewPage path='/review/:movieId' userId={this.state.userId}/>
+          <ReviewPage path='/review/:movieId' userId={this.state.userId} admin={this.state.admin}/>
           {this.state.userId && <Profile path='/myprofile' userId={this.state.userId}/>}
           <OtherProfile path="/user/:userId"/>
           {this.state.admin === true && <PostReview path="/post_review" userId={this.state.userId} admin={this.state.admin} />}

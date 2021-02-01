@@ -1,4 +1,8 @@
 .Comment-body {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     border-radius: 5px;
     border: 1px solid var(--darkpurple);
     margin: 0 0 var(--s);
@@ -36,4 +40,14 @@
     cursor: pointer;
     color: #0269a4;
     transform: scale(1.01);
+    transition: all .25s ease-in-out;
+}
+
+.delete-button {
+    color: #0269a4;
+    margin-right: 5px;
+}
+.delete-button:hover {
+    cursor: pointer;
+    font-weight: 600;
 }

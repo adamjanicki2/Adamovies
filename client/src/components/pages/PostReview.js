@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { get, post } from "../../utilities.js";
 import { navigate } from '@reach/router';
 import "../../utilities.css";
+import logo from "../../public/img/black180.png";
 class PostReview extends Component {
   constructor(props) {
     super(props);
@@ -38,26 +39,28 @@ class PostReview extends Component {
     if (this.checkFilled()) {
       window.alert("Fill in all fields!")
     }else{
-      const body = {
-        release_year: this.state.release_year,
-        title: this.state.title,
-        media_type: this.state.media_type,
-        rating: this.state.rating,
-        director: this.state.director,
-        content: this.state.review_content,
-        img_url: this.state.img_url,
-        trailer_link: this.state.trailer_link,
-        season: this.state.season? this.state.season : 0,
-        episode: this.state.episode? this.state.episode : 0,
-      };
-  
-      post('/api/new_review', body).then((response) => {
-        //console.log(response);
-        navigate("/review_success");
-      })
-    }
+      if (window.confirm("Click OK to submit your review!")){
+        const body = {
+          release_year: this.state.release_year,
+          title: this.state.title,
+          media_type: this.state.media_type,
+          rating: this.state.rating,
+          director: this.state.director,
+          content: this.state.review_content,
+          img_url: this.state.img_url,
+          trailer_link: this.state.trailer_link,
+          season: this.state.season? this.state.season : 0,
+          episode: this.state.episode? this.state.episode : 0,
+        };
     
+        post('/api/new_review', body).then((response) => {
+          //console.log(response);
+          navigate("/review_success");
+        });
+      }
+    }
   };
+  
   render() {
     if (!this.state.user || !this.state.user.admin){
       return (<div></div>);
@@ -65,6 +68,7 @@ class PostReview extends Component {
     return (
       <div className="bg">
         <h1 className="u-textCenter">Welcome back, {this.state.user.name.split(' ')[0]}!</h1>
+        {this.state.media_type === '' && <div className="centered-elements Adamovies-logo180"><img className="Adamovies-logo180bordering" src={logo}/></div>}
         <div className="centered-elements"><select name='media_type' className='dropdown' onChange={this.handleChange}>
           <option value='' selected disabled hidden>Select Review Type</option>
           <option value="movie">Movie</option>
@@ -189,7 +193,7 @@ class PostReview extends Component {
         </div>}
         {this.state.media_type !== '' && <div className='centered-elements'><button
           type="submit"
-          className="NewPostInput-button u-pointer"
+          className="Submit-button u-pointer"
           value="Submit"
           onClick={this.handleSubmit}
         >

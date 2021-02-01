@@ -5,10 +5,14 @@ class ReviewSuccess extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    document.title = 'Adamovies | Submission Success!'
+  };
+
   render() {
     return (
       <div className='bg'>
-        <h1 className='u-textCenter'>Successfully posted new review!</h1>
+        <h1 className='u-textCenter'>Successfully posted review!</h1>
       </div>
     );
   }

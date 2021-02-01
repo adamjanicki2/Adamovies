@@ -35,6 +35,29 @@ router.get("/get_single_user", (req, res) => {
   });
 });
 
+router.post("/delete_comment", auth.ensureAdmin, (req, res) => {
+  Comment.findByIdAndDelete(req.body.comment_id).then((deleted) => {
+    res.send({msg: 'Deleted comment '+req.body.comment_id});
+  });
+});
+
+router.post("/update_review", auth.ensureAdmin, (req, res) => {
+  const data = {
+    content: req.body.content,
+    director: req.body.director,
+    rating: parseInt(req.body.rating),
+    title: req.body.title,
+    release_year: parseInt(req.body.release_year),
+    trailer_link: req.body.trailer_link,
+    img_url: req.body.img_url,
+    episode: parseInt(req.body.episode),
+    season: parseInt(req.body.season),
+  };
+  Review.updateOne({_id: req.body.review_id}, data).then((success) => {
+    res.send(data);
+  });
+});
+
 router.get("/get_reviews", (req, res) => {
   Review.find(req.query).then((reviews) => {
     res.send(reviews);

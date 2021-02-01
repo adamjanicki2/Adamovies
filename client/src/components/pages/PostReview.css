@@ -61,3 +61,29 @@
     font-size: 20px;
     font-family: 'Inter';
 }
+
+.Submit-button {
+    font-size: 22px;
+    padding: var(--s) var(--m);
+    color: var(--darkpurple);
+    font-family: "Inter";
+    border: var(--grey) 1px solid;
+    border-radius: var(--xs);
+    background-color: #e0e0e0;
+    transition: color 0.1s, background 0.1s;
+  }
+  
+  .Submit-button:hover {
+    background-color: #fff;
+    color: black;
+  }
+
+  .Adamovies-logo180{
+      padding-top: 1%;
+      padding-bottom: 2%;
+  }
+
+  .Adamovies-logo180bordering {
+      border: 2px solid white;
+      border-radius: 8px;
+  }

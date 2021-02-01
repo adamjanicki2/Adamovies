@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get, convertDate } from "../../utilities.js";
+import { get, convertDate, post } from "../../utilities.js";
 import { socket } from "../../client-socket.js";
 import "../../utilities.css";
 import "./ReviewPage.css";
@@ -39,12 +39,21 @@ class ReviewPage extends Component {
       navigate(`/user/${admin_id}`);
     }
   };
+
+  handleDeletion = (commentId) => {
+    post("/api/delete_comment", {comment_id: commentId}).then((success) => {
+      get("/api/get_comments_for_review", {review_id: this.props.movieId}).then((comments) =>{
+        this.setState({comments: comments});
+      })
+    })
+  };
+
   render() {
     if (!this.state.review) {
         return <div></div>;
     }
     const comments_list = this.state.comments && this.state.comments.length > 0? this.state.comments.map((comment) => 
-        <div className="comment-single"><SingleComment timestamp={comment.timestamp} userId={comment.user_id} commenter={comment.username} picture={comment.picture} content={comment.content} color={this.props.userId === comment.user_id? 'Self-background' : 'Normal-background'}/></div>
+        <div className="comment-single"><SingleComment self_id={this.props.userId} admin={this.props.admin} commentId={comment._id} handleDeletion={this.handleDeletion} timestamp={comment.timestamp} userId={comment.user_id} commenter={comment.username} picture={comment.picture} content={comment.content} color={this.props.userId === comment.user_id? 'Self-background' : 'Normal-background'}/></div>
     ) : <div>No comments on this review!</div>
     return (
       <>
@@ -64,9 +73,9 @@ class ReviewPage extends Component {
             </div>
             <h2>Review: </h2>
             
-        <div className='review-content'>
+        <p className='review-content'>
             {this.state.review.content}
-        </div>
+        </p>
         <hr className='review-line'/>
         <div>
             <h2>Comments:</h2>
