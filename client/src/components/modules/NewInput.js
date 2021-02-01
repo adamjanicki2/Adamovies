@@ -37,6 +37,18 @@ class NewInput extends Component {
     } 
   };
 
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter'){
+      if (this.state.value !== ''){
+        event.preventDefault();
+        this.props.onSubmit && this.props.onSubmit(this.state.value);
+        this.setState({
+          value: "",
+        });
+      } 
+    }
+  }
+
   render() {
     return (
       <div className="u-flex">
@@ -45,6 +57,7 @@ class NewInput extends Component {
           placeholder={this.props.defaultText}
           value={this.state.value}
           onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
           className="NewPostInput-input"
           maxLength="200"
         />
@@ -97,6 +110,13 @@ class SearchBar extends Component {
     this.props.onSubmit && this.props.onSubmit(this.state.value);
   };
 
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      this.props.onSubmit && this.props.onSubmit(this.state.value);
+    }
+  }
+
   render() {
     return (
       <div className="u-flex search-bar">
@@ -105,6 +125,7 @@ class SearchBar extends Component {
           placeholder={this.props.defaultText}
           value={this.state.value}
           onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
           className="NewPostInput-input"
           maxLength="200"
         />
