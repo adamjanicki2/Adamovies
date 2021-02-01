@@ -87,10 +87,10 @@ class EditReview extends Component {
     }
     return (
       <div className='bg'>
-        <h1 className='u-textCenter'>Edit Review page for: {this.state.title}</h1>
+        <h1 className='u-textCenter'>Edit Review page for "{this.state.title}"</h1>
         {this.state.media_type !== '' && <div className='Post-container'>
           <div className="Entry-flex">
-            <h2>Title: </h2>
+            <h2 className='field-text'>Title</h2>
             <input 
             type="text"
             name='title'
@@ -103,7 +103,7 @@ class EditReview extends Component {
           />
           </div>
           {this.state.media_type === 'show' && <div className="Entry-flex">
-            <h2>Season: </h2>
+            <h2 className='field-text'>Season</h2>
             <input 
             type="number"
             name='season'
@@ -115,7 +115,7 @@ class EditReview extends Component {
           />
           </div>}
           {this.state.media_type === 'show' && <div className="Entry-flex">
-            <h2>Episode: </h2>
+            <h2 className='field-text'>Episode</h2>
             <input 
             type="number"
             name='episode'
@@ -127,7 +127,7 @@ class EditReview extends Component {
           />
           </div>}
           <div className="Entry-flex">
-            <h2>Rating: </h2>
+            <h2 className='field-text'>Rating</h2>
             <input
             name='rating'
             required={true}
@@ -140,7 +140,7 @@ class EditReview extends Component {
           />
           </div>
           <div className="Entry-flex">
-            <h2>Release Year: </h2>
+            <h2 className='field-text'>Release Year</h2>
             <input
             name='release_year'
             required={true}
@@ -153,7 +153,7 @@ class EditReview extends Component {
           />
           </div>
           <div className="Entry-flex">
-            <h2>Director: </h2>
+            <h2 className='field-text'>Director</h2>
             <input
             name='director'
             required={true}
@@ -166,7 +166,7 @@ class EditReview extends Component {
           />
           </div>
           <div className="Entry-flex">
-            <h2>Image URL: </h2>
+            <h2 className='field-text'>Image URL</h2>
             <input
             name='img_url'
             required={true}
@@ -179,7 +179,7 @@ class EditReview extends Component {
           />
           </div>
           <div className="Entry-flex">
-            <h2>Trailer Link: </h2>
+            <h2 className='field-text'>Trailer Link</h2>
             <input
             name='trailer_link'
             required={true}
@@ -192,7 +192,7 @@ class EditReview extends Component {
           />
           </div>
           <div className='Review-flex'>
-            <h2>Review: </h2>
+            <h2 className='field-text'>Review</h2>
             <textarea
             name='review_content'
             required={true}
@@ -204,8 +204,7 @@ class EditReview extends Component {
             rows='16'
             />
           </div>
-        </div>}
-        {this.state.media_type !== '' && <div className='centered-elements'><button
+          {this.state.media_type !== '' && <div className='centered-elements post-submit'><button
           type="submit"
           className="Submit-button u-pointer"
           value="Submit"
@@ -213,6 +212,7 @@ class EditReview extends Component {
         >
           Submit Review
         </button></div>}
+        </div>}
       </div>
     );
   }

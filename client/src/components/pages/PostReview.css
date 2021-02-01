@@ -1,11 +1,13 @@
 .Post-container {
     margin: 3%;
-    /* border: 2px solid red; */
+    border: 5px solid var(--grey);
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
-    padding: 2%
+    padding: 2%;
+    border-radius: 48px;
+    background-color: var(--darkpurple);
 }
 .Post-flex {
     display: flex;
@@ -38,7 +40,7 @@
 .Review-input {
     flex-grow: 1;
     font-family: "Inter";
-    border: var(--grey) 1px solid;
+    border: var(--grey) 2px solid;
     border-radius: var(--s);
     transition: box-shadow 0.1s;
     font-size: 22px;
@@ -87,4 +89,12 @@
   .Adamovies-logo180bordering {
       border: 2px solid white;
       border-radius: 8px;
+  }
+
+  .post-submit{
+      margin-top: 20px;
+  }
+
+  .field-text {
+      color:var(--yellow);
   }
