@@ -15,7 +15,7 @@ import RootConsole from "./pages/RootConsole.js";
 import FAQ from "./pages/FAQ.js";
 import About from "./pages/About.js";
 import "../utilities.css";
-
+import Reviews from "./pages/Reviews.js"
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
@@ -77,6 +77,8 @@ class App extends Component {
           )}
         </Location>
         <Router>
+          <Reviews path='/testmovies' userId={this.state.userId} admin={this.state.admin} root={this.state.root} type={'movie'}/>
+          <Reviews path='/testshows' userId={this.state.userId} admin={this.state.admin} root={this.state.root} type={'show'}/>
           <Home path="/" userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>
           <Movies path='/movies' userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>
           <Shows path='/tvshows' userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>

@@ -6,7 +6,8 @@ import "./Home.css";
 import SingleReview from "../modules/SingleReview.js";
 import { SearchBar } from "../modules/NewInput.js";
 import BottomBar from "../modules/BottomBar.js";
-class Movies extends Component {
+
+class Reviews extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,8 +19,8 @@ class Movies extends Component {
   }
 
   componentDidMount() {
-    document.title = "Adamovies | Movies";
-    get("/api/get_reviews", {type: 'movie'}).then((reviews) => {
+    document.title = this.props.type === 'movie'? 'Adamovies | Movies' : 'Adamovies | TV Shows';
+    get("/api/get_reviews", {type: this.props.type}).then((reviews) => {
       this.setState({reviews: reviews, reviews_to_display: [...reviews],});
     });
   }
@@ -27,7 +28,7 @@ class Movies extends Component {
   delete_review = (review_id) => {
     if (window.confirm("Click OK to delete this review")){
       post("/api/delete_review", {review_id: review_id}).then((deleted) => {
-        get("/api/get_reviews", {type: 'movie'}).then((reviews) => {
+        get("/api/get_reviews", {type: this.props.type}).then((reviews) => {
           this.setState({reviews: reviews, reviews_to_display: this.sortReviews(reviews, this.state.sort_option)});
         });
       });
@@ -106,7 +107,7 @@ class Movies extends Component {
     return (
       <>
       <div className='bg'>
-        <h1 className="u-pageHeader">Movies</h1>
+        <h1 className="u-pageHeader">{this.props.type === 'movie'? 'Movies' : 'TV Shows'}</h1>
         <div className='centered-elements'><SearchBar defaultText={'Search by title, director, year, or admin'} onSubmit={this.onSearchSubmit}/></div>
         <div className="centered-elements inputs-top"><select name='sorted_type' className='dropdown-filter' onChange={this.handleChangeSorted}>
           <option value="publishedlowtohigh" selected>Sort By: Published Low to High</option>
@@ -123,4 +124,4 @@ class Movies extends Component {
     );
   }
 }
-export default Movies;
+export default Reviews;

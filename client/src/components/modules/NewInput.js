@@ -99,7 +99,11 @@ class SearchBar extends Component {
     };
   }
 
+
   handleChange = (event) => {
+    if (event.target.value === '' && this.state.value !== ''){
+      this.props.onSubmit && this.props.onSubmit('');
+    }
     this.setState({
       value: event.target.value,
     });
@@ -119,9 +123,10 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div className="u-flex search-bar">
+    <div className='search-bar'>
+      <div className="u-flex">
         <input
-          type="text"
+          type="search"
           placeholder={this.props.defaultText}
           value={this.state.value}
           onChange={this.handleChange}
@@ -138,6 +143,7 @@ class SearchBar extends Component {
           Search
         </button>
       </div>
+    </div>
     );
   }
 }

@@ -61,7 +61,7 @@ class Shows extends Component {
       review.director.toLowerCase().split(' ').includes(lower) ||
       review.release_year.toString() === newQuery ||
       review.admin_username.toLowerCase() === lower);
-    this.setState({reviews_to_display: newReviews_list});
+    this.setState({reviews_to_display: this.sortReviews(newReviews_list, this.state.sort_option)});
   };
 
   updateSorted = (newSort) => {
@@ -102,7 +102,7 @@ class Shows extends Component {
     }
     const reviews_list = this.state.reviews_to_display.length !== 0? this.state.reviews_to_display.map((review) => 
       <SingleReview review={review} admin={this.props.admin} root={this.props.root} delete_review={this.delete_review}/>
-    ) : <h1 className='u-textCenter'>No Reviews!</h1>;
+    ) : <h1 className='u-textCenter No-reviews'>No Reviews!</h1>;
     return (
       <>
       <div className='bg'>
@@ -116,7 +116,7 @@ class Shows extends Component {
           <option value="alphabetically">Sort By: Title</option>
 
         </select></div>
-        <div className="reviews-container">{reviews_list}</div>
+        <div className={this.state.reviews_to_display.length !== 0? "reviews-container" : 'No-reviews'}>{reviews_list}</div>
         <BottomBar />
       </div>
       </>
