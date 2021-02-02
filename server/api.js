@@ -200,6 +200,12 @@ router.get("/get_all_other_users", auth.ensureRoot, (req, res) => {
   });
 })
 
+router.post("/update_user_admin", auth.ensureRoot, (req, res) => {
+  User.updateOne({_id: req.body.user_id}, {admin: req.body.new_admin_status}).then((success) => {
+    res.send({msg: 'success'});
+  });
+});
+
 router.get("/tempy", (req, res) => {
   // Review.updateMany({}, {season: 0, episode: 0}).then((success) => {
   //   res.send({mesg: 'success!'});
