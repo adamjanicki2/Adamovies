@@ -50,6 +50,15 @@ class Reviews extends Component {
     else if (newSort === 'alphabetically'){
       return [...reviews].sort((a, b) => a.title > b.title? 1: -1);
     }
+    else if (newSort === 'reversealphabetically'){
+      return [...reviews].sort((a, b) => a.title > b.title? -1: 1);
+    }
+    else if (newSort === 'ratinglowtohigh'){
+      return [...reviews].sort((a, b) => a.rating > b.rating? 1: -1);
+    }
+    else if (newSort === 'ratinghightolow'){
+      return [...reviews].sort((a, b) => a.rating > b.rating? -1: 1);
+    }
   };
 
   updateQuery = (newQuery) => {
@@ -84,6 +93,15 @@ class Reviews extends Component {
     else if (newSort === 'alphabetically'){
       updatedSort = this.state.reviews_to_display.sort((a, b) => a.title > b.title? 1: -1);
     }
+    else if (newSort === 'reversealphabetically'){
+      updatedSort = this.state.reviews_to_display.sort((a, b) => a.title > b.title? -1: 1);
+    }
+    else if (newSort === 'ratinglowtohigh'){
+      updatedSort = this.state.reviews_to_display.sort((a, b) => a.rating > b.rating? 1: -1);
+    }
+    else if (newSort === 'ratinghightolow'){
+      updatedSort = this.state.reviews_to_display.sort((a, b) => a.rating > b.rating? -1: 1);
+    }
     this.setState({reviews_to_display: updatedSort});
   };
 
@@ -110,11 +128,14 @@ class Reviews extends Component {
         <h1 className="u-pageHeader">{this.props.type === 'movie'? 'Movies' : 'TV Shows'}</h1>
         <div className='centered-elements'><SearchBar defaultText={'Search by title, director, year, or admin'} onSubmit={this.onSearchSubmit}/></div>
         <div className="centered-elements inputs-top"><select name='sorted_type' className='dropdown-filter' onChange={this.handleChangeSorted}>
-          <option value="publishedlowtohigh" selected>Sort By: Published Low to High</option>
-          <option value="publishedhightolow">Sort By: Published High to Low</option>
-          <option value="releaselowtohigh">Sort By: Release Low to High</option>
-          <option value="releasehightolow">Sort By: Release High to Low</option>
-          <option value="alphabetically">Sort By: Title</option>
+          <option value="publishedlowtohigh" selected>Sort By: Published (Old to New)</option>
+          <option value="publishedhightolow">Sort By: Published (New to Old)</option>
+          <option value="releaselowtohigh">Sort By: Release (Old to New)</option>
+          <option value="releasehightolow">Sort By: Release (New to Old)</option>
+          <option value="ratinglowtohigh">Sort By: Rating (Low to High)</option>
+          <option value="ratinghightolow">Sort By: Rating (High to Low)</option>
+          <option value="alphabetically">Sort By: Title (Alphabetically)</option>
+          <option value="reversealphabetically">Sort By: Title (Reverse Alphabetically)</option>
 
         </select></div>
         <div className={this.state.reviews_to_display.length !== 0? "reviews-container" : 'No-reviews'}>{reviews_list}</div>

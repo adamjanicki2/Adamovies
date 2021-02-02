@@ -26,7 +26,9 @@ class FAQ extends Component {
       ],
     }
   }
-
+  componentDidMount(){
+    window.scrollTo(0, 0);
+  }
   render() {
     let questions_to_display = [];
     for (let i = 0;i<this.state.questions.length; i++){
