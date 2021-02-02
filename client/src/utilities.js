@@ -19,6 +19,20 @@ function convertToJSON(res) {
       });
     });
 }
+export function convertPicture(SIZE_, picture){
+  if (picture.split('/')[picture.split('/').length - 2] === 's96-c'){
+    let arr = picture.split('/');
+    arr[arr.length - 2] = arr[arr.length - 2][0]+SIZE_+arr[arr.length - 2].substring(3);
+    return arr.join('/');
+  }else if (picture.split('=')[picture.split('=').length - 1] === 's96-c'){
+    let arr = picture.split('=');
+    arr[arr.length-1] = arr[arr.length - 1][0]+SIZE_+arr[arr.length - 1].substring(3);
+    return arr.join('=');
+  }else{
+    return picture;
+  }
+}
+
 export function convertDate(stamp){
   const d = new Date(stamp);
   const AMPM = d.toLocaleTimeString().split(' ')[1]

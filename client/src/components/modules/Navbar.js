@@ -3,6 +3,7 @@ import { Link, navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import "./Navbar.css";
 import logo from '../../public/img/adamovies45.png';
+import { convertPicture } from "../../utilities.js";
 const GOOGLE_CLIENT_ID = "577990730068-40v41c82e6bd14pj40khj7f2nbqhnasu.apps.googleusercontent.com";
 
 class Navbar extends Component {
@@ -25,18 +26,7 @@ class Navbar extends Component {
       let picture_to_use=null;
       if (this.props.picture !== null){
         const SIZE_ = '36'; //dimensions of pfp, change this number to change the size, make sure to change width/h in navbar.css
-        if (this.props.picture.split('/')[this.props.picture.split('/').length - 2] === 's96-c'){
-          let arr = this.props.picture.split('/');
-          arr[arr.length - 2] = arr[arr.length - 2][0]+SIZE_+arr[arr.length - 2].substring(3);
-          picture_to_use = arr.join('/');
-        }else if (this.props.picture.split('=')[this.props.picture.split('=').length - 1] === 's96-c'){
-          let arr = this.props.picture.split('=');
-          arr[arr.length-1] = arr[arr.length - 1][0]+SIZE_+arr[arr.length - 1].substring(3);
-          picture_to_use = arr.join('=');
-        }else{
-          picture_to_use = this.props.picture;
-        }
-        
+        picture_to_use = convertPicture(SIZE_, this.props.picture);
       }
 
       return (
@@ -62,6 +52,9 @@ class Navbar extends Component {
               {this.props.admin === true &&
                 <Link to="/post_review" className={this.props.location.pathname === '/post_review'? "Navbar-route Route-clicked":"Navbar-route"} >
                 Post
+              </Link>}
+              {this.props.root === true && <Link to="/root_console" className={this.props.location.pathname === '/root_console'? "Navbar-route Route-clicked":"Navbar-route"} >
+                Root
               </Link>}
             </div>
             <div className="log-container">

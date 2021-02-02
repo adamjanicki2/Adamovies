@@ -194,7 +194,11 @@ router.get("/recent_reviews", (req, res) => {
   });
 });
 
-
+router.get("/get_all_other_users", auth.ensureRoot, (req, res) => {
+  User.find({_id: {$ne: req.user._id}}, {username: 1, name: 1, admin: 1, picture: 1}).then((all_users) => {
+    res.send(all_users);
+  });
+})
 
 router.get("/tempy", (req, res) => {
   // Review.updateMany({}, {season: 0, episode: 0}).then((success) => {

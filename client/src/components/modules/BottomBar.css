@@ -1,0 +1,12 @@
+.Bottom-container{
+    width: 100%;
+    height: fit-content;
+    background-color: var(--darkpurple);
+    display: inline-flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    color: white;
+}
