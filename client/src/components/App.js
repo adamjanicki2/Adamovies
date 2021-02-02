@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Router, Location, navigate } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Home from "./pages/Home.js";
-import Movies from "./pages/Movies.js";
-import Shows from "./pages/Shows.js";
 import Profile from "./pages/Profile.js";
 import Navbar from "./modules/Navbar.js";
 import ReviewPage from "./pages/ReviewPage.js";
@@ -77,11 +75,9 @@ class App extends Component {
           )}
         </Location>
         <Router>
-          <Reviews path='/testmovies' userId={this.state.userId} admin={this.state.admin} root={this.state.root} type={'movie'}/>
-          <Reviews path='/testshows' userId={this.state.userId} admin={this.state.admin} root={this.state.root} type={'show'}/>
+          <Reviews path='/movies' userId={this.state.userId} admin={this.state.admin} root={this.state.root} type={'movie'}/>
+          <Reviews path='/tvshows' userId={this.state.userId} admin={this.state.admin} root={this.state.root} type={'show'}/>
           <Home path="/" userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>
-          <Movies path='/movies' userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>
-          <Shows path='/tvshows' userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>
           <ReviewPage path='/review/:movieId' userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>
           {this.state.userId && <Profile path='/myprofile' userId={this.state.userId}/>}
           <OtherProfile path="/user/:userId"/>
