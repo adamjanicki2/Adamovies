@@ -30,10 +30,10 @@ class Navbar extends Component {
       }
 
       return (
-        <nav className="Navbar-container u-bordering">
-          <div className="nav-container u-bordering">
-            <div className="nav-titlecontainer u-bordering">
-              <img src={logo} className='Navbar-logo'/>
+        <nav className="Navbar-container">
+          <div className="nav-container">
+            <div className="nav-titlecontainer">
+              <div><img src={logo} className='Navbar-logo'/></div>
               <div className="Navbar-title">ADAMOVIES</div>
             </div>
             <div className="link-container">

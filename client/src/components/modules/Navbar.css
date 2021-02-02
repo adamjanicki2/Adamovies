@@ -86,17 +86,13 @@
 
 .Navbar-logo {
   background-image: url('../../public/img/adamovies45.png');
-  width: 45px;
-  height: 45px;
   align-items:center;
   width: fit-content;
   height: fit-content;
-  padding: 0 0 0 0;
-  margin-top: 10;
-  margin-bottom: -10px;
   margin-right: var(--m);
   border: 1px solid var(--offwhite);
   border-radius: 6px;
+  margin-bottom: -6px;
 }
 
 
