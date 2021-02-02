@@ -7,6 +7,8 @@
   --offwhite: #e1efe6;
   --grey: #aeb7b3;
   --offblack: #000411;
+  --cream: #fefdf0;
+  --offwhite2: #fffff7;
 
   --xs: 4px;
   --s: 8px;
@@ -95,7 +97,7 @@ form {
   text-decoration: underline;
 }
 
-u.auto {
+.u-auto {
   margin-left: auto;
   margin-right: auto;
 }

@@ -3,6 +3,7 @@ import { get, post } from "../../utilities.js";
 import { navigate } from '@reach/router';
 import "../../utilities.css";
 import logo from "../../public/img/black180.png";
+import BottomBar from "../modules/BottomBar.js";
 class PostReview extends Component {
   constructor(props) {
     super(props);
@@ -67,7 +68,7 @@ class PostReview extends Component {
     }
     return (
       <div className="bg">
-        <h1 className="u-textCenter">Welcome back, {this.state.user.name.split(' ')[0]}!</h1>
+        <h1 className="u-pageHeader u-textCenter">Welcome back, {this.state.user.name.split(' ')[0]}!</h1>
         {this.state.media_type === '' && <div className="centered-elements Adamovies-logo180"><img className="Adamovies-logo180bordering" src={logo}/></div>}
         <div className="centered-elements"><select name='media_type' className='dropdown' onChange={this.handleChange}>
           <option value='' selected>Select Review Type</option>
@@ -199,6 +200,7 @@ class PostReview extends Component {
           Submit Review
         </button></div>}
         </div>}
+        {this.state.media_type !== '' && <BottomBar/> }
       </div>
     );
   }

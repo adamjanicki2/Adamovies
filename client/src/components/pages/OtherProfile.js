@@ -2,6 +2,7 @@ import { get, convertPicture } from "../../utilities.js";
 import React, { Component } from "react";
 import "../../utilities.css";
 import "./Profile.css";
+import BottomBar from "../modules/BottomBar.js";
 
 class OtherProfile extends Component {
   constructor(props) {
@@ -61,6 +62,7 @@ class OtherProfile extends Component {
             </h2>
           </div>
         </div>
+        <BottomBar/>
         </div>
         </>
       ) 

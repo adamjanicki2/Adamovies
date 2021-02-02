@@ -2,6 +2,7 @@
     width: 100%;
     height: fit-content;
     background-color: var(--darkpurple);
+    border-radius: 6px 6px 0px 0px;
     display: inline-flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -9,4 +10,16 @@
     align-items: center;
     margin-top: 20px;
     color: white;
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+.Bottom-links:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.Bottom-links{
+    margin-left: 8px;
+    margin-right: 8px;
 }

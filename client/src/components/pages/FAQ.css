@@ -1,0 +1,18 @@
+.QA-container {
+    max-width: 90%;
+    margin-bottom: 2%;
+    border-radius: 16px;
+    background-color: var(--offwhite2);
+    border: 1px solid var(--grey);
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+}
+
+.line-QA{
+    width: 100%;
+}
+
+.QA-text {
+    font-weight: 300;
+    color: var(--offblack)
+}

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "../../utilities.css";
 import "./PostReview.css";
 import { get, post } from "../../utilities.js";
-import { setConfig } from "react-hot-loader";
 import { navigate } from '@reach/router';
+import BottomBar from "../modules/BottomBar.js";
 class EditReview extends Component {
   constructor(props) {
     super(props);
@@ -87,7 +87,7 @@ class EditReview extends Component {
     }
     return (
       <div className='bg'>
-        <h1 className='u-textCenter'>Edit Review page for "{this.state.title}"</h1>
+        <h1 className='u-pageHeader u-textCenter'>Edit Review page for "{this.state.title}"</h1>
         {this.state.media_type !== '' && <div className='Post-container'>
           <div className="Entry-flex">
             <h2 className='field-text'>Title</h2>
@@ -213,6 +213,7 @@ class EditReview extends Component {
           Submit Review
         </button></div>}
         </div>}
+        <BottomBar/>
       </div>
     );
   }

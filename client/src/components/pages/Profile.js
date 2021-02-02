@@ -2,6 +2,7 @@ import { convertPicture, get, post } from "../../utilities.js";
 import React, { Component } from "react";
 import "../../utilities.css";
 import "./Profile.css";
+import BottomBar from "../modules/BottomBar.js";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -163,6 +164,7 @@ class Profile extends Component {
             {this.state.status? 'Save Changes': 'Edit Profile'}
           </button>
         </div>
+        <BottomBar />
       </div>
         </>
       ) 

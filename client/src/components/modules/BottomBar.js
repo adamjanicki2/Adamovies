@@ -19,7 +19,9 @@ class BottomBar extends Component {
     render() {
       return (
         <div className='Bottom-container'>
-            <h1>BottomBar!</h1>
+            <div onClick={()=>{navigate('/faq')}} className='Bottom-links'>FAQ</div>
+            <div> | </div>
+            <div onClick={()=>{navigate('/about')}} className='Bottom-links'>About Adamovies</div>
         </div>
       );
     }

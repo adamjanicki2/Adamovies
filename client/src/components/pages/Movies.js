@@ -5,6 +5,7 @@ import "./Reviews.css";
 import "./Home.css";
 import SingleReview from "../modules/SingleReview.js";
 import { SearchBar } from "../modules/NewInput.js";
+import BottomBar from "../modules/BottomBar.js";
 class Movies extends Component {
   constructor(props) {
     super(props);
@@ -101,7 +102,7 @@ class Movies extends Component {
     }
     const reviews_list = this.state.reviews_to_display.length !== 0? this.state.reviews_to_display.map((review) => 
       <SingleReview review={review} admin={this.props.admin} root={this.props.root} delete_review={this.delete_review}/>
-    ) : <h1 className='u-textCenter'>No Reviews!</h1>;
+    ) : <h1 className='u-textCenter No-reviews'>No Reviews!</h1>;
     return (
       <>
       <div className='bg'>
@@ -115,7 +116,8 @@ class Movies extends Component {
           <option value="alphabetically">Sort By: Title</option>
 
         </select></div>
-        <div className="reviews-container">{reviews_list}</div>
+        <div className={this.state.reviews_to_display.length !== 0? "reviews-container" : 'No-reviews'}>{reviews_list}</div>
+        <BottomBar />
       </div>
       </>
     );

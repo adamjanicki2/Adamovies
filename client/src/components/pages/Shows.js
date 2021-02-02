@@ -5,6 +5,7 @@ import "./Reviews.css";
 import "./Home.css";
 import SingleReview from "../modules/SingleReview.js";
 import { SearchBar } from "../modules/NewInput.js";
+import BottomBar from "../modules/BottomBar.js";
 class Shows extends Component {
   constructor(props) {
     super(props);
@@ -116,6 +117,7 @@ class Shows extends Component {
 
         </select></div>
         <div className="reviews-container">{reviews_list}</div>
+        <BottomBar />
       </div>
       </>
     );

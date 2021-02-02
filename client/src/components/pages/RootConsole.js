@@ -24,7 +24,9 @@ class RootConsole extends Component {
         return (<div></div>);
     }
     return (
-        <h1 className='u-textCenter'>Root Console</h1>
+      <div className='bg'>
+        <h1 className='u-pageHeader u-textCenter'>Root Console</h1>
+      </div>
     );
   }
 }

@@ -3,6 +3,7 @@ import "../../utilities.css";
 import "./Home.css";
 import SingleReview from "../modules/SingleReview.js";
 import { get, post } from "../../utilities.js";
+import BottomBar from '../modules/BottomBar.js';
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -42,6 +43,7 @@ class Home extends Component {
         <div className='Reviews-container'>
           {reviews_list}
         </div>
+        <BottomBar />
       </div>
       </>
     );

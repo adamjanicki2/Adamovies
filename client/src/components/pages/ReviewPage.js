@@ -58,7 +58,7 @@ class ReviewPage extends Component {
     return (
       <>
         <div className='u-textCenter'>
-            <h1>{this.state.review.title} ({this.state.review.release_year})</h1>
+            <h1 className='u-pageHeader'>{this.state.review.title} ({this.state.review.release_year})</h1>
             <h1>{this.state.review.rating}%</h1>
             <img src={this.state.review.img_url} className='Poster-img'/>
             <h2>Director: {this.state.review.director}</h2>
