@@ -70,7 +70,7 @@ class NewComment extends Component {
   }
 
   addComment = (value) => {
-    const body = { review_id: this.props.movieId, content: value };
+    const body = { review_id: this.props.movieId, content: value, title: this.props.title };
     post("/api/new_comment", body);
   };
 

@@ -88,7 +88,7 @@ class ReviewPage extends Component {
         <hr className='review-line'/>
         <div>
             <h2>Comments({this.state.comments.length}):</h2>
-            {this.props.userId? <div className="Comment-bar"><NewComment movieId={this.state.review._id} className='Comment-bar'/></div> : <div></div>}
+            {this.props.userId? <div className="Comment-bar"><NewComment movieId={this.state.review._id} title={this.state.review.title}className='Comment-bar'/></div> : <div></div>}
             {comments_list}
         </div>
         </div>

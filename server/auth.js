@@ -62,10 +62,6 @@ function login(req, res) {
     });
 }
 
-function update_timestamp(user) {
-  User.updateOne({googleid: user.googleid, name: user.name}, {last_login: Date.now()});
-}
-
 function logout(req, res) {
   req.session.user = null;
   res.send({});

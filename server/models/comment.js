@@ -5,6 +5,7 @@ const comment = new mongoose.Schema({
   user_id: String,
   user_googleid: String,
   review_id: String,
+  title: String,
   content: String,
   picture: String,
   timestamp: Number,

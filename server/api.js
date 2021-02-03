@@ -58,7 +58,9 @@ router.post("/delete_comment", auth.ensureRoot, (req, res) => {
 
 router.post("/delete_review", auth.ensureRoot, (req, res) => {
   Review.findByIdAndDelete(req.body.review_id).then((deleted) =>{
-    res.send({msg: "Deleted review "+req.body.review_id});
+    Comment.deleteMany({review_id: req.body.review._id}).then((success) => {
+      res.send({msg: "Deleted review and comments for "+req.body.review_id});
+    });
   });
 });
 
@@ -127,6 +129,7 @@ router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
         review_id: req.body.review_id,
         content: req.body.content,
         picture: picture_to_use,
+        title: req.body.title,
         timestamp: Date.now(),
         username: existing_user.username,
       };
@@ -138,8 +141,8 @@ router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
   }
 });
 
-router.post("/update_timestamp", (req, res) => {
-  User.updateOne({googleid: req.user.googleid, name: req.user.name}, {last_login: Date.now()}).then((r) => {
+router.post("/update_timestamp", auth.ensureLoggedIn, (req, res) => {
+  User.updateOne({_id: req.user._id}, {last_login: Date.now()}).then((r) => {
     res.send({msg: 'success'});
   });
 });
@@ -298,11 +301,29 @@ router.post("/unban_user", auth.ensureRoot, (req, res)=> {
   });
 });
 
+router.get("/comments_since_timestamp", auth.ensureRoot, (req, res) => {
+  Comment.find({timestamp: {$gt: req.query.timestamp}}).sort({review_id: 1}).then((recent_comments) => {
+    let data = [];
+    let used = [];
+    for (let i=0; i<recent_comments.length; i++){
+      if (!used.includes(recent_comments[i].review_id)){
+        used.push(recent_comments[i].review_id);
+        data.push([recent_comments[i].review_id, 1, recent_comments[i].title]);
+      }else{
+        data[data.length-1][1]++;
+      }
+    }
+    res.send({data: data});
+  })
+});
+
 router.get("/tempy", (req, res) => {
   // Review.updateMany({mpa_rating: undefined}, {mpa_rating: 'PG-13'}).then((s) => {
   //   res.send({msg: 'success!'});
   // })
 });
+
+
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

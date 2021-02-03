@@ -84,6 +84,5 @@
 }
 .admin-name:hover{
     cursor: pointer;
-    transition: all .3s ease-in;
-    transform: scale(1.05);
+    text-decoration: underline;
 }

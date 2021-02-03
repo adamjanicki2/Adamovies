@@ -13,6 +13,7 @@ class RootConsole extends Component {
       all_users: undefined,
       all_announcements: undefined,
       all_bannedusers: undefined,
+      new_comments: undefined,
     };
   }
 
@@ -28,7 +29,12 @@ class RootConsole extends Component {
     
     get("/api/get_all_bannedusers").then((all_banned) => {
       this.setState({all_bannedusers: all_banned});
-    })
+    });
+
+    get("/api/comments_since_timestamp", {timestamp: this.props.timestamp}).then((new_comments) => {
+      this.setState({new_comments: new_comments.data});
+      post("/api/update_timestamp");
+    });
   }
 
   navigateProfile = (admin_id, self_id) => {
@@ -78,11 +84,30 @@ class RootConsole extends Component {
   };
 
   render() {
-    if (!this.state.all_users || !this.props.root || !this.state.all_announcements || !this.state.all_bannedusers){
+    if (!this.state.all_users || !this.props.root || !this.state.all_announcements || !this.state.all_bannedusers || !this.state.new_comments){
         return (<div></div>);
     }
     return (
       <div className='bg'>
+        <h1 className='u-pageHeader u-textCenter'>New Comments</h1>
+        <div className="table-container">
+        <table className='styled-table'>
+        <thead >
+          <tr>
+            <th className='tabletitletext'>Title</th>
+            <th className='tabletitletext'>Amount</th>
+          </tr>
+          </thead>
+        <tbody>
+          {this.state.new_comments.map((comment) => 
+          <tr>
+            <td className='table-cell' onClick={()=>{navigate(`/review/${comment[0]}`)}}>{comment[2]}</td>
+            <td>{comment[1]}</td>
+        </tr>
+    )}
+    </tbody>
+    </table>
+    </div>
         <h1 className='u-pageHeader u-textCenter'>Announcements</h1>
         <div className="table-container">
         <table className='styled-table'>

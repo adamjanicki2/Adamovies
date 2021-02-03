@@ -28,13 +28,14 @@ class App extends Component {
       user_picture: null,
       admin: null,
       root: null,
+      timestamp: null,
     };
   }
 
   componentDidMount() {
     get("/api/whoami").then((user) => {
       if (user._id) {
-        this.setState({ userId: user._id, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, });
+        this.setState({ userId: user._id, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login});
       }
     });
   }
@@ -46,16 +47,14 @@ class App extends Component {
         window.alert("You've been banned from having an Adamovies account. This means you can no longer comment or have a profile.");
       }else{
         console.log(`Logged in as ${user.name}`);
-        post("/api/update_timestamp").then((success) => {
-          this.setState({ userId: user._id , user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root});
-          post("/api/initsocket", { socketid: socket.id });
-        });
+        this.setState({ userId: user._id , user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login});
+        post("/api/initsocket", { socketid: socket.id });
       }
     });
   };
 
   handleLogout = () => {
-    this.setState({ userId: undefined, user_name: "", user_picture: null, admin: null, root: null });
+    this.setState({ userId: undefined, user_name: "", user_picture: null, admin: null, root: null , timestamp: null});
     post("/api/logout");
     navigate('/');
   };
@@ -88,7 +87,7 @@ class App extends Component {
           {this.state.admin === true && <PostReview path="/post_review" userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>}
           {this.state.admin === true && <ReviewSuccess path="/review_success"/>}
           {this.state.admin === true && <EditReview path='/edit_review/:reviewId' userId={this.state.userId}/>}
-          {this.state.root === true && <RootConsole path='/root_console' userId={this.state.userId} root={this.state.root}/>}
+          {this.state.root === true && <RootConsole path='/root_console' userId={this.state.userId} root={this.state.root} timestamp={this.state.timestamp}/>}
           <FAQ path='/faq'/>
           <About path='/about'/>
           <NotFound default />
