@@ -241,6 +241,18 @@ router.get("/recent_announcements", (req, res) => {
   });
 });
 
+router.get("/get_all_announcements", auth.ensureRoot, (req, res) => {
+  Announcement.find({}).sort({timestamp: -1}).then((sorted_announcements) => {
+    res.send(sorted_announcements);
+  });
+});
+
+router.post("/delete_announcement", auth.ensureRoot, (req, res)=>{
+  Announcement.findByIdAndDelete(req.body.announcement_id).then((deleted) => {
+    res.send({msg: 'deleted announcement'});
+  });
+});
+
 router.get("/tempy", (req, res) => {
   const newA = {
     admin_name: req.user.name,

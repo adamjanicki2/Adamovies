@@ -103,25 +103,22 @@
   border: 2px solid var(--offwhite);
   }
 
-  .button-log{
-    background-color: var(--offwhite);
-    color: #000;
-    margin-top: 5%;
-    border-radius: 8px;
-    font-family: "Orbitron";
-    font-size: 20px;
-    margin-right:0px;
-    margin-left:3px;
-    margin-bottom:12px;
-    padding-top:2px;
-    padding-bottom: 2px;
-    opacity: 1.0;
-}
-
-.button-log:hover{
-    opacity: 0.88;
+  .button-log {
+    font-size: 22px;
+    padding: var(--s) var(--m);
+    color: var(--darkpurple);
+    font-family: "Inter";
+    border: var(--grey) 1px solid;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+    transition: color 0.1s, background 0.1s;
+  }
+  
+  .button-log:hover {
+    background-color: #fff;
+    color: black;
     cursor: pointer;
-}
+  }
 .nav-container {
   display: inline-flex;
   flex-direction: row;
