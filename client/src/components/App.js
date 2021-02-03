@@ -40,12 +40,12 @@ class App extends Component {
   }
 
   handleLogin = (res) => {
-    console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
       if (user.banned){
         window.alert("You've been banned from having an Adamovies account. This means you can no longer comment or have a profile.");
       }else{
+        console.log(`Logged in as ${user.name}`);
         post("/api/update_timestamp").then((success) => {
           this.setState({ userId: user._id , user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root});
           post("/api/initsocket", { socketid: socket.id });

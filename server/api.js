@@ -282,9 +282,11 @@ router.get("/get_all_bannedusers", auth.ensureRoot, (req, res) => {
 router.post("/ban_user", auth.ensureRoot, (req,res) => {
   //req.body.user
   User.findByIdAndDelete(req.body.user._id).then((success) => {
-    const newBanned = new BannedUser({name: req.body.user.name, googleid: req.body.user.googleid});
-    newBanned.save();
-    res.send({msg: 'successfully banned user'});
+    Comment.deleteMany({user_googleid: req.body.user.googleid}).then((success_) => {
+      const newBanned = new BannedUser({name: req.body.user.name, googleid: req.body.user.googleid});
+      newBanned.save();
+      res.send({msg: 'successfully banned user'});
+    });
   })
 });
 
