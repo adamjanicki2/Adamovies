@@ -1,17 +1,6 @@
 import React, { Component } from "react";
 import "./NewInput.css";
 import { post } from "../../utilities";
-
-
-/**
- * New Post is a parent component for all input components
- *
- * Proptypes
- * @param {string} defaultText is the placeholder text
- * @param {string} storyId optional prop, used for comments
- * @param {({storyId, value}) => void} onSubmit: (function) triggered when this post is submitted, takes {storyId, value} as parameters
- */
-
 class NewInput extends Component {
   constructor(props) {
     super(props);
@@ -148,4 +137,71 @@ class SearchBar extends Component {
   }
 }
 
-export { NewComment, SearchBar };
+class NewAnnouncement extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      title_value: "",
+      content_value: "",
+    };
+  }
+
+
+  handleChange = (event) => {
+    this.setState({[event.target.name]: event.target.value});
+  };
+
+  handleSubmit = (event) => {
+    if(this.state.content_value !== '' && this.state.title_value !== ''){
+      event.preventDefault();
+      this.props.onSubmit && this.props.onSubmit(this.state.title_value, this.state.content_value);
+      this.setState({title_value: '', content_value: ''});
+    }
+  };
+
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter' && this.state.content_value !== '' && this.state.title_value !== ''){
+      event.preventDefault();
+      this.props.onSubmit && this.props.onSubmit(this.state.title_value, this.state.content_value);
+      this.setState({title_value: '', content_value: ''});
+    }
+  }
+
+  render() {
+    return (
+      <div className="bar-container">
+      <input
+        type="text"
+        name='title_value'
+        placeholder='Announcement title'
+        value={this.state.title_value}
+        onChange={this.handleChange}
+        onKeyPress={this.handleKeyPress}
+        className="left-input"
+        maxLength="40"
+      />
+      <input
+        type="text"
+        name='content_value'
+        placeholder='Enter announcement here!'
+        value={this.state.content_value}
+        onChange={this.handleChange}
+        onKeyPress={this.handleKeyPress}
+        className="middle-input"
+        maxLength="300"
+      />
+      <button
+        type="submit"
+        className="NewPostInput-button u-pointer"
+        value="Submit"
+        onClick={this.handleSubmit}
+      >
+        Announce
+      </button>
+    </div>
+    );
+  }
+}
+
+export { NewComment, SearchBar, NewAnnouncement };

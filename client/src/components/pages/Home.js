@@ -4,11 +4,14 @@ import "./Home.css";
 import SingleReview from "../modules/SingleReview.js";
 import { get, post } from "../../utilities.js";
 import BottomBar from '../modules/BottomBar.js';
+import Announcements from "../modules/Announcements.js";
+
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       recent_reviews: undefined,
+      recent_announcements: undefined,
     };
   }
 
@@ -17,6 +20,9 @@ class Home extends Component {
     get("/api/recent_reviews").then((reviews) => {
       this.setState({recent_reviews: reviews});
     });
+    get("/api/recent_announcements").then((announcements) => {
+      this.setState({recent_announcements: announcements});
+    })
   }
 
   delete_review = (review_id) => {
@@ -29,8 +35,23 @@ class Home extends Component {
     }
   };
 
+  onSubmit = (title, content) => {
+    if (window.confirm('Click OK to Submit Announcement')){
+        const newAnnouncement = {
+          title: title,
+          content: content,
+        };
+        post("/api/new_announcement", {title: title, content: content}).then((new_announcement) => {
+          let new_recent = [new_announcement].concat(this.state.recent_announcements);
+          this.setState((previous_state) => ({
+            recent_announcements: [new_announcement].concat(previous_state.recent_announcements),
+          }));
+        });
+    }
+  }
+
   render() {
-    if (this.state.recent_reviews === undefined){
+    if (this.state.recent_reviews === undefined || this.state.recent_announcements === undefined){
       return (<div></div>);
     }
     const reviews_list = this.state.recent_reviews.length !== 0? this.state.recent_reviews.map((review) => 
@@ -39,6 +60,8 @@ class Home extends Component {
     return (
       <>
       <div className='bg'>
+        <h1 className="u-pageHeader">Announcements</h1>
+        <Announcements recent_announcements={this.state.recent_announcements} self_id={this.props.userId} admin={this.props.admin} onSubmit={this.onSubmit}/>
         <h1 className="u-pageHeader">Recent Reviews</h1>
         <div className='Reviews-container'>
           {reviews_list}

@@ -3,6 +3,8 @@ const express = require("express");
 const User = require("./models/user");
 const Review = require("./models/review");
 const Comment = require("./models/comment");
+const Announcement = require("./models/announcement");
+//////////////////////
 
 const auth = require("./auth");
 const router = express.Router();
@@ -12,7 +14,6 @@ router.post("/login", auth.login);
 router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
   if (!req.user) {
-    // not logged in
     return res.send({});
   }else{
     User.findOne({googleid: req.user.googleid}).then((existing) => {
@@ -21,10 +22,21 @@ router.get("/whoami", (req, res) => {
   }
 });
 
-
+function convpic(SIZE_, picture){
+  if (picture.split('/')[picture.split('/').length - 2] === 's96-c'){
+    let arr = picture.split('/');
+    arr[arr.length - 2] = arr[arr.length - 2][0]+SIZE_+arr[arr.length - 2].substring(3);
+    return arr.join('/');
+  }else if (picture.split('=')[picture.split('=').length - 1] === 's96-c'){
+    let arr = picture.split('=');
+    arr[arr.length-1] = arr[arr.length - 1][0]+SIZE_+arr[arr.length - 1].substring(3);
+    return arr.join('=');
+  }else{
+    return picture;
+  }
+}
 
 router.post("/initsocket", (req, res) => {
-  // do nothing if user not logged in
   if (req.user) socketManager.addUser(req.user, socketManager.getSocketFromSocketID(req.body.socketid));
   res.send({});
 });
@@ -206,15 +218,47 @@ router.post("/update_user_admin", auth.ensureRoot, (req, res) => {
   });
 });
 
+router.post("/new_announcement", auth.ensureAdmin, (req, res) => {
+  const newAnnouncement = {
+    admin_name: req.user.name,
+    admin_id: req.user._id,
+    admin_username: req.user.username,
+    admin_picture: convpic('18', req.user.picture),
+    title: req.body.title,
+    content: req.body.content,
+    timestamp: Date.now(),
+  };
+  const New_Announcement = new Announcement(newAnnouncement);
+  New_Announcement.save();
+  res.send(newAnnouncement);
+});
+
+router.get("/recent_announcements", (req, res) => {
+  const NUMBER_ANNOUNCEMENTS = 3;
+  Announcement.find({}).sort({timestamp: -1}).then((sorted_announcements) => {
+    const end_index = sorted_announcements.length > NUMBER_ANNOUNCEMENTS? NUMBER_ANNOUNCEMENTS : sorted_announcements.length;
+    res.send(sorted_announcements.slice(0, end_index));
+  });
+});
+
 router.get("/tempy", (req, res) => {
-  // Review.updateMany({}, {season: 0, episode: 0}).then((success) => {
-  //   res.send({mesg: 'success!'});
-  // })
+  const newA = {
+    admin_name: req.user.name,
+    admin_id: req.user._id,
+    admin_username: req.user.username,
+    admin_picture: req.user.picture,
+    title: 'testing 1',
+    content: "TESTING THIS FEATURE!!!!!!!!!!!!!!!!!!!!",
+    timestamp: Date.now(),
+  };
+  const A = new Announcement(newA);
+  A.save()
+  res.send(newA);
 });
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
-  res.status(404).send({ error_msg: "API route not found" });
+  res.status(404).send({ error: "API path not found :(" });
 });
 
 module.exports = router;

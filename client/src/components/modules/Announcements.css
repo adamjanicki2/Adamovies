@@ -1,0 +1,53 @@
+.announcements-container {
+    width: 80%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.single-announcement {
+    width: 80%;
+    background-color: var(--cream);
+    border-radius: 8px;
+    color: black;
+    padding-left: 5%;
+    padding-right: 5%;
+    border: 1px solid var(--offblack);
+    padding-bottom: 8px;
+}
+
+.announcement-pfp {
+    border-radius: 25%;
+    vertical-align: middle;
+    margin-left: 4px;
+    margin-right: 4px;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #000;
+}
+
+.title-elements{
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.announcement-title{
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pfpadminlink:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}

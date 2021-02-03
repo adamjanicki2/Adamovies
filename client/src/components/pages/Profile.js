@@ -26,7 +26,7 @@ class Profile extends Component {
     get("/api/whoami").then((user) => {
       let picture_to_use = null;
       if (user.picture !== null){
-        const SIZE_ = '420'; //dimensions of pfp, change this number to change the size, make sure to change width/h in navbar.css
+        const SIZE_ = '450'; //dimensions of pfp, change this number to change the size, make sure to change width/h in navbar.css
         picture_to_use = convertPicture(SIZE_, user.picture);
       }
       document.title = "Adamovies | My Profile"
