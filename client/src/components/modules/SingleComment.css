@@ -23,13 +23,13 @@
 }
 
 .comment-pfp {
-    border-radius: 50%;
+    border-radius: 25%;
     vertical-align: middle;
     margin-left: 4px;
     margin-right: 4px;
     width: 18px;
     height: 18px;
-    border: 1px solid #fff;
+    border: 2px solid #000;
 }
 
 .comment-username {
