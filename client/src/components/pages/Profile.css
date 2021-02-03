@@ -7,6 +7,7 @@
     margin-left: auto;
     margin-right: auto;
     border: 8px solid var(--offblack);
+    box-shadow: 0 0 40px -10px var(--offblack);
 }
 
 .Input-input {

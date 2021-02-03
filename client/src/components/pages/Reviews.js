@@ -127,7 +127,7 @@ class Reviews extends Component {
       <>
       <div className='bg'>
         <h1 className="u-pageHeader">{this.props.type === 'movie'? 'Movies' : 'TV Shows'}</h1>
-        <div className='centered-elements'><SearchBar defaultText={'Search by title, director, year, MPA rating, or admin'} onSubmit={this.onSearchSubmit}/></div>
+        <div className='centered-elements'><SearchBar defaultText={'Search by title, director, year, MPAA rating, or admin'} onSubmit={this.onSearchSubmit}/></div>
         <div className="centered-elements inputs-top"><select name='sorted_type' className='dropdown-filter' onChange={this.handleChangeSorted}>
           <option value="publishedlowtohigh" selected>Sort By: Published (Old to New)</option>
           <option value="publishedhightolow">Sort By: Published (New to Old)</option>

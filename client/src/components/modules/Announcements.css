@@ -15,8 +15,9 @@
     color: black;
     padding-left: 5%;
     padding-right: 5%;
-    border: 1px solid var(--offblack);
+    border: 1px solid var(--grey);
     padding-bottom: 8px;
+    box-shadow: 0 0 30px -10px var(--darkpurple);
 }
 
 .announcement-pfp {

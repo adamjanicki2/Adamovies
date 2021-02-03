@@ -17,6 +17,7 @@
     padding-right:5%;
     padding-bottom: 1%;
     margin-top: 2%;
+    box-shadow: 0 0 40px -10px  var(--darkpurple);
 }
 .review-containercontainer{
     padding-left: 10%;

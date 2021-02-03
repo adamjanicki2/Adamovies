@@ -156,7 +156,7 @@ class EditReview extends Component {
           />
           </div>
           <div className="Entry-flex">
-            <h2 className='field-text'>MPA Rating</h2>
+            <h2 className='field-text'>MPAA Rating</h2>
             <input
             name='mpa_rating'
             required={true}
@@ -165,7 +165,7 @@ class EditReview extends Component {
             onChange={this.handleChange}
             className="Review-input"
             maxLength='5'
-            placeholder='MPA Rating'
+            placeholder='MPAA Rating'
           />
           </div>
           <div className="Entry-flex">

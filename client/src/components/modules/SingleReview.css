@@ -1,6 +1,7 @@
 .Review-container {
-    border: 3px solid var(--offblack);
-    border-radius: 5%;
+    border: 2px solid var(--offblack);
+    box-shadow: 0 0 30px -10px var(--darkpurple);
+    border-radius: 32px;
     background-color: #fefdf0;
     width: 580px;
     max-height: 600px;
@@ -15,6 +16,7 @@
     border: 5px solid var(--yellow);
     max-width: 90%;
     max-height: 350px;
+    box-shadow: 0 0 50px -10px  #555;
 }
 
 .Title-link{
@@ -22,8 +24,8 @@
 }
 .Title-link:hover{
     cursor: pointer;
-    transform: scale(1.02);
-    transition: all .25s ease-in-out;
+    transform: scale(1.1);
+    transition: all .5s ease-in-out;
 }
 
 .Review-linkcontainer {
