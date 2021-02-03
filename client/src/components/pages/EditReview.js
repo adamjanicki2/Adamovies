@@ -19,6 +19,7 @@ class EditReview extends Component {
       img_url: '',
       trailer_link: '',
       release_year: undefined,
+      runtime: undefined,
     };
   }
 
@@ -35,7 +36,8 @@ class EditReview extends Component {
         review_content: single_review.content,
         img_url: single_review.img_url,
         trailer_link: single_review.trailer_link,
-        release_year: single_review.release_year
+        release_year: single_review.release_year,
+        runtime: single_review.runtime,
       };
       console.log(newState);
       this.setState(newState);
@@ -69,6 +71,7 @@ class EditReview extends Component {
           trailer_link: this.state.trailer_link,
           season: this.state.season? this.state.season : 0,
           episode: this.state.episode? this.state.episode : 0,
+          runtime: this.state.runtime? this.state.runtime : 0,
         };
     
         post('/api/update_review', body).then((response) => {
@@ -123,6 +126,18 @@ class EditReview extends Component {
             onChange={this.handleChange}
             className="Review-input"
             min="0" max="100"
+            placeholder='0'
+          />
+          </div>}
+          {this.state.media_type === 'movie' && <div className="Entry-flex">
+            <h2 className='field-text'>Runtime (min)</h2>
+            <input 
+            type="number"
+            name='runtime'
+            value={this.state.runtime}
+            onChange={this.handleChange}
+            className="Review-input"
+            min="0" max="300"
             placeholder='0'
           />
           </div>}

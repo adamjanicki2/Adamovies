@@ -16,5 +16,6 @@ const review = new mongoose.Schema({
   timestamp: Number,
   img_url: String,
   director: String,
+  runtime: Number, //in minutes
 });
 module.exports = mongoose.model("review", review);

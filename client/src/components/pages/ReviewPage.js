@@ -40,6 +40,13 @@ class ReviewPage extends Component {
     }
   };
 
+  convertRuntime = (minutes) => {
+    const hours = Math.floor(minutes/60);
+    const mini = minutes % 60;
+    const hours_str = hours === 0? '' : hours.toString()+'h';
+    return hours_str + mini.toString()+'m';
+  };
+
   handleDeletion = (commentId) => {
     post("/api/delete_comment", {comment_id: commentId}).then((success) => {
       get("/api/get_comments_for_review", {review_id: this.props.movieId}).then((comments) =>{
@@ -62,7 +69,7 @@ class ReviewPage extends Component {
             {this.state.review.season !== 0 && <h1>Season {this.state.review.season} {this.state.review.episode!==0 && ' Episode '+this.state.review.episode}</h1>}
             <h1>{this.state.review.rating}%</h1>
             <img src={this.state.review.img_url} className='Poster-img'/>
-            <h2>Director: {this.state.review.director}</h2>
+            <h2>{this.state.review.director} {this.state.review.runtime !==0 && ' | '+this.convertRuntime(this.state.review.runtime)}</h2>
             <a className="u-linked" href={this.state.review.trailer_link} target="_blank">View Trailer</a>
         </div>
         <div className="review-containercontainer">

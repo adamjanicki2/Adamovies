@@ -19,6 +19,7 @@ class PostReview extends Component {
       img_url: '',
       trailer_link: '',
       release_year: undefined,
+      runtime: undefined,
     };
   }
   componentDidMount() {
@@ -52,6 +53,7 @@ class PostReview extends Component {
           trailer_link: this.state.trailer_link,
           season: this.state.season? this.state.season : 0,
           episode: this.state.episode? this.state.episode : 0,
+          runtime: this.state.runtime? this.state.runtime : 0,
         };
     
         post('/api/new_review', body).then((response) => {
@@ -110,6 +112,18 @@ class PostReview extends Component {
             onChange={this.handleChange}
             className="Review-input"
             min="0" max="100"
+            placeholder='0'
+          />
+          </div>}
+          {this.state.media_type === 'movie' && <div className="Entry-flex">
+            <h2 className='field-text'>Runtime (min)</h2>
+            <input 
+            type="number"
+            name='runtime'
+            value={this.state.runtime}
+            onChange={this.handleChange}
+            className="Review-input"
+            min="0" max="300"
             placeholder='0'
           />
           </div>}

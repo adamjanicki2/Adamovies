@@ -70,6 +70,7 @@ router.post("/update_review", auth.ensureAdmin, (req, res) => {
     img_url: req.body.img_url,
     episode: parseInt(req.body.episode),
     season: parseInt(req.body.season),
+    runtime: parseInt(req.body.runtime),
   };
   Review.updateOne({_id: req.body.review_id}, data).then((success) => {
     res.send(data);
@@ -151,6 +152,7 @@ router.post("/new_review", auth.ensureAdmin, (req, res) => {
     timestamp: Date.now(),
     episode: parseInt(req.body.episode),
     season: parseInt(req.body.season),
+    runtime: parseInt(req.body.runtime),
   };
   const newReview = new Review(data);
   newReview.save()
@@ -254,18 +256,9 @@ router.post("/delete_announcement", auth.ensureRoot, (req, res)=>{
 });
 
 router.get("/tempy", (req, res) => {
-  const newA = {
-    admin_name: req.user.name,
-    admin_id: req.user._id,
-    admin_username: req.user.username,
-    admin_picture: req.user.picture,
-    title: 'testing 1',
-    content: "TESTING THIS FEATURE!!!!!!!!!!!!!!!!!!!!",
-    timestamp: Date.now(),
-  };
-  const A = new Announcement(newA);
-  A.save()
-  res.send(newA);
+  // Review.updateMany({runtime: undefined}, {runtime: 0}).then((succes) => {
+  //   res.send({msg: 'success'});
+  // })
 });
 
 router.all("*", (req, res) => {
