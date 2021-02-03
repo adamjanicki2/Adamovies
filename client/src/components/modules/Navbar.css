@@ -28,16 +28,6 @@
     font-size: 24px;
     font-weight: 300;
   }
-  .Navbar-profilelink {
-
-  }
-  .Navbar-profilelink:hover {
-    cursor: pointer;
-    transform: scale(1.05);
-    transition: all .25s ease-in-out;
-    color: #fff;
-    opacity: 1.0;
-  }
 
   .Navbar-route {
     color: var(--offwhite);
@@ -147,4 +137,22 @@
   align-items: center;
   padding-left: 1%;
   padding-right: 1%;
+}
+
+.pfpname-container {
+  display:inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+  margin-left: 0;
+}
+
+.pfpname-container:hover{
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: all .25s ease-in-out;
+  color: #fff;
+  opacity: 1.0;
 }

@@ -30,13 +30,13 @@ class Navbar extends Component {
       }
 
       return (
-        <nav className="Navbar-container u-bordering">
-          <div className="nav-container u-bordering">
-            <div className="nav-titlecontainer u-bordering">
+        <nav className="Navbar-container">
+          <div className="nav-container">
+            <div className="nav-titlecontainer">
               <div u-bordering><img src={logo} className='Navbar-logo'/></div>
-              <div className="Navbar-title u-bordering">ADAMOVIES</div>
+              <div className="Navbar-title">ADAMOVIES</div>
             </div>
-            <div className="link-container u-bordering">
+            <div className="link-container">
             <Link to="/" className={this.props.location.pathname === '/'? "Navbar-route Route-clicked":"Navbar-route"}>
                 Home
               </Link>
@@ -57,9 +57,11 @@ class Navbar extends Component {
                 Root
               </Link>}
             </div>
-            <div className="log-container u-bordering">
-              {this.props.userId && <img src={picture_to_use} className='Navbar-pfp'/>}
-              {this.props.userId && <h2 onClick={() => {navigate('/myprofile')}} className="Navbar-name Navbar-profilelink">{this.props.name.split(" ")[0]}</h2>}
+            <div className="log-container">
+              {this.props.userId && <div className='pfpname-container' onClick={() => {navigate('/myprofile')}}>
+                <img src={picture_to_use} className='Navbar-pfp'/>
+                <h2 className="Navbar-name">{this.props.name.split(" ")[0]}</h2>
+              </div>}
               {this.props.userId !== undefined? (
                 <GoogleLogout
                 clientId={GOOGLE_CLIENT_ID}
