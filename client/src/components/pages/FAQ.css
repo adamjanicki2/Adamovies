@@ -4,6 +4,7 @@
     border-radius: 16px;
     background-color: var(--offwhite2);
     border: 1px solid var(--grey);
+    box-shadow: 0 0 30px -10px;
     padding-left: 2.5%;
     padding-right: 2.5%;
 }
@@ -28,10 +29,21 @@
     padding-right: 2.5%;
     padding-top: 10px;
     border: 1px solid var(--grey);
+    box-shadow: 0 0 30px -10px;
 }
 
 .about-text {
     color: var(--offblack);
     font-size: 20px;
     font-weight: 350;
+}
+
+.mail-link{
+    text-decoration: underline;
+    color: var(--offblack);
+}
+
+.mail-link:hover{
+    text-decoration: underline;
+    color: #0269a4;
 }

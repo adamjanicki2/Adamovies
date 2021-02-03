@@ -113,6 +113,7 @@ class Profile extends Component {
           : <h1 className='u-textCenter profile-uname'>{this.state.username}</h1>}</div>
           
           <hr className='profile-line'/>
+          <div className='entire-container'>
           <div className="Bio-container">
           <div className="Profile-subContainer u-textCenter">
             <h1 className="Profile-subTitle">Currently Watching</h1>
@@ -169,6 +170,7 @@ class Profile extends Component {
             >
             {this.state.status? 'Save Changes': 'Edit Profile'}
           </button>
+          </div>
         </div>
         <BottomBar />
       </div>

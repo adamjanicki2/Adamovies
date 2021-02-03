@@ -32,7 +32,7 @@ class About extends Component {
            <br></br><br></br>
           As of the time I am writing this, I am the only admin user, so the amount of reviews I can write is very limited. I've seen a great deal of movies over the years, so it's going to take a while to 
           write a review on the 100s of movies that I've seen. I'm going to prioritize writing reviews on content that I have just finished watching; that way I can write with the content fresh in my head.
-          Also, I'll be writing writing weekly reviews of shows that are currently releasing (for example WandaVision). 
+          Also, I'll be writing writing weekly reviews of shows that are currently releasing (for example WandaVision). If you want to write reviews for the site, feel free to <a className='mail-link' target="_blank" href="mailto:adamoviessite@gmail.com">email me</a> and ask.
           <br></br><br></br>
           That was a lot of text, and I'm sure you didn't read any of it, but in short, thanks for using Adamovies, and I hope you enjoy the site!
         </p>

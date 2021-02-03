@@ -12,6 +12,7 @@
     color: white;
     padding-top: 32px;
     padding-bottom: 32px;
+    box-shadow: 0 0 30px -10px var(--darkpurple);
 }
 
 .Bottom-links:hover{
