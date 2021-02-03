@@ -39,7 +39,6 @@ class EditReview extends Component {
         release_year: single_review.release_year,
         runtime: single_review.runtime,
       };
-      console.log(newState);
       this.setState(newState);
     });
     get("/api/whoami").then((user_) => {
@@ -75,7 +74,6 @@ class EditReview extends Component {
         };
     
         post('/api/update_review', body).then((response) => {
-          console.log(response);
           navigate("/review_success");
         });
       }

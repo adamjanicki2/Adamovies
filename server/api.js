@@ -10,6 +10,9 @@ const auth = require("./auth");
 const router = express.Router();
 const socketManager = require("./server-socket");
 
+const badwords = require('bad-words');
+const filter = new badwords();
+
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
@@ -96,37 +99,42 @@ router.get("/get_comments_for_review", (req, res) => {
 });
 
 router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
-  User.findById(req.user._id).then((existing_user) => {
-    let picture_to_use = null;
-    if (req.user.picture !== null){
-      const SIZE_ = '18';
-      if (req.user.picture.split('/')[req.user.picture.split('/').length - 2] === 's96-c'){
-        let arr = req.user.picture.split('/');
-        arr[arr.length - 2] = arr[arr.length - 2][0]+SIZE_+arr[arr.length - 2].substring(3);
-        picture_to_use = arr.join('/');
-      }else if (req.user.picture.split('=')[req.user.picture.split('=').length - 1] === 's96-c'){
-        let arr = req.user.picture.split('=');
-        arr[arr.length-1] = arr[arr.length - 1][0]+SIZE_+arr[arr.length - 1].substring(3);
-        picture_to_use = arr.join('=');
-      }else{
-        picture_to_use = req.user.picture;
+  if (filter.isProfane(req.body.content)) {
+    res.send({msg: 'bad language!'});
+  }
+  else{
+    User.findById(req.user._id).then((existing_user) => {
+      let picture_to_use = null;
+      if (req.user.picture !== null){
+        const SIZE_ = '18';
+        if (req.user.picture.split('/')[req.user.picture.split('/').length - 2] === 's96-c'){
+          let arr = req.user.picture.split('/');
+          arr[arr.length - 2] = arr[arr.length - 2][0]+SIZE_+arr[arr.length - 2].substring(3);
+          picture_to_use = arr.join('/');
+        }else if (req.user.picture.split('=')[req.user.picture.split('=').length - 1] === 's96-c'){
+          let arr = req.user.picture.split('=');
+          arr[arr.length-1] = arr[arr.length - 1][0]+SIZE_+arr[arr.length - 1].substring(3);
+          picture_to_use = arr.join('=');
+        }else{
+          picture_to_use = req.user.picture;
+        }
       }
-    }
-    const data = {
-      user_name: req.user.name,
-      user_id: req.user._id,
-      user_googleid: req.user.googleid,
-      review_id: req.body.review_id,
-      content: req.body.content,
-      picture: picture_to_use,
-      timestamp: Date.now(),
-      username: existing_user.username,
-    };
-    const newComment = new Comment(data);
-    newComment.save();
-    socketManager.getIo().emit(req.body.review_id, data);
-    res.send(data);
-  });
+      const data = {
+        user_name: req.user.name,
+        user_id: req.user._id,
+        user_googleid: req.user.googleid,
+        review_id: req.body.review_id,
+        content: req.body.content,
+        picture: picture_to_use,
+        timestamp: Date.now(),
+        username: existing_user.username,
+      };
+      const newComment = new Comment(data);
+      newComment.save();
+      socketManager.getIo().emit(req.body.review_id, data);
+      res.send(data);
+    });
+  }
 });
 
 router.post("/update_timestamp", (req, res) => {
@@ -198,6 +206,16 @@ router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
   }
     
   
+});
+
+router.post("/is_badwords", (req, res) => {
+  let is_bad = false;
+  for (let i = 0; i<req.body.text.length; i++){
+    if (filter.isProfane(req.body.text[i])){
+      is_bad = true;
+    }
+  }
+  res.send({is_bad: is_bad});
 });
 
 router.get("/recent_reviews", (req, res) => {

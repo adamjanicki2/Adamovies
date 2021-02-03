@@ -72,13 +72,19 @@ class Profile extends Component {
   
   buttonClicked = () => {
     if (this.state.info_updated && this.state.status){
-      post("/api/update_profile", {bio: this.state.bio, updated_uname: this.state.update_uname, googleid: this.state.googleid, new_username: this.state.username, new_m: this.state.fav_mov, new_s: this.state.fav_show, new_c: this.state.currently_watching}).then((updated)=>{
-        if (updated.is_valid){
-          this.setState({status: !this.state.status, info_updated: false});
+      post("/api/is_badwords", {text: [this.state.bio,  this.state.username, this.state.fav_mov, this.state.fav_show, this.state.currently_watching]}).then((result) => {
+        if(result.is_bad){
+          window.alert("The use of bad words is not permitted!");
         }else{
-          window.alert("That username is already taken!");
+          post("/api/update_profile", {bio: this.state.bio, updated_uname: this.state.update_uname, googleid: this.state.googleid, new_username: this.state.username, new_m: this.state.fav_mov, new_s: this.state.fav_show, new_c: this.state.currently_watching}).then((updated)=>{
+            if (updated.is_valid){
+              this.setState({status: !this.state.status, info_updated: false});
+            }else{
+              window.alert("That username is already taken!");
+            }
+            
+          });
         }
-        
       });
     }
     else{

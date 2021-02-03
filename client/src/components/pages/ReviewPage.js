@@ -7,6 +7,7 @@ import "../modules/SingleReview.css";
 import { NewComment } from "../modules/NewInput.js";
 import SingleComment from "../modules/SingleComment.js";
 import { navigate } from "@reach/router";
+import BottomBar from "../modules/BottomBar.js";
 
 class ReviewPage extends Component {
   constructor(props) {
@@ -92,6 +93,7 @@ class ReviewPage extends Component {
         </div>
         </div>
         </div>
+        <BottomBar/>
       </>
     );
   }

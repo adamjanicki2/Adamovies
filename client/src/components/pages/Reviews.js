@@ -112,7 +112,7 @@ class Reviews extends Component {
 
   onSearchSubmit = (searchQuery) => {
     this.updateQuery(searchQuery);
-    console.log('Searched: '+searchQuery);
+    // console.log('Searched: '+searchQuery);
   };
 
   render() {
