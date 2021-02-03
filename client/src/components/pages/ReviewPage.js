@@ -70,7 +70,7 @@ class ReviewPage extends Component {
             {this.state.review.season !== 0 && <h1>Season {this.state.review.season} {this.state.review.episode!==0 && ' Episode '+this.state.review.episode}</h1>}
             <h1>{this.state.review.rating}%</h1>
             <img src={this.state.review.img_url} className='Poster-img'/>
-            <h2>{this.state.review.director} {this.state.review.runtime !==0 && ' | '+this.convertRuntime(this.state.review.runtime)}</h2>
+            <h2>{this.state.review.director} | {this.state.review.mpa_rating} {this.state.review.runtime !==0 && ' | '+this.convertRuntime(this.state.review.runtime)}</h2>
             <a className="u-linked" href={this.state.review.trailer_link} target="_blank">View Trailer</a>
         </div>
         <div className="review-containercontainer">

@@ -20,6 +20,7 @@ class PostReview extends Component {
       trailer_link: '',
       release_year: undefined,
       runtime: undefined,
+      mpa_rating: '',
     };
   }
   componentDidMount() {
@@ -34,7 +35,7 @@ class PostReview extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
   checkFilled = () => {
-    return !this.state.title || !this.state.media_type || !this.state.director || !this.state.review_content || !this.state.rating || !this.state.img_url || !this.state.trailer_link || !this.state.release_year;
+    return !this.state.title || !this.state.media_type || !this.state.director || !this.state.review_content || !this.state.rating || !this.state.img_url || !this.state.mpa_rating || !this.state.trailer_link || !this.state.release_year;
   };
 
   handleSubmit = () => {
@@ -54,6 +55,7 @@ class PostReview extends Component {
           season: this.state.season? this.state.season : 0,
           episode: this.state.episode? this.state.episode : 0,
           runtime: this.state.runtime? this.state.runtime : 0,
+          mpa_rating: this.state.mpa_rating,
         };
     
         post('/api/new_review', body).then((response) => {
@@ -138,6 +140,19 @@ class PostReview extends Component {
             className="Review-input"
             min="0" max="100"
             placeholder='0'
+          />
+          </div>
+          <div className="Entry-flex">
+            <h2 className='field-text'>MPA Rating</h2>
+            <input
+            name='mpa_rating'
+            required={true}
+            type="text"
+            value={this.state.mpa_rating}
+            onChange={this.handleChange}
+            className="Review-input"
+            maxLength='20'
+            placeholder='MPA Rating'
           />
           </div>
           <div className="Entry-flex">

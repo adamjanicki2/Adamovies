@@ -69,6 +69,7 @@ class Reviews extends Component {
       review.title.toLowerCase().split(' ').includes(lower) ||
       review.director.toLowerCase() === lower ||
       review.director.toLowerCase().split(' ').includes(lower) ||
+      review.mpa_rating.toLowerCase() === lower ||
       review.release_year.toString() === newQuery ||
       review.admin_username.toLowerCase() === lower);
     this.setState({reviews_to_display: this.sortReviews(newReviews_list, this.state.sort_option)});
@@ -126,7 +127,7 @@ class Reviews extends Component {
       <>
       <div className='bg'>
         <h1 className="u-pageHeader">{this.props.type === 'movie'? 'Movies' : 'TV Shows'}</h1>
-        <div className='centered-elements'><SearchBar defaultText={'Search by title, director, year, or admin'} onSubmit={this.onSearchSubmit}/></div>
+        <div className='centered-elements'><SearchBar defaultText={'Search by title, director, year, MPA rating, or admin'} onSubmit={this.onSearchSubmit}/></div>
         <div className="centered-elements inputs-top"><select name='sorted_type' className='dropdown-filter' onChange={this.handleChangeSorted}>
           <option value="publishedlowtohigh" selected>Sort By: Published (Old to New)</option>
           <option value="publishedhightolow">Sort By: Published (New to Old)</option>

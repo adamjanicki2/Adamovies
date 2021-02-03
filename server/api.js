@@ -74,6 +74,7 @@ router.post("/update_review", auth.ensureAdmin, (req, res) => {
     episode: parseInt(req.body.episode),
     season: parseInt(req.body.season),
     runtime: parseInt(req.body.runtime),
+    mpa_rating: req.body.mpa_rating,
   };
   Review.updateOne({_id: req.body.review_id}, data).then((success) => {
     res.send(data);
@@ -161,6 +162,7 @@ router.post("/new_review", auth.ensureAdmin, (req, res) => {
     episode: parseInt(req.body.episode),
     season: parseInt(req.body.season),
     runtime: parseInt(req.body.runtime),
+    mpa_rating: req.body.mpa_rating,
   };
   const newReview = new Review(data);
   newReview.save()
@@ -297,9 +299,9 @@ router.post("/unban_user", auth.ensureRoot, (req, res)=> {
 });
 
 router.get("/tempy", (req, res) => {
-  // const newBanned = new BannedUser({name: req.user.name, googleid: req.user.googleid});
-  // newBanned.save();
-  // res.send({success: 'successfully banned '+req.user.username});
+  // Review.updateMany({mpa_rating: undefined}, {mpa_rating: 'PG-13'}).then((s) => {
+  //   res.send({msg: 'success!'});
+  // })
 });
 
 router.all("*", (req, res) => {

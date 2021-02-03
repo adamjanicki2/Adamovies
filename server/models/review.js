@@ -17,5 +17,7 @@ const review = new mongoose.Schema({
   img_url: String,
   director: String,
   runtime: Number, //in minutes
+  mpa_rating: String,
+
 });
 module.exports = mongoose.model("review", review);
