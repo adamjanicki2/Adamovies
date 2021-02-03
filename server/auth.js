@@ -5,7 +5,7 @@ const socketManager = require("./server-socket");
 
 const CLIENT_ID = "577990730068-40v41c82e6bd14pj40khj7f2nbqhnasu.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
-
+const BannedUser = require("./models/banneduser");
 function verify(token) {
   return client
     .verifyIdToken({
@@ -18,34 +18,43 @@ function verify(token) {
 // gets user from DB, or makes a new account if it doesn't exist yet
 function getOrCreateUser(user) {
   // the "sub" field means "subject", which is a unique identifier for each user
-  update_timestamp(user);
-  return User.findOne({ googleid: user.sub }).then((existingUser) => {
-    if (existingUser) return existingUser;
-
-    const newUser = new User({
-      name: user.name,
-      googleid: user.sub,
-      picture: user.picture,
-      admin: false,
-      root: false,
-      currently_watching: 'Not Set',
-      favorite_movie: 'Not Set',
-      favorite_show: 'Not Set',
-      last_login: Date.now(),
-      username: user.name,
-      bio: "Happy Adamovies user!"
-    });
-    return newUser.save();
-  });
+  return BannedUser.findOne({ googleid: user.sub}).then((banned_user) => {
+    if (banned_user){
+      return {banned: true};
+    }else{
+      return User.findOne({ googleid: user.sub }).then((existingUser) => {
+        if (existingUser) return existingUser;
+    
+        const newUser = new User({
+          name: user.name,
+          googleid: user.sub,
+          picture: user.picture,
+          admin: false,
+          root: false,
+          currently_watching: 'Not Set',
+          favorite_movie: 'Not Set',
+          favorite_show: 'Not Set',
+          last_login: Date.now(),
+          username: user.name,
+          bio: "Happy Adamovies user!"
+        });
+        return newUser.save();
+      });
+    }
+  })
 }
 
 function login(req, res) {
   verify(req.body.token)
     .then((user) => getOrCreateUser(user))
     .then((user) => {
-      update_timestamp(user);
-      req.session.user = user;
-      res.send(user);
+      if (user.banned){
+        console.log('user banned');
+        res.send({banned: true});
+      }else{
+        req.session.user = user;
+        res.send(user);
+      }
     })
     .catch((err) => {
       console.log(`Failed to log in: ${err}`);

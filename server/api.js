@@ -5,7 +5,7 @@ const Review = require("./models/review");
 const Comment = require("./models/comment");
 const Announcement = require("./models/announcement");
 //////////////////////
-
+const BannedUser = require("./models/banneduser");
 const auth = require("./auth");
 const router = express.Router();
 const socketManager = require("./server-socket");
@@ -227,7 +227,7 @@ router.get("/recent_reviews", (req, res) => {
 });
 
 router.get("/get_all_other_users", auth.ensureRoot, (req, res) => {
-  User.find({_id: {$ne: req.user._id}}, {username: 1, name: 1, admin: 1, picture: 1}).then((all_users) => {
+  User.find({_id: {$ne: req.user._id}}, {username: 1, name: 1, admin: 1, picture: 1, googleid: 1}).then((all_users) => {
     res.send(all_users);
   });
 })
@@ -273,10 +273,31 @@ router.post("/delete_announcement", auth.ensureRoot, (req, res)=>{
   });
 });
 
+router.get("/get_all_bannedusers", auth.ensureRoot, (req, res) => {
+  BannedUser.find({}).then((users) => {
+    res.send(users);
+  });
+});
+
+router.post("/ban_user", auth.ensureRoot, (req,res) => {
+  //req.body.user
+  User.findByIdAndDelete(req.body.user._id).then((success) => {
+    const newBanned = new BannedUser({name: req.body.user.name, googleid: req.body.user.googleid});
+    newBanned.save();
+    res.send({msg: 'successfully banned user'});
+  })
+});
+
+router.post("/unban_user", auth.ensureRoot, (req, res)=> {
+  BannedUser.deleteOne({googleid: req.body.user.googleid}).then((success) => {
+    res.send({msg: 'success'});
+  });
+});
+
 router.get("/tempy", (req, res) => {
-  // Review.updateMany({runtime: undefined}, {runtime: 0}).then((succes) => {
-  //   res.send({msg: 'success'});
-  // })
+  // const newBanned = new BannedUser({name: req.user.name, googleid: req.user.googleid});
+  // newBanned.save();
+  // res.send({success: 'successfully banned '+req.user.username});
 });
 
 router.all("*", (req, res) => {

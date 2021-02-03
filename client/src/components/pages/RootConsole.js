@@ -4,6 +4,7 @@ import "./RootConsole.css";
 import "../modules/SingleComment.css";
 import { get, post, convertPicture, convertDate } from "../../utilities.js";
 import { navigate } from '@reach/router';
+import BottomBar from '../modules/BottomBar.js';
 
 class RootConsole extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class RootConsole extends Component {
     this.state = {
       all_users: undefined,
       all_announcements: undefined,
+      all_bannedusers: undefined,
     };
   }
 
@@ -24,6 +26,9 @@ class RootConsole extends Component {
       this.setState({all_announcements: all_announcements});
     });
     
+    get("/api/get_all_bannedusers").then((all_banned) => {
+      this.setState({all_bannedusers: all_banned});
+    })
   }
 
   navigateProfile = (admin_id, self_id) => {
@@ -53,37 +58,33 @@ class RootConsole extends Component {
     }
   }
 
+  banUser = (user, index) => {
+    const msg = "Click OK to ban "+user.username;
+    if (window.confirm(msg)){
+      const new_all_users =  this.state.all_users.slice(0, index).concat(this.state.all_users.slice(index+1, this.state.all_users.length));
+      const new_banned_users = [{name: user.name, googleid: user.googleid}].concat(this.state.all_bannedusers);
+      this.setState({all_users: new_all_users, all_bannedusers: new_banned_users});
+      post("/api/ban_user", {user: user});
+    }
+  };
+
+  unbanUser = (user, index) => {
+    const msg = "Click OK to unban "+user.name;
+    if (window.confirm(msg)){
+      const new_banned =  this.state.all_bannedusers.slice(0, index).concat(this.state.all_bannedusers.slice(index+1, this.state.all_bannedusers.length));
+      this.setState({all_bannedusers: new_banned});
+      post("/api/unban_user", {user: user});
+    }
+  };
+
   render() {
-    if (!this.state.all_users || !this.props.root || !this.state.all_announcements){
+    if (!this.state.all_users || !this.props.root || !this.state.all_announcements || !this.state.all_bannedusers){
         return (<div></div>);
     }
     return (
       <div className='bg'>
-        <h1 className='u-pageHeader u-textCenter'>Root Console</h1>
+        <h1 className='u-pageHeader u-textCenter'>Announcements</h1>
         <div className="table-container">
-        <table className='styled-table'>
-        <thead >
-          <tr>
-            <th className='tabletitletext'>Name</th>
-            <th className='tabletitletext'>Username</th>
-            <th className='tabletitletext'>Admin</th>
-            <th className='tabletitletext'>Make Admin</th>
-          </tr>
-          </thead>
-        <tbody>
-          {this.state.all_users.map((user, i) => 
-          <tr>
-            <td className='table-cell'onClick={()=>{navigate(`/user/${user._id}`)}}><img src={convertPicture('20', user.picture)} className='root-pfp'/> {user.name}</td>
-            <td>{user.username}</td>
-            <td>{user.admin.toString()}</td>
-            <td className='table-cell' onClick={()=>{this.changeAdmin(user, i)}}>{user.admin? 'Disable Admin' : 'Enable Admin'}</td>
-        </tr>
-    )}
-    </tbody>
-    </table>
-    </div>
-
-    <div className="table-container">
         <table className='styled-table'>
         <thead >
           <tr>
@@ -105,6 +106,52 @@ class RootConsole extends Component {
     </tbody>
     </table>
     </div>
+      <h1 className='u-pageHeader u-textCenter'>Users</h1>
+        <div className="table-container">
+        <table className='styled-table'>
+        <thead >
+          <tr>
+            <th className='tabletitletext'>Name</th>
+            <th className='tabletitletext'>Username</th>
+            <th className='tabletitletext'>Make Admin</th>
+            <th className='tabletitletext'>Ban User</th>
+          </tr>
+          </thead>
+        <tbody>
+          {this.state.all_users.map((user, i) => 
+          <tr>
+            <td className='table-cell'onClick={()=>{navigate(`/user/${user._id}`)}}><img src={convertPicture('20', user.picture)} className='root-pfp'/> {user.name}</td>
+            <td>{user.username}</td>
+            <td className='table-cell' onClick={()=>{this.changeAdmin(user, i)}}>{user.admin? 'Disable Admin' : 'Enable Admin'}</td>
+            <td className='table-cell' onClick={()=>{this.banUser(user, i)}}>Ban {user.username}</td>
+        </tr>
+    )}
+    </tbody>
+    </table>
+    </div>
+    <h1 className='u-pageHeader u-textCenter'>Banned Users</h1>
+    <div className="table-container">
+        <table className='styled-table'>
+        <thead >
+          <tr>
+            <th className='tabletitletext'>Name</th>
+            <th className='tabletitletext'>Google ID</th>
+            <th className='tabletitletext'>Action</th>
+          </tr>
+          </thead>
+        <tbody>
+          {this.state.all_bannedusers.map((user, i) => 
+          <tr>
+            <td>{user.name}</td>
+            <td>{user.googleid}</td>
+            <td className='table-cell' onClick={()=>{this.unbanUser(user, i)}}>Unban {user.name}</td>
+        </tr>
+    )}
+    </tbody>
+    </table>
+    </div>
+
+    <BottomBar/>
       </div>
     );
   }
