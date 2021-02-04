@@ -59,6 +59,12 @@ class Reviews extends Component {
     else if (newSort === 'ratinghightolow'){
       return [...reviews].sort((a, b) => a.rating > b.rating? -1: 1);
     }
+    else if (newSort === 'likeslowtohigh'){
+      return [...reviews].sort((a, b) => a.likes > b.likes? 1: -1);
+    }
+    else if (newSort === 'likeshightolow'){
+      return [...reviews].sort((a, b) => a.likes > b.likes? -1: 1);
+    }
   };
 
   updateQuery = (newQuery) => {
@@ -103,6 +109,12 @@ class Reviews extends Component {
     else if (newSort === 'ratinghightolow'){
       updatedSort = this.state.reviews_to_display.sort((a, b) => a.rating > b.rating? -1: 1);
     }
+    else if (newSort === 'likeslowtohigh'){
+      updatedSort = this.state.reviews_to_display.sort((a, b) => a.likes > b.likes? 1: -1);
+    }
+    else if (newSort === 'likeshightolow'){
+      updatedSort = this.state.reviews_to_display.sort((a, b) => a.likes > b.likes? -1: 1);
+    }
     this.setState({reviews_to_display: updatedSort});
   };
 
@@ -121,7 +133,7 @@ class Reviews extends Component {
       return (<div></div>);
     }
     const reviews_list = this.state.reviews_to_display.length !== 0? this.state.reviews_to_display.map((review) => 
-      <SingleReview review={review} admin={this.props.admin} root={this.props.root} delete_review={this.delete_review}/>
+      <SingleReview review={review} admin={this.props.admin} root={this.props.root} delete_review={this.delete_review} unliked={this.props.userId && !review.liked_users.includes(this.props.userId)}/>
     ) : <h1 className='u-textCenter No-reviews'>No Reviews!</h1>;
     return (
       <>
@@ -131,12 +143,15 @@ class Reviews extends Component {
         <div className="centered-elements inputs-top"><select name='sorted_type' className='dropdown-filter' onChange={this.handleChangeSorted}>
           <option value="alphabetically" selected>Sort By: Title (Alphabetically)</option>
           <option value="reversealphabetically">Sort By: Title (Reverse Alphabetically)</option>
+          <option value="ratinglowtohigh">Sort By: Rating (Low to High)</option>
+          <option value="ratinghightolow">Sort By: Rating (High to Low)</option>
+          <option value="likeslowtohigh">Sort By: Likes (Low to High)</option>
+          <option value="likeshightolow">Sort By: Likes (High to Low)</option>
           <option value="publishedlowtohigh">Sort By: Published (Old to New)</option>
           <option value="publishedhightolow">Sort By: Published (New to Old)</option>
           <option value="releaselowtohigh">Sort By: Release (Old to New)</option>
           <option value="releasehightolow">Sort By: Release (New to Old)</option>
-          <option value="ratinglowtohigh">Sort By: Rating (Low to High)</option>
-          <option value="ratinghightolow">Sort By: Rating (High to Low)</option>
+          
           
 
         </select></div>

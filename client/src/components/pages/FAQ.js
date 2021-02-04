@@ -13,6 +13,7 @@ class FAQ extends Component {
         'How do I change my username?',
         'After I sign in, will other users be able to see my first and last name or other private information?',
         'How do I post a review?',
+        "Why can't I unlike a review?",
         'Is Adamovies fun?',
       ],
       answers: [
@@ -21,7 +22,8 @@ class FAQ extends Component {
         'After signing in, you can click on your name in the top right corner, which will take you to your profile page, where you can change your username',
         "The only information other users can see is your username, profile picture, your favorite show, your favorite movie, your currently watching, and your bio. Your username is set to your name by default, but changing it will ensure no users can view your name, as updating your username will also update your username in any of the comment you've written.",
         "Adamovies uses an admin system, so only hand-picked users are able to post reviews. If you gain my trust through comments, I just might make you a site admin though!",
-        'I think it is! I tried to design this site as a fun place for reading and talking about movies and shows!'
+        "Because it would hurt my feelings! No, so due to a little quirk with the database, enabling users to unlike a review would result in inefficient runtimes.",
+        'I think it is! I tried to design this site as a fun place for reading and talking about movies and shows!',
 
       ],
     }
