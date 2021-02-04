@@ -86,3 +86,29 @@
     cursor: pointer;
     text-decoration: underline;
 }
+.title-container{
+    margin-top: -20px;
+}
+
+.back-container {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-right: auto;
+    margin-left: 2%;
+    margin-top: 1%;
+}
+
+.back-container:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all .3s ease-in-out;
+}
+
+.no-margin{
+    margin: 0 0 0 4px;
+    padding: 0 0 0 0;
+    font-weight: 400;
+    color: black;
+}

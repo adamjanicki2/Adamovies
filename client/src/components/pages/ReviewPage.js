@@ -8,7 +8,8 @@ import { NewComment } from "../modules/NewInput.js";
 import SingleComment from "../modules/SingleComment.js";
 import { navigate } from "@reach/router";
 import BottomBar from "../modules/BottomBar.js";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 class ReviewPage extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +21,7 @@ class ReviewPage extends Component {
   }
 
   componentDidMount() {
-    
+    console.log(this.props.pathname);
     get(`/api/get_single_review`, { movieId: this.props.movieId }).then((movie) => {
       get('/api/get_comments_for_review', { review_id: movie._id}).then((comments) => {
         document.title = "Adamovies | "+movie.title + " ("+movie.release_year+")"
@@ -65,8 +66,9 @@ class ReviewPage extends Component {
     ) : <div>No comments on this review!</div>
     return (
       <>
+      <div className='back-container' onClick={()=>{history.back()}}><FontAwesomeIcon icon={faChevronLeft} size={'2x'}/><h2 className='no-margin'>Back</h2></div>
         <div className='u-textCenter'>
-            <h1 className='u-pageHeader'>{this.state.review.title} ({this.state.review.release_year})</h1>
+            <div className='title-container'><h1 className='u-pageHeader'>{this.state.review.title} ({this.state.review.release_year})</h1></div>
             {this.state.review.season !== 0 && <h1>Season {this.state.review.season} {this.state.review.episode!==0 && ' Episode '+this.state.review.episode}</h1>}
             <h1>{this.state.review.rating}%</h1>
             <img src={this.state.review.img_url} className='Poster-img'/>
