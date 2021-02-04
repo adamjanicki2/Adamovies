@@ -67,6 +67,8 @@ class ReviewPage extends Component {
     return (
       <>
       <div className='back-container' onClick={()=>{history.back()}}><FontAwesomeIcon icon={faChevronLeft} size={'2x'}/><h2 className='no-margin'>Back</h2></div>
+      <div className="review-containercontainer">
+      <div className='review-container'>
         <div className='u-textCenter'>
             <div className='title-container'><h1 className='u-pageHeader'>{this.state.review.title} ({this.state.review.release_year})</h1></div>
             {this.state.review.season !== 0 && <h1>Season {this.state.review.season} {this.state.review.episode!==0 && ' Episode '+this.state.review.episode}</h1>}
@@ -75,8 +77,8 @@ class ReviewPage extends Component {
             <h2>{this.state.review.director} | {this.state.review.mpa_rating} {this.state.review.runtime !==0 && ' | '+this.convertRuntime(this.state.review.runtime)}</h2>
             <div><a className="u-linked" href={this.state.review.trailer_link} target="_blank">View Trailer</a> {this.props.admin && <a className="u-linked u-pointer" onClick={()=>{navigate(`/edit_review/${this.state.review._id}`)}}>Edit Review</a>}</div>
         </div>
-        <div className="review-containercontainer">
-        <div className='review-container'>
+        <hr className='review-line'/>
+        
             <div className="Review-headercontainer">
               <div className='review-titleentry'><h1 className='Review-subTitle'>{convertDate(this.state.review.timestamp)}</h1></div>
               <div className='review-titleentry'><h1 className='Review-subTitle admin-name' onClick={() => {this.navigateProfile(this.state.review.admin_id, this.props.userId)}}>{this.state.review.admin_username}</h1></div>

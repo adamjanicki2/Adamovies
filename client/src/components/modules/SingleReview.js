@@ -9,11 +9,13 @@ class SingleReview extends Component {
 
   render() {
     return (
-      <div className="Review-container u-textCenter">
-        <h1 className='Title-link' onClick={() => {navigate(`/review/${this.props.review._id}`)}}>{this.props.review.title} ({this.props.review.release_year})</h1>
+      <div className="Review-container u-textCenter Title-link">
+        <div className='u-pointer' onClick={() => {navigate(`/review/${this.props.review._id}`)}}>
+        <h1>{this.props.review.title} ({this.props.review.release_year})</h1>
         {this.props.review.season !== 0 && <h2>Season {this.props.review.season} {this.props.review.episode !== 0? `Episode ${this.props.review.episode}` : ""}</h2>}
-        <img src={this.props.review.img_url} className='Poster-img u-pointer' onClick={() => {navigate(`/review/${this.props.review._id}`)}}/>
+        <img src={this.props.review.img_url} className='Poster-img'/>
         <h2>{convertDate(this.props.review.timestamp).split(' ')[0]} | {this.props.review.rating}%</h2>
+        </div>
         <div className='Review-linkcontainer'>
         <Link to={`/review/${this.props.review._id}`} className="u-linked">
             Read {this.props.review.admin_username}'s Review
