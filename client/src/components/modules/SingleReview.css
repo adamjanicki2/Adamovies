@@ -46,3 +46,22 @@
     text-decoration: none;
     color: (--offblack);
 }
+
+.movie-info{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-heart{
+    margin-right: 4px;
+    color: var(--heartred);
+
+}
+
+.bar-spacing{
+    margin-left: 8px;
+    margin-right: 8px;
+}

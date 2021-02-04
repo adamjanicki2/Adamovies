@@ -18,6 +18,7 @@ const review = new mongoose.Schema({
   director: String,
   runtime: Number, //in minutes
   mpa_rating: String,
-
+  liked_users: Array,
+  likes: Number,
 });
 module.exports = mongoose.model("review", review);

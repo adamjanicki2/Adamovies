@@ -112,3 +112,38 @@
     font-weight: 400;
     color: black;
 }
+
+.liked-heart{
+    color: var(--heartred);
+}
+
+.unliked-heart{
+    color: var(--grey);
+}
+
+.unliked-heart:hover{
+    color: var(--heartpink);
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: all .25s ease-in-out;
+}
+
+.like-container{
+    display: inline-flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--offwhite);
+    border-radius: 8px;
+    padding: var(--s);
+}
+.likes-text{
+    margin: 0 0 0 8px;
+    padding: 0 0 0 0;
+
+}
+
+.no-top{
+    padding-top:0;
+    margin-top: 8px;
+}

@@ -64,6 +64,13 @@ router.post("/delete_review", auth.ensureRoot, (req, res) => {
   });
 });
 
+router.post("/like_review", auth.ensureLoggedIn, (req, res) => {
+  //req.body.current_user_list, req.body.new_likes
+  Review.updateOne({_id: req.body.review_id}, {likes: req.body.new_likes, liked_users:req.body.current_user_list.concat([req.user._id])}).then((success) => {
+    res.send({msg: 'liked'});
+  });
+});
+
 router.post("/update_review", auth.ensureAdmin, (req, res) => {
   const data = {
     content: req.body.content,
@@ -92,6 +99,7 @@ router.get("/get_reviews", (req, res) => {
 router.get("/get_single_review", (req, res) => {
   Review.findById(req.query.movieId).then((result) => {
     res.send(result);
+    console.log(result);
   });
 });
 
@@ -166,6 +174,8 @@ router.post("/new_review", auth.ensureAdmin, (req, res) => {
     season: parseInt(req.body.season),
     runtime: parseInt(req.body.runtime),
     mpa_rating: req.body.mpa_rating,
+    liked_users: [],
+    likes: 0,
   };
   const newReview = new Review(data);
   newReview.save()
@@ -318,7 +328,7 @@ router.get("/comments_since_timestamp", auth.ensureRoot, (req, res) => {
 });
 
 router.get("/tempy", (req, res) => {
-  // Review.updateMany({mpa_rating: undefined}, {mpa_rating: 'PG-13'}).then((s) => {
+  // Review.updateMany({}, {liked_users: []}).then((s) => {
   //   res.send({msg: 'success!'});
   // })
 });

@@ -10,6 +10,7 @@ import { navigate } from "@reach/router";
 import BottomBar from "../modules/BottomBar.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import {  faHeart } from '@fortawesome/free-solid-svg-icons';
 class ReviewPage extends Component {
   constructor(props) {
     super(props);
@@ -17,15 +18,16 @@ class ReviewPage extends Component {
       review: undefined,
       comments: undefined,
       user: undefined,
+      liked_review: undefined,
     };
   }
 
   componentDidMount() {
-    console.log(this.props.pathname);
     get(`/api/get_single_review`, { movieId: this.props.movieId }).then((movie) => {
       get('/api/get_comments_for_review', { review_id: movie._id}).then((comments) => {
         document.title = "Adamovies | "+movie.title + " ("+movie.release_year+")"
-          this.setState({review: movie, comments: comments});
+        // console.log(movie);
+        this.setState({review: movie, comments: comments, liked_review: movie.liked_users.includes(this.props.userId)});
       });
     });
     socket.on(this.props.movieId, (data) => {
@@ -56,6 +58,17 @@ class ReviewPage extends Component {
       })
     })
   };
+  
+  likeReview = (review_id, has_liked, user_id) => {
+    //req.body.current_user_list, req.body.new_likes
+    if (!has_liked && user_id){
+      post("/api/like_review", {review_id: review_id, current_user_list: this.state.review.liked_users, new_likes: this.state.review.likes+1}).then((success) => {
+        let review_copy = this.state.review;
+        review_copy.likes = this.state.review.likes+1;
+        this.setState({liked_review: true, review: review_copy});
+      });
+    }
+  };
 
   render() {
     if (!this.state.review) {
@@ -84,7 +97,8 @@ class ReviewPage extends Component {
               <div className='review-titleentry'><h1 className='Review-subTitle admin-name' onClick={() => {this.navigateProfile(this.state.review.admin_id, this.props.userId)}}>{this.state.review.admin_username}</h1></div>
               <div className='review-titleentry'><h1 className='Review-subTitle'>Adameter: {this.state.review.rating}%</h1></div>
             </div>
-            <h2>Review: </h2>
+            <div className='like-container'><FontAwesomeIcon icon={faHeart} size={'2x'} className={this.state.liked_review || !this.props.userId? "liked-heart" : 'unliked-heart'} onClick={()=>{this.likeReview(this.state.review._id, this.state.liked_review, this.props.userId)}}/><h2 className='likes-text'>{this.state.review.likes}</h2></div>
+            <h2 className='no-top'>Review: </h2>
             
         <p className='review-content'>
             {this.state.review.content}
