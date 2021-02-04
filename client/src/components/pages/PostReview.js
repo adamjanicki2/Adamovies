@@ -85,7 +85,7 @@ class PostReview extends Component {
          <br></br>2. Your rating for the review must be between 0 and 100 inclusive.
          <br></br>3. MPAA rating is something like PG-13, R, TV-14, etc.
          <br></br>4. When finding an image to use for the Image URL, make sure you can visit the image URL address before copy and pasting it. Sometimes they don't work.
-         <br></br>5. Make sure the image if of a reasonable size. Don't insert a 2000x1000 image, instead go for something less than 800px.
+         <br></br>5. Make sure the image if of a reasonable size. Don't insert a 2000x1000 image, instead go for something less than 800px. The code will scale the images to fit the reviews, but it'll just be lower resolution.
          <br></br>6. Have fun writing your review!!
         </p>
         <div className="centered-elements Adamovies-logo180"><img className="Adamovies-logo180bordering" src={logo}/></div>
@@ -201,7 +201,7 @@ class PostReview extends Component {
             value={this.state.img_url}
             onChange={this.handleChange}
             className="Review-input"
-            maxLength='100'
+            maxLength='500'
             placeholder='Image URL'
           />
           </div>
@@ -225,7 +225,7 @@ class PostReview extends Component {
             required={true}
             maxLength='10000'
             value={this.state.review_content}
-            className="Review-input"
+            className="Content-input"
             placeholder="Enter your new review here!"
             onChange={this.handleChange}
             rows='16'

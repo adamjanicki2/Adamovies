@@ -6,7 +6,7 @@
     justify-content: center;
     padding: 2%;
     border-radius: 48px;
-    background-color: var(--darkpurple);
+    background-color: var(--cream);
     box-shadow: 0 0 30px -10px var(--offblack);
 }
 .Post-flex {
@@ -96,5 +96,15 @@
   }
 
   .field-text {
-      color:var(--yellow);
+    color: var(--darkpurple);
+  }
+
+  .Content-input {
+    flex-grow: 1;
+    font-family: "Inter";
+    border: var(--grey) 2px solid;
+    border-radius: var(--s);
+    transition: box-shadow 0.1s;
+    font-size: 16px;
+    width: 90%;
   }

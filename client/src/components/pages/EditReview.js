@@ -203,7 +203,7 @@ class EditReview extends Component {
             value={this.state.img_url}
             onChange={this.handleChange}
             className="Review-input"
-            maxLength='100'
+            maxLength='500'
             placeholder='Image URL'
           />
           </div>
@@ -227,7 +227,7 @@ class EditReview extends Component {
             required={true}
             maxLength='10000'
             value={this.state.review_content}
-            className="Review-input"
+            className="Content-input"
             placeholder="Edit your review here!"
             onChange={this.handleChange}
             rows='16'

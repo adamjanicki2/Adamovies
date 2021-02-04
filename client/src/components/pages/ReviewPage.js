@@ -71,7 +71,7 @@ class ReviewPage extends Component {
             <h1>{this.state.review.rating}%</h1>
             <img src={this.state.review.img_url} className='Poster-img'/>
             <h2>{this.state.review.director} | {this.state.review.mpa_rating} {this.state.review.runtime !==0 && ' | '+this.convertRuntime(this.state.review.runtime)}</h2>
-            <a className="u-linked" href={this.state.review.trailer_link} target="_blank">View Trailer</a>
+            <div><a className="u-linked" href={this.state.review.trailer_link} target="_blank">View Trailer</a> {this.props.admin && <a className="u-linked u-pointer" onClick={()=>{navigate(`/edit_review/${this.state.review._id}`)}}>Edit Review</a>}</div>
         </div>
         <div className="review-containercontainer">
         <div className='review-container'>
