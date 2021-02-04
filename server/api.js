@@ -105,7 +105,8 @@ router.get("/get_single_review", (req, res) => {
 
 router.get("/get_comments_for_review", (req, res) => {
   Comment.find({review_id: req.query.review_id}).then((comments) => {
-    res.send(comments);
+    if(!req.query.number) res.send(comments);
+    else res.send({number_comments: comments.length});
   });
 });
 

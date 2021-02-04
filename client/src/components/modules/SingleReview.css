@@ -71,3 +71,8 @@
     color: var(--grey);
 
 }
+
+.comment-icon{
+    margin-right: 4px;
+    color: #00D6FF;
+}

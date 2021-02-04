@@ -38,7 +38,7 @@ export function convertDate(stamp){
   const AMPM = d.toLocaleTimeString().split(' ')[1]
   const minutes = d.toLocaleTimeString().split(' ')[0].split(":")[0] + ':' + d.toLocaleTimeString().split(' ')[0].split(":")[1]
   const date = d.toLocaleDateString().split("/");
-  return date[0]+"/"+date[1]+"/"+date[2].substring(2) + ' ' + minutes+AMPM;
+  return date[0]+"/"+date[1]+"/"+date[2] + ' ' + minutes+AMPM;
 }
 
 export function get(endpoint, params = {}) {

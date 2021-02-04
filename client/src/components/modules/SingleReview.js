@@ -1,15 +1,21 @@
 import React, { Component } from "react";
 import { Link, navigate } from "@reach/router";
 import "./SingleReview.css";
-import { convertDate } from "../../utilities.js";
+import { convertDate, get } from "../../utilities.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faHeart } from '@fortawesome/free-solid-svg-icons';
+import {  faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
 class SingleReview extends Component {
   constructor(props) {
     super(props);
-    //this.props.userId
+    this.state = {
+      comments_for_review: 0,
+    };
   }
-
+  componentDidMount(){
+    get("/api/get_comments_for_review", {review_id: this.props.review._id, number: true}).then((result) => {
+      this.setState({comments_for_review: result.number_comments});
+    });
+  };
 
   render() {
     console.log('rendered soingle review');
@@ -20,7 +26,15 @@ class SingleReview extends Component {
         <h1>{this.props.review.title} ({this.props.review.release_year})</h1>
         {this.props.review.season !== 0 && <h2>Season {this.props.review.season} {this.props.review.episode !== 0? `Episode ${this.props.review.episode}` : ""}</h2>}
         <img src={this.props.review.img_url} className='Poster-img'/>
-        <div className='movie-info'><h2>{convertDate(this.props.review.timestamp).split(' ')[0]}</h2><h2 className='bar-spacing'>|</h2><h2>{this.props.review.rating}%</h2><h2 className='bar-spacing'>|</h2><FontAwesomeIcon className={heart_style} icon={faHeart} size={'2x'}/><h2>{this.props.review.likes}</h2></div>
+        <div className='movie-info'>
+          <h2>{convertDate(this.props.review.timestamp).split(' ')[0]}</h2>
+          <h2 className='bar-spacing'>|</h2><h2>{this.props.review.rating}%</h2><h2 className='bar-spacing'>|</h2>
+          <FontAwesomeIcon className={heart_style} icon={faHeart} size={'2x'}/>
+          <h2>{this.props.review.likes}</h2>
+          <h2 className='bar-spacing'>|</h2>
+          <FontAwesomeIcon className='comment-icon' icon={faComment} size={'2x'}/>
+          <h2>{this.state.comments_for_review}</h2>
+        </div>
         </div>
         <div className='Review-linkcontainer'>
         <Link to={`/review/${this.props.review._id}`} className="u-linked">
