@@ -31,7 +31,6 @@ class Announcements extends Component {
             </div>
             <p>{announcement.content}</p>
             <hr/>
-            {/* {i == this.props.recent_announcements.length - 1 && this.props.admin && <NewAnnouncement onSubmit={this.props.onSubmit}/>} */}
         </div>
         );
       return (

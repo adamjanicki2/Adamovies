@@ -76,3 +76,7 @@
     margin-right: 4px;
     color: #00D6FF;
 }
+
+.disguise{
+    color: var(--cream);
+}

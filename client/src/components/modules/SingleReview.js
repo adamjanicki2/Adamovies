@@ -25,6 +25,7 @@ class SingleReview extends Component {
         <div className='u-pointer' onClick={() => {navigate(`/review/${this.props.review._id}`)}}>
         <h1>{this.props.review.title} ({this.props.review.release_year})</h1>
         {this.props.review.season !== 0 && <h2>Season {this.props.review.season} {this.props.review.episode !== 0? `Episode ${this.props.review.episode}` : ""}</h2>}
+        {this.props.review.season === 0 && this.props.review.episode === 0 && <h2 className='disguise'>.</h2>}
         <img src={this.props.review.img_url} className='Poster-img'/>
         <div className='movie-info'>
           <h2>{convertDate(this.props.review.timestamp).split(' ')[0]}</h2>

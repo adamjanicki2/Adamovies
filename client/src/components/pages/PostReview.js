@@ -85,8 +85,10 @@ class PostReview extends Component {
          <br></br>2. Your rating for the review must be between 0 and 100 inclusive.
          <br></br>3. MPAA rating is something like PG-13, R, TV-14, etc.
          <br></br>4. When finding an image to use for the Image URL, make sure you can visit the image URL address before copy and pasting it. Sometimes they don't work.
-         <br></br>5. Make sure the image if of a reasonable size. Don't insert a 2000x1000 image, instead go for something less than 800px. The code will scale the images to fit the reviews, but it'll just be lower resolution.
+         <br></br>5. Encourage user participation in the comments! It'll seem like you're a youtuber, but it's fun to get feedback on our reviews!
          <br></br>6. Have fun writing your review!!
+         <br></br>
+         <br></br>
         </p>
         <div className="centered-elements Adamovies-logo180"><img className="Adamovies-logo180bordering" src={logo}/></div>
         </div>}
