@@ -61,7 +61,7 @@ class PostReview extends Component {
     
         post('/api/new_review', body).then((response) => {
           //console.log(response);
-          navigate("/review_success");
+          navigate("/");
         });
       }
     }

@@ -3,8 +3,9 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
-    border-radius: 5px;
-    border: 1px solid var(--darkpurple);
+    border-radius: 8px;
+    border: 1px solid var(--grey);
+    box-shadow: 0 0 30px -10px var(--grey);
     margin: 0 0 var(--s);
     padding: 4px;
 }

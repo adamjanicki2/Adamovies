@@ -14,7 +14,7 @@
     flex-grow: 1;
     font-family: "Inter";
     border: var(--grey) 1px solid;
-    border-radius: var(--s);
+    border-radius: var(--xs);
     transition: box-shadow 0.1s;
     margin-left: 8px;
     font-size: 22px;

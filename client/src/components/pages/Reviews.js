@@ -36,7 +36,7 @@ class Reviews extends Component {
   };
 
   sortReviews = (reviews, newSort) => {
-    if (newSort === 'all' || newSort === 'publishedlowtohigh'){
+    if (newSort === 'all' || newSort === 'alphabetically'){
       return [...reviews];
     }else if (newSort === 'publishedhightolow'){
       return [...reviews].sort((a, b) => a.timestamp > b.timestamp? -1: 1);
@@ -47,8 +47,8 @@ class Reviews extends Component {
     else if (newSort === 'releasehightolow'){
       return [...reviews].sort((a, b) => a.release_year > b.release_year? -1: 1);
     }
-    else if (newSort === 'alphabetically'){
-      return [...reviews].sort((a, b) => a.title > b.title? 1: -1);
+    else if (newSort === 'publishedlowtohigh'){
+      return [...reviews].sort((a, b) => a.timestamp > b.timestamp? 1: -1);
     }
     else if (newSort === 'reversealphabetically'){
       return [...reviews].sort((a, b) => a.title > b.title? -1: 1);
@@ -80,8 +80,8 @@ class Reviews extends Component {
       return
     }
     let updatedSort = null;
-    if (newSort === 'all' || newSort === 'publishedlowtohigh'){
-      updatedSort = this.state.reviews_to_display.sort((a, b) => a.timestamp > b.timestamp? 1: -1);
+    if (newSort === 'all' || newSort === 'alphabetically'){
+      updatedSort = this.state.reviews_to_display.sort((a, b) => a.title > b.title? 1: -1);
     }else if (newSort === 'publishedhightolow'){
       updatedSort = this.state.reviews_to_display.sort((a, b) => a.timestamp > b.timestamp? -1: 1);
     }
@@ -91,8 +91,8 @@ class Reviews extends Component {
     else if (newSort === 'releasehightolow'){
       updatedSort = this.state.reviews_to_display.sort((a, b) => a.release_year > b.release_year? -1: 1);
     }
-    else if (newSort === 'alphabetically'){
-      updatedSort = this.state.reviews_to_display.sort((a, b) => a.title > b.title? 1: -1);
+    else if (newSort === 'publishedlowtohigh'){
+      updatedSort = this.state.reviews_to_display.sort((a, b) => a.timestamp > b.timestamp? 1: -1);
     }
     else if (newSort === 'reversealphabetically'){
       updatedSort = this.state.reviews_to_display.sort((a, b) => a.title > b.title? -1: 1);
@@ -129,14 +129,15 @@ class Reviews extends Component {
         <h1 className="u-pageHeader">{this.props.type === 'movie'? 'Movies' : 'TV Shows'}</h1>
         <div className='centered-elements'><SearchBar defaultText={'Search by title, director, year, MPAA rating, or admin'} onSubmit={this.onSearchSubmit}/></div>
         <div className="centered-elements inputs-top"><select name='sorted_type' className='dropdown-filter' onChange={this.handleChangeSorted}>
-          <option value="publishedlowtohigh" selected>Sort By: Published (Old to New)</option>
+          <option value="alphabetically" selected>Sort By: Title (Alphabetically)</option>
+          <option value="reversealphabetically">Sort By: Title (Reverse Alphabetically)</option>
+          <option value="publishedlowtohigh">Sort By: Published (Old to New)</option>
           <option value="publishedhightolow">Sort By: Published (New to Old)</option>
           <option value="releaselowtohigh">Sort By: Release (Old to New)</option>
           <option value="releasehightolow">Sort By: Release (New to Old)</option>
           <option value="ratinglowtohigh">Sort By: Rating (Low to High)</option>
           <option value="ratinghightolow">Sort By: Rating (High to Low)</option>
-          <option value="alphabetically">Sort By: Title (Alphabetically)</option>
-          <option value="reversealphabetically">Sort By: Title (Reverse Alphabetically)</option>
+          
 
         </select></div>
         <div className={this.state.reviews_to_display.length !== 0? "reviews-container" : 'No-reviews'}>{reviews_list}</div>

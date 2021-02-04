@@ -84,7 +84,7 @@ router.post("/update_review", auth.ensureAdmin, (req, res) => {
 });
 
 router.get("/get_reviews", (req, res) => {
-  Review.find(req.query).then((reviews) => {
+  Review.find(req.query).sort({title: 1}).then((reviews) => {
     res.send(reviews);
   });
 });

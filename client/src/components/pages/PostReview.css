@@ -41,7 +41,7 @@
     flex-grow: 1;
     font-family: "Inter";
     border: var(--grey) 2px solid;
-    border-radius: var(--s);
+    border-radius: var(--xs);
     transition: box-shadow 0.1s;
     font-size: 22px;
     width: 90%;
@@ -103,7 +103,7 @@
     flex-grow: 1;
     font-family: "Inter";
     border: var(--grey) 2px solid;
-    border-radius: var(--s);
+    border-radius: var(--xs);
     transition: box-shadow 0.1s;
     font-size: 16px;
     width: 90%;
