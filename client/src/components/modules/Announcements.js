@@ -31,12 +31,12 @@ class Announcements extends Component {
             </div>
             <p>{announcement.content}</p>
             <hr/>
-            {i == this.props.recent_announcements.length - 1 && this.props.admin && <NewAnnouncement onSubmit={this.props.onSubmit}/>}
+            {/* {i == this.props.recent_announcements.length - 1 && this.props.admin && <NewAnnouncement onSubmit={this.props.onSubmit}/>} */}
         </div>
         );
       return (
         <div className='announcements-container'>
-            <div className='single-announcement'>{announcements_to_display}</div>
+            <div className='single-announcement'><div className='scrolling-announcements'>{announcements_to_display}</div><div>{this.props.admin && <NewAnnouncement onSubmit={this.props.onSubmit}/>}</div></div>
         </div>
       );
     }

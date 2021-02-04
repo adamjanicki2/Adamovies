@@ -4,6 +4,7 @@ import { navigate } from '@reach/router';
 import "../../utilities.css";
 import logo from "../../public/img/black180.png";
 import BottomBar from "../modules/BottomBar.js";
+import "./FAQ.css";
 class PostReview extends Component {
   constructor(props) {
     super(props);
@@ -73,12 +74,22 @@ class PostReview extends Component {
     return (
       <div className="bg">
         <h1 className="u-pageHeader u-textCenter">Welcome back, {this.state.user.name.split(' ')[0]}!</h1>
-        {this.state.media_type === '' && <div className="centered-elements Adamovies-logo180"><img className="Adamovies-logo180bordering" src={logo}/></div>}
         <div className="centered-elements"><select name='media_type' className='dropdown' onChange={this.handleChange}>
           <option value='' selected>Select Review Type</option>
           <option value="movie">Movie</option>
           <option value="show">TV Show</option>
         </select></div>
+        {this.state.media_type === '' && <div className='About-container instruction-body'>
+        <p className='about-text'>Hi {this.state.user.name.split(' ')[0]}! Thanks for being an admin! In case this is your first time posting a review, please read these instructions:
+         <br></br><br></br>1. Make sure to fill out all required fields. For movies, all of the fields are required. For shows, the season and episode fields are not required, so you can leave them blank if you choose.
+         <br></br>2. Your rating for the review must be between 0 and 100 inclusive.
+         <br></br>3. MPAA rating is something like PG-13, R, TV-14, etc.
+         <br></br>4. When finding an image to use for the Image URL, make sure you can visit the image URL address before copy and pasting it. Sometimes they don't work.
+         <br></br>5. Make sure the image if of a reasonable size. Don't insert a 2000x1000 image, instead go for something less than 800px.
+         <br></br>6. Have fun writing your review!!
+        </p>
+        <div className="centered-elements Adamovies-logo180"><img className="Adamovies-logo180bordering" src={logo}/></div>
+        </div>}
         {this.state.media_type !== '' && <div className='Post-container'>
           <div className="Entry-flex">
             <h2 className='field-text'>Title</h2>
@@ -229,7 +240,7 @@ class PostReview extends Component {
           Submit Review
         </button></div>}
         </div>}
-        {this.state.media_type !== '' && <BottomBar/> }
+        <BottomBar/>
       </div>
     );
   }

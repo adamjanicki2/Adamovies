@@ -20,14 +20,14 @@
 .NewPostInput-button {
   color: var(--darkpurple);
   font-family: "Inter";
-  border: var(--grey) 1px solid;
   border-radius: 0 var(--xs) var(--xs) 0;
+  border: var(--grey) 1px solid;
   background-color: #e0e0e0;
   transition: color 0.1s, background 0.1s;
 }
 
 .NewPostInput-button:hover {
-  background-color: var(--offwhite2);
+  background-color: #fff;
   color: black;
 }
 

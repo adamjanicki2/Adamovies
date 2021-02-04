@@ -259,7 +259,7 @@ router.post("/new_announcement", auth.ensureAdmin, (req, res) => {
 });
 
 router.get("/recent_announcements", (req, res) => {
-  const NUMBER_ANNOUNCEMENTS = 3;
+  const NUMBER_ANNOUNCEMENTS = 30;
   Announcement.find({}).sort({timestamp: -1}).then((sorted_announcements) => {
     const end_index = sorted_announcements.length > NUMBER_ANNOUNCEMENTS? NUMBER_ANNOUNCEMENTS : sorted_announcements.length;
     res.send(sorted_announcements.slice(0, end_index));

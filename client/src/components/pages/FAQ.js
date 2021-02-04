@@ -28,6 +28,7 @@ class FAQ extends Component {
   }
   componentDidMount(){
     window.scrollTo(0, 0);
+    document.title = 'Adamovies | FAQ';
   }
   render() {
     let questions_to_display = [];
