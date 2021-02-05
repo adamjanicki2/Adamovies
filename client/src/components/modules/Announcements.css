@@ -11,13 +11,13 @@
 .single-announcement {
     width: 80%;
     background-color: var(--cream);
-    border-radius: 8px;
+    border-radius: 16px;
     color: var(--offblack);
     padding-left: 5%;
     padding-right: 5%;
     border: 1px solid var(--grey);
     padding-bottom: 8px;
-    box-shadow: 0 0 30px -10px var(--darkpurple);
+    box-shadow: 0 0 36px -10px var(--darkpurple);
 }
 
 .announcement-pfp {
