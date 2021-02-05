@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get, convertDate, post } from "../../utilities.js";
+import { get, convertDate, post, convertPicture } from "../../utilities.js";
 import { socket } from "../../client-socket.js";
 import "../../utilities.css";
 import "./ReviewPage.css";
@@ -9,8 +9,7 @@ import SingleComment from "../modules/SingleComment.js";
 import { navigate } from "@reach/router";
 import BottomBar from "../modules/BottomBar.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import {  faHeart } from '@fortawesome/free-solid-svg-icons';
+import {  faChevronLeft, faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
 class ReviewPage extends Component {
   constructor(props) {
     super(props);
@@ -94,7 +93,7 @@ class ReviewPage extends Component {
         
             <div className="Review-headercontainer">
               <div className='review-titleentry'><h1 className='Review-subTitle'>{convertDate(this.state.review.timestamp)}</h1></div>
-              <div className='review-titleentry'><h1 className='Review-subTitle admin-name' onClick={() => {this.navigateProfile(this.state.review.admin_id, this.props.userId)}}>{this.state.review.admin_username}</h1></div>
+              <div className='review-titleentry review-title-namepfp'><img className='admin-review-pfp'src={convertPicture('36', this.state.review.admin_picture)}/><h1 className='Review-subTitle admin-name' onClick={() => {this.navigateProfile(this.state.review.admin_id, this.props.userId)}}>{this.state.review.admin_username}</h1></div>
               <div className='review-titleentry'><h1 className='Review-subTitle'>Adameter: {this.state.review.rating}%</h1></div>
             </div>
             <div className='like-container'><FontAwesomeIcon icon={faHeart} size={'2x'} className={this.state.liked_review || !this.props.userId? "liked-heart" : 'unliked-heart'} onClick={()=>{this.likeReview(this.state.review._id, this.state.liked_review, this.props.userId)}}/><h2 className='likes-text'>{this.state.review.likes}</h2></div>
@@ -105,7 +104,7 @@ class ReviewPage extends Component {
         </p>
         <hr className='review-line'/>
         <div>
-            <h2>Comments({this.state.comments.length}):</h2>
+          <div className='comment-bubble'><FontAwesomeIcon className='comment-icon-reviewpage' icon={faComment} size={'2x'}/><h2 className='likes-text'>{this.state.comments.length}</h2></div>
             {this.props.userId? <div className="Comment-bar"><NewComment movieId={this.state.review._id} title={this.state.review.title}className='Comment-bar'/></div> : <div></div>}
             {comments_list}
         </div>
