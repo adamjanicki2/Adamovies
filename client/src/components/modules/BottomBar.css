@@ -13,6 +13,7 @@
     padding-top: 32px;
     padding-bottom: 32px;
     box-shadow: 0 0 30px -10px var(--darkpurple);
+    background-image: linear-gradient(to right, #3a1160, var(--darkpurple));
 }
 
 .Bottom-links:hover{

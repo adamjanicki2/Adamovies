@@ -99,7 +99,7 @@ router.get("/get_reviews", (req, res) => {
 router.get("/get_single_review", (req, res) => {
   Review.findById(req.query.movieId).then((result) => {
     res.send(result);
-    console.log(result);
+    // console.log(result);
   });
 });
 
