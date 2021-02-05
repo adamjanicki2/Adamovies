@@ -82,7 +82,7 @@ class ReviewPage extends Component {
       <div className="review-containercontainer">
       <div className='review-container'>
         <div className='u-textCenter'>
-            <div className='title-container'><h1 className='u-pageHeader'>{this.state.review.title} ({this.state.review.release_year})</h1></div>
+            <div className='title-container'><h1 className='u-pageHeaderInter'>{this.state.review.title} ({this.state.review.release_year})</h1></div>
             {this.state.review.season !== 0 && <h1>Season {this.state.review.season} {this.state.review.episode!==0 && ' Episode '+this.state.review.episode}</h1>}
             <h1>{this.state.review.rating}%</h1>
             <img src={this.state.review.img_url} className='Poster-img'/>

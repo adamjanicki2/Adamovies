@@ -3,7 +3,7 @@ import { Link, navigate } from "@reach/router";
 import "./SingleReview.css";
 import { convertDate, get, convertPicture } from "../../utilities.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
+import {  faHeart, faComment, faFilm, faTv } from '@fortawesome/free-solid-svg-icons';
 class SingleReview extends Component {
   constructor(props) {
     super(props);
@@ -26,8 +26,11 @@ class SingleReview extends Component {
       <div className="Review-container u-textCenter Title-link">
         <div className='u-pointer' onClick={() => {navigate(`/review/${this.props.review._id}`)}}>
         <h1>{this.props.review.title} ({this.props.review.release_year})</h1>
-        <h2>{this.props.review.season !== 0 && `Season ${this.props.review.season}`} {this.props.review.episode !== 0 && `Episode ${this.props.review.episode}`} {(this.props.review.season !== 0 || this.props.review.episode !== 0) && ' | '} {this.props.review.genre}</h2>
-        {/* {this.props.review.season === 0 && this.props.review.episode === 0 && <h2 className='disguise'>.</h2>} */}
+        <div className='review-subtitlecontainer'>
+          <FontAwesomeIcon className='media-icon' icon={this.props.review.type==='movie'? faFilm:faTv} size={'2x'}/>
+          <h2 className='textnomargin'> | {this.props.review.genre} {this.props.review.season !== 0 && `| Season ${this.props.review.season}`} {this.props.review.episode !== 0 && ` Episode ${this.props.review.episode}`}</h2>
+        </div>
+        
         <img src={this.props.review.img_url} className='Poster-img'/>
         <div className='movie-info'>
           <h2>{convertDate(this.props.review.timestamp).split(' ')[0]}</h2>

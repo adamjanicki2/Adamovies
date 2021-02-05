@@ -21,6 +21,9 @@
 
 .comment-block {
     margin-left: 4px;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .comment-pfp {
@@ -30,7 +33,7 @@
     margin-right: 4px;
     width: 18px;
     height: 18px;
-    border: 2px solid #000;
+    border: 2px solid var(--offblack);
 }
 
 .comment-username {
@@ -51,4 +54,12 @@
 .delete-button:hover {
     cursor: pointer;
     font-weight: 600;
+}
+
+.tinypfpcontainer{
+    display:inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
 }

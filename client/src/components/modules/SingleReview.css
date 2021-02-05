@@ -101,3 +101,25 @@
     cursor: pointer;
 
 }
+
+.review-subtitlecontainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -2%;
+    margin-bottom: 2%;
+}
+
+.textnomargin{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    font-weight: 400;
+}
+
+.media-icon{
+    margin-right: 10px;
+}
