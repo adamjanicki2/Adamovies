@@ -23,7 +23,7 @@
 
 }
 .Title-link:hover{
-    transform: scale(1.05);
+    transform: scale(1.044);
     transition: all .5s ease-in-out;
 }
 
@@ -79,4 +79,25 @@
 
 .disguise{
     color: var(--cream);
+}
+
+.no-margin{
+    margin-right: 16px;
+    margin-left:0;
+    margin-top:0;
+    margin-bottom:0;
+    padding: 0 0 0 0;
+}
+
+.reviewcard-pfp{
+    border: 2px solid var(--offblack);
+    border-radius: 25%;
+    width: 28px;
+    height: 28px;
+}
+
+.admin-link:hover{
+    text-decoration: underline;
+    cursor: pointer;
+
 }

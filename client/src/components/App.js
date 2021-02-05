@@ -12,6 +12,7 @@ import RootConsole from "./pages/RootConsole.js";
 import FAQ from "./pages/FAQ.js";
 import About from "./pages/About.js";
 import "../utilities.css";
+import ReviewSuccess from "./pages/ReviewSuccess.js";
 import Reviews from "./pages/Reviews.js"
 import { socket } from "../client-socket.js";
 
@@ -83,6 +84,7 @@ class App extends Component {
           <ReviewPage path='/review/:movieId' userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>
           {this.state.userId && <Profile path='/myprofile' userId={this.state.userId}/>}
           <OtherProfile path="/user/:userId"/>
+          {this.state.admin === true && <ReviewSuccess path="/review_success"/>}
           {this.state.admin === true && <PostReview path="/post_review" userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>}
           {this.state.admin === true && <EditReview path='/edit_review/:reviewId' userId={this.state.userId}/>}
           {this.state.root === true && <RootConsole path='/root_console' userId={this.state.userId} root={this.state.root} timestamp={this.state.timestamp}/>}

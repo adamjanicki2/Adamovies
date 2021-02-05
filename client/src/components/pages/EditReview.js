@@ -77,7 +77,7 @@ class EditReview extends Component {
         };
     
         post('/api/update_review', body).then((response) => {
-          navigate("/");
+          navigate("/review_success");
         });
       }
     }

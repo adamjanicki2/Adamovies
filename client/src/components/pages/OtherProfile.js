@@ -3,7 +3,9 @@ import React, { Component } from "react";
 import "../../utilities.css";
 import "./Profile.css";
 import BottomBar from "../modules/BottomBar.js";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import "./ReviewPage.css";
 class OtherProfile extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +34,7 @@ class OtherProfile extends Component {
     return (
         <>
         <div className='bg'>
+        <div className='back-container' onClick={()=>{history.back()}}><FontAwesomeIcon icon={faChevronLeft} size={'2x'}/><h2 className='no-margin'>Back</h2></div>
           {this.state.user.admin && <h1 className="u-textCenter">(Admin)</h1>}
           <img src={this.state.user.picture} className='Profile-picture'/>
           <h1 className='u-textCenter profile-uname'>{this.state.user.username}</h1>

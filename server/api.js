@@ -58,7 +58,7 @@ router.post("/delete_comment", auth.ensureRoot, (req, res) => {
 
 router.post("/delete_review", auth.ensureRoot, (req, res) => {
   Review.findByIdAndDelete(req.body.review_id).then((deleted) =>{
-    Comment.deleteMany({review_id: req.body.review._id}).then((success) => {
+    Comment.deleteMany({review_id: req.body.review_id}).then((success) => {
       res.send({msg: "Deleted review and comments for "+req.body.review_id});
     });
   });
@@ -162,6 +162,7 @@ router.post("/new_review", auth.ensureAdmin, (req, res) => {
     admin_id: req.user._id,
     admin_googleid: req.user.googleid,
     admin_username: req.user.username,
+    admin_picture: convpic('28', req.user.picture),
     type: req.body.media_type,
     content: req.body.content,
     director: req.body.director,
@@ -329,9 +330,9 @@ router.get("/comments_since_timestamp", auth.ensureRoot, (req, res) => {
 });
 
 router.get("/tempy", (req, res) => {
-  // Review.updateMany({}, {liked_users: []}).then((s) => {
-  //   res.send({msg: 'success!'});
-  // })
+  Review.updateMany({}, {admin_picture: 'https://lh6.googleusercontent.com/-vspGCNx71Gk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucluwP4h8qJZNS_I7gqCBL3pWMp_-g/s28-c/photo.jpg'}).then((s) => {
+    res.send({msg: 'success!'});
+  })
 });
 
 

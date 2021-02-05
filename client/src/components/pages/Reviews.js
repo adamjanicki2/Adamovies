@@ -133,7 +133,7 @@ class Reviews extends Component {
       return (<div></div>);
     }
     const reviews_list = this.state.reviews_to_display.length !== 0? this.state.reviews_to_display.map((review) => 
-      <SingleReview review={review} admin={this.props.admin} root={this.props.root} delete_review={this.delete_review} unliked={this.props.userId && !review.liked_users.includes(this.props.userId)}/>
+      <SingleReview review={review} admin={this.props.admin} root={this.props.root} delete_review={this.delete_review} unliked={this.props.userId && !review.liked_users.includes(this.props.userId)} userId={this.props.userId}/>
     ) : <h1 className='u-textCenter No-reviews'>No Reviews!</h1>;
     return (
       <>

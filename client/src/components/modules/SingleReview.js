@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link, navigate } from "@reach/router";
 import "./SingleReview.css";
-import { convertDate, get } from "../../utilities.js";
+import { convertDate, get, convertPicture } from "../../utilities.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
 class SingleReview extends Component {
@@ -16,9 +16,11 @@ class SingleReview extends Component {
       this.setState({comments_for_review: result.number_comments});
     });
   };
-
+  navigateAdmin = (admin, self) => {
+    if(admin  === self) navigate("/myprofile");
+    else navigate(`/user/${admin}`);
+  };
   render() {
-    console.log('rendered soingle review');
     const heart_style = this.props.unliked? 'grey-heart': 'card-heart';
     return (
       <div className="Review-container u-textCenter Title-link">
@@ -38,10 +40,12 @@ class SingleReview extends Component {
         </div>
         </div>
         <div className='Review-linkcontainer'>
-        <Link to={`/review/${this.props.review._id}`} className="u-linked">
+        {/* <Link to={`/review/${this.props.review._id}`} className="u-linked">
             Read {this.props.review.admin_username}'s Review
-        </Link>
-        <a className="u-linked"href={this.props.review.trailer_link} target="_blank">View Trailer</a>
+        </Link> */}
+        <img className='reviewcard-pfp' src={this.props.review.admin_picture}/>
+        <h3 className='no-margin admin-link' onClick={()=>{this.navigateAdmin(this.props.review.admin_id,this.props.userId)}}>{this.props.review.admin_username}</h3>
+        {/* <a className="u-linked"href={this.props.review.trailer_link} target="_blank">View Trailer</a> */}
         {this.props.admin === true && <Link to={`/edit_review/${this.props.review._id}`} className="u-linked">
           Edit Review
         </Link>}
