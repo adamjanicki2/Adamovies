@@ -47,12 +47,12 @@ class NewInput extends Component {
           value={this.state.value}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
-          className="NewPostInput-input"
+          className="NI-input"
           maxLength="200"
         />
         <button
           type="submit"
-          className="NewPostInput-button u-pointer"
+          className="NI-button u-pointer"
           value="Submit"
           onClick={this.handleSubmit}
         >
@@ -120,12 +120,12 @@ class SearchBar extends Component {
           value={this.state.value}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
-          className="NewPostInput-input"
+          className="NI-input"
           maxLength="200"
         />
         <button
           type="submit"
-          className="NewPostInput-button u-pointer"
+          className="NI-button u-pointer"
           value="Submit"
           onClick={this.handleSubmit}
         >
@@ -193,7 +193,7 @@ class NewAnnouncement extends Component {
       />
       <button
         type="submit"
-        className="NewPostInput-button u-pointer"
+        className="NI-button u-pointer"
         value="Submit"
         onClick={this.handleSubmit}
       >

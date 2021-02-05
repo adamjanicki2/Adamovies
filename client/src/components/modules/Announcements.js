@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../utilities.css";
 import "./Announcements.css";
-import { get, post, convertDate, convertPicture } from "../../utilities.js";
+import { convertDate } from "../../utilities.js";
 import { navigate } from "@reach/router";
 import { NewAnnouncement } from "./NewInput.js";
 
@@ -10,7 +10,6 @@ class Announcements extends Component {
       super(props);
 
     }
-  
     navigateProfile = (admin_id, self_id) => {
         if(admin_id === self_id){
             navigate('/myprofile');

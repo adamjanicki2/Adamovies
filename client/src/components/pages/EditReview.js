@@ -77,7 +77,7 @@ class EditReview extends Component {
         };
     
         post('/api/update_review', body).then((response) => {
-          navigate("/review_success");
+          navigate("/");
         });
       }
     }
@@ -216,7 +216,7 @@ class EditReview extends Component {
             value={this.state.trailer_link}
             onChange={this.handleChange}
             className="Review-input"
-            maxLength='100'
+            maxLength='200'
             placeholder='Trailer Link'
           />
           </div>

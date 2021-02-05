@@ -1,8 +1,6 @@
-import React, { Component,useEffect } from "react";
-import { Link, navigate } from "@reach/router";
+import React, { Component } from "react";
+import { navigate } from "@reach/router";
 import "./BottomBar.css";
-import logo from '../../public/img/adamovies45.png';
-import { convertPicture } from "../../utilities.js";
 
 class BottomBar extends Component {
     constructor(props) {

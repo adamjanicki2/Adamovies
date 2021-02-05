@@ -108,7 +108,7 @@ class Profile extends Component {
             value={this.state.username? this.state.username : ''}
             onChange={this.changeUsername}
             className="Input-input u-textCenter"
-            maxLength="20"
+            maxLength="16"
           />
           : <h1 className='u-textCenter profile-uname'>{this.state.username}</h1>}</div>
           
@@ -119,11 +119,11 @@ class Profile extends Component {
             <h1 className="Profile-subTitle">Currently Watching</h1>
             {this.state.status? <input 
             type="text"
-            placeholder="Bio"
+            placeholder="Currently Watching"
             value={this.state.currently_watching? this.state.currently_watching : ''}
             onChange={this.changeCurrently}
             className="Input-input"
-            maxLength="20"
+            maxLength="30"
           /> : <h2>{this.state.currently_watching}</h2>}
           </div>
           <div className="Profile-subContainer u-textCenter">
@@ -134,7 +134,7 @@ class Profile extends Component {
             value={this.state.fav_mov? this.state.fav_mov : ''}
             onChange={this.changeMov}
             className="Input-input"
-            maxLength="20"
+            maxLength="30"
           /> : <h2>{this.state.fav_mov}</h2>}
           </div>
           <div className="Profile-subContainer u-textCenter">
@@ -145,7 +145,7 @@ class Profile extends Component {
             value={this.state.fav_show? this.state.fav_show : ''}
             onChange={this.changeShow}
             className="Input-input"
-            maxLength="20"
+            maxLength="30"
           /> : <h2>{this.state.fav_show}</h2>}
           </div>
           <div className="Profile-subContainer u-textCenter">

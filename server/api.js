@@ -180,7 +180,8 @@ router.post("/new_review", auth.ensureAdmin, (req, res) => {
     likes: 0,
   };
   const newReview = new Review(data);
-  newReview.save()
+  newReview.save();
+  socketManager.getIo().emit(req.body.media_type , data);
   res.send(data);
 });
 
@@ -267,6 +268,7 @@ router.post("/new_announcement", auth.ensureAdmin, (req, res) => {
   };
   const New_Announcement = new Announcement(newAnnouncement);
   New_Announcement.save();
+  socketManager.getIo().emit('announcement', newAnnouncement);
   res.send(newAnnouncement);
 });
 

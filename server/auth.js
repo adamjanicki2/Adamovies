@@ -15,9 +15,7 @@ function verify(token) {
     .then((ticket) => ticket.getPayload());
 }
 
-// gets user from DB, or makes a new account if it doesn't exist yet
 function getOrCreateUser(user) {
-  // the "sub" field means "subject", which is a unique identifier for each user
   return BannedUser.findOne({ googleid: user.sub}).then((banned_user) => {
     if (banned_user){
       return {banned: true};
@@ -68,7 +66,6 @@ function logout(req, res) {
 }
 
 function populateCurrentUser(req, res, next) {
-  // simply populate "req.user" for convenience
   req.user = req.session.user;
   next();
 }

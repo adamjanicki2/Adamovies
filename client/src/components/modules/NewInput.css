@@ -1,10 +1,10 @@
-.NewPostInput-input,
-.NewPostInput-button {
+.NI-input,
+.NI-button {
   font-size: 14px;
   padding: var(--s) var(--m);
 }
 
-.NewPostInput-input {
+.NI-input {
   flex-grow: 1;
   font-family: "Inter";
   border: var(--grey) 1px solid;
@@ -12,12 +12,12 @@
   transition: box-shadow 0.1s;
 }
 
-.NewPostInput-input:focus-within {
+.NI-input:focus-within {
   border-color: var(--primary--dim);
   box-shadow: 0 0 0 var(--xs) rgba(0, 123, 255, 0.25);
 }
 
-.NewPostInput-button {
+.NI-button {
   color: var(--darkpurple);
   font-family: "Inter";
   border-radius: 0 var(--xs) var(--xs) 0;
@@ -26,7 +26,7 @@
   transition: color 0.1s, background 0.1s;
 }
 
-.NewPostInput-button:hover {
+.NI-button:hover {
   background-color: #fff;
   color: black;
 }

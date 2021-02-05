@@ -5,7 +5,7 @@ import SingleReview from "../modules/SingleReview.js";
 import { get, post } from "../../utilities.js";
 import BottomBar from '../modules/BottomBar.js';
 import Announcements from "../modules/Announcements.js";
-
+import { socket } from "../../client-socket.js";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +22,22 @@ class Home extends Component {
     });
     get("/api/recent_announcements").then((announcements) => {
       this.setState({recent_announcements: announcements});
-    })
+    });
+    socket.on('announcement', (announcement) => {
+      this.setState((prev) => ({
+        recent_announcements: [announcement].concat(prev.recent_announcements),
+      }));
+    });
+    socket.on('show', (review) => {
+      this.setState((prev) => ({
+        recent_reviews: [review].concat(prev.recent_reviews),
+      }));
+    });
+    socket.on('movie', (review) => {
+      this.setState((prev) => ({
+        recent_reviews: [review].concat(prev.recent_reviews),
+      }));
+    });
   }
 
   delete_review = (review_id) => {
@@ -41,12 +56,7 @@ class Home extends Component {
           title: title,
           content: content,
         };
-        post("/api/new_announcement", {title: title, content: content}).then((new_announcement) => {
-          let new_recent = [new_announcement].concat(this.state.recent_announcements);
-          this.setState((previous_state) => ({
-            recent_announcements: [new_announcement].concat(previous_state.recent_announcements),
-          }));
-        });
+        post("/api/new_announcement", {title: title, content: content});
     }
   }
 

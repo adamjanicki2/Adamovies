@@ -61,7 +61,7 @@ class PostReview extends Component {
     
         post('/api/new_review', body).then((response) => {
           //console.log(response);
-          navigate("/review_success");
+          navigate("/");
         });
       }
     }
@@ -164,7 +164,7 @@ class PostReview extends Component {
             value={this.state.mpa_rating}
             onChange={this.handleChange}
             className="Review-input"
-            maxLength='20'
+            maxLength='5'
             placeholder='MPAA Rating'
           />
           </div>
@@ -216,7 +216,7 @@ class PostReview extends Component {
             value={this.state.trailer_link}
             onChange={this.handleChange}
             className="Review-input"
-            maxLength='100'
+            maxLength='200'
             placeholder='Trailer Link'
           />
           </div>

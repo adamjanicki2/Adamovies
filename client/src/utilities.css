@@ -34,21 +34,8 @@ form {
   display: flex;
 }
 
-.u-flexColumn {
-  display: flex;
-  flex-direction: column;
-}
-
-.u-flex-justifyCenter {
-  justify-content: center;
-}
-
-
 .u-bordering {
   border: 2px solid green;
-}
-.u-flex-alignCenter {
-  align-items: center;
 }
 
 .u-inlineBlock {
@@ -65,10 +52,6 @@ form {
 
 .u-textCenter {
   text-align: center;
-}
-
-.u-relative {
-  position: relative;
 }
 
 .u-pointer {
