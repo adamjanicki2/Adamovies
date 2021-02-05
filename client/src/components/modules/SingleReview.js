@@ -30,16 +30,15 @@ class SingleReview extends Component {
           <FontAwesomeIcon className='media-icon' icon={this.props.review.type==='movie'? faFilm:faTv} size={'2x'}/>
           <h2 className='textnomargin'> | {this.props.review.genre} {this.props.review.season !== 0 && `| Season ${this.props.review.season}`} {this.props.review.episode !== 0 && ` Episode ${this.props.review.episode}`}</h2>
         </div>
-        
         <img src={this.props.review.img_url} className='Poster-img'/>
         <div className='movie-info'>
-          <h2>{convertDate(this.props.review.timestamp).split(' ')[0]}</h2>
-          <h2 className='bar-spacing'>|</h2><h2>{this.props.review.rating}%</h2><h2 className='bar-spacing'>|</h2>
+          <h2 className='subpicturetext'>{convertDate(this.props.review.timestamp).split(' ')[0]}</h2>
+          <h2 className='bar-spacing subpicturetext'>|</h2><h2 className='subpicturetext'>{this.props.review.rating}%</h2><h2 className='bar-spacing subpicturetext'>|</h2>
           <FontAwesomeIcon className={heart_style} icon={faHeart} size={'2x'}/>
-          <h2>{this.props.review.likes}</h2>
-          <h2 className='bar-spacing'>|</h2>
+          <h2 className='subpicturetext'>{this.props.review.likes}</h2>
+          <h2 className='bar-spacing subpicturetext'>|</h2>
           <FontAwesomeIcon className='comment-icon' icon={faComment} size={'2x'}/>
-          <h2>{this.state.comments_for_review}</h2>
+          <h2 className='subpicturetext'>{this.state.comments_for_review}</h2>
         </div>
         </div>
         <div className='Review-linkcontainer'>

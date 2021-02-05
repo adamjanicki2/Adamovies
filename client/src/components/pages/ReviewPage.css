@@ -159,6 +159,10 @@
     display: inline-flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-items: center;
+    background-color: var(--offwhite);
+    border-radius: 8px;
+    padding: var(--s);
     margin-top: 16px;
     margin-bottom: 20px;
 }
@@ -171,4 +175,21 @@
 .admin-review-pfp{
     border: 2px solid black;
     border-radius: 25%;
+}
+
+.marginsubtext{
+    margin-right: 8px;
+    margin-top: 0;
+    margin-bottom: 0;
+
+}
+
+.movie-info-page{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }

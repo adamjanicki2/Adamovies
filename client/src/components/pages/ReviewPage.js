@@ -9,7 +9,7 @@ import SingleComment from "../modules/SingleComment.js";
 import { navigate } from "@reach/router";
 import BottomBar from "../modules/BottomBar.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faChevronLeft, faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
+import {  faChevronLeft, faHeart, faComment, faTv, faFilm } from '@fortawesome/free-solid-svg-icons';
 class ReviewPage extends Component {
   constructor(props) {
     super(props);
@@ -86,7 +86,19 @@ class ReviewPage extends Component {
             {this.state.review.season !== 0 && <h1>Season {this.state.review.season} {this.state.review.episode!==0 && ' Episode '+this.state.review.episode}</h1>}
             <h1>{this.state.review.rating}%</h1>
             <img src={this.state.review.img_url} className='Poster-img'/>
-            <h2>{this.state.review.director} | {this.state.review.mpa_rating} {this.state.review.runtime !==0 && ' | '+this.convertRuntime(this.state.review.runtime)} | {this.state.review.genre}</h2>
+            <div className='movie-info-page'>
+              <FontAwesomeIcon className='media-icon' icon={this.state.review.type==='movie'? faFilm:faTv} size={'2x'}/>
+              <h2 className='marginsubtext'>|</h2>
+              <h2 className='marginsubtext'>{this.state.review.genre+' '}</h2>
+              <h2 className='marginsubtext'>|</h2>
+              <h2 className='marginsubtext'>{this.state.review.director} </h2>
+              <h2 className='marginsubtext'>|</h2>
+              <h2 className='marginsubtext'>{this.state.review.mpa_rating} </h2>
+              {this.state.review.runtime !==0 &&<h2 className='marginsubtext'>|</h2>}
+              {this.state.review.runtime !==0 && <h2 className='marginsubtext'>{this.convertRuntime(this.state.review.runtime)}</h2>}
+              
+            </div>
+            {/* <h2>{this.state.review.director} | {this.state.review.mpa_rating} {this.state.review.runtime !==0 && ' | '+this.convertRuntime(this.state.review.runtime)} | {this.state.review.genre}</h2> */}
             <div><a className="u-linked" href={this.state.review.trailer_link} target="_blank">View Trailer</a> {this.props.admin && <a className="u-linked u-pointer" onClick={()=>{navigate(`/edit_review/${this.state.review._id}`)}}>Edit Review</a>}</div>
         </div>
         <hr className='review-line'/>
