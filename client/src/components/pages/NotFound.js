@@ -11,8 +11,7 @@ class NotFound extends Component {
       <div className='bg'>
         <div className="centered-elements Adamovies-logo180"><img className="Adamovies-logo180bordering" src={logo}/></div>
         <h1 className='u-textCenter Not-found'>404 Not Found</h1>
-        <h2 className='u-textCenter'>Page "{window.location.pathname}" couldn't be found.</h2>
-        <h2 className='u-textCenter'>Try logging in; some pages require logging in to view.</h2>
+        <h2 className='u-textCenter'>Oops! Page "{window.location.pathname}" couldn't be found.</h2>
       </div>
     );
   }

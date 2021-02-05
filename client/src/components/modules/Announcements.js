@@ -20,14 +20,13 @@ class Announcements extends Component {
 
     render() {
         const announcements_to_display = this.props.recent_announcements.map((announcement, i) => 
-        <div>
-            <div className='announcement-title'>
-                <h2 className='title-elements'>{announcement.title}</h2>
-                <h3 className='title-elements'>{convertDate(announcement.timestamp)}</h3>
-                <h3 className='title-elements'>|</h3>
-                <img src={announcement.admin_picture} className='announcement-pfp'/> 
-                <h3 className='title-elements pfpadminlink' onClick={()=>{this.navigateProfile(announcement.admin_id, this.props.self_id)}}>{announcement.admin_username}</h3>
+        <div className=''>
+            <div className=''>
+                <h2 className='no-title-margin'>{announcement.title}</h2>
             </div>
+            <div className='announcement-title onepercenter'><h3 className='title-elements title-date'>{convertDate(announcement.timestamp)} | </h3><div className='adminpfp-name'><img src={announcement.admin_picture} className='announcement-pfp'/> 
+                <h3 className='title-elements pfpadminlink title-adminname' onClick={()=>{this.navigateProfile(announcement.admin_id, this.props.self_id)}}>{announcement.admin_username}</h3></div>
+                </div>
             <p>{announcement.content}</p>
             <hr/>
         </div>

@@ -44,7 +44,6 @@
     width: fit-content;
     height: fit-content;
     margin-bottom: 0;
-    margin-left: auto;
     margin-right: auto;
 }
 
@@ -56,4 +55,24 @@
 .scrolling-announcements {
     max-height: 400px;
     overflow-y:auto
+}
+
+.title-date{
+    font-weight: 450;
+}
+.title-adminname{
+    font-weight: 450;
+}
+
+.no-title-margin{
+    padding: 0 0 0 0;
+    margin-bottom: 0;
+}
+
+.adminpfp-name{
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
 }

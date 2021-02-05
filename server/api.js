@@ -84,6 +84,7 @@ router.post("/update_review", auth.ensureAdmin, (req, res) => {
     season: parseInt(req.body.season),
     runtime: parseInt(req.body.runtime),
     mpa_rating: req.body.mpa_rating,
+    genre: req.body.genre,
   };
   Review.updateOne({_id: req.body.review_id}, data).then((success) => {
     res.send(data);
@@ -176,6 +177,7 @@ router.post("/new_review", auth.ensureAdmin, (req, res) => {
     season: parseInt(req.body.season),
     runtime: parseInt(req.body.runtime),
     mpa_rating: req.body.mpa_rating,
+    genre: req.body.genre,
     liked_users: [],
     likes: 0,
   };
@@ -237,7 +239,7 @@ router.post("/is_badwords", (req, res) => {
 });
 
 router.get("/recent_reviews", (req, res) => {
-  const NUMBER_REVIEWS = 12;
+  const NUMBER_REVIEWS = 18;
   Review.find({}).sort({timestamp: -1}).then((sorted_reviews) => {
     const end_index = sorted_reviews.length > NUMBER_REVIEWS? NUMBER_REVIEWS : sorted_reviews.length;
     res.send(sorted_reviews.slice(0, end_index));
@@ -330,14 +332,6 @@ router.get("/comments_since_timestamp", auth.ensureRoot, (req, res) => {
     res.send({data: data});
   })
 });
-
-router.get("/tempy", (req, res) => {
-  Review.updateMany({}, {admin_picture: 'https://lh6.googleusercontent.com/-vspGCNx71Gk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucluwP4h8qJZNS_I7gqCBL3pWMp_-g/s28-c/photo.jpg'}).then((s) => {
-    res.send({msg: 'success!'});
-  })
-});
-
-
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

@@ -23,7 +23,7 @@ class About extends Component {
           is easy, all you have to do is sign in with google: no additional registration is required! <br></br><br></br>
           This site is meant to be simple to use. The home page contains the most recently published reviews, along with announcements from myself and other admins. 
           Announcements will mostly be used to describe any updates on site functionality or new content. Then, there are separate pages for movies and shows, where you can browse
-          any of the reviews published on the site. There is an option to sort reviews, and also search reviews by title, director, year released, or admin author. 
+          any of the reviews published on the site. There is an option to sort reviews, and also search reviews by title, director, genre, year released, MPAA rating, or admin author. 
           <br></br><br></br>For users who choose to log in, there will be a profile page where you can make changes to your username and bio. The most fun part of the site is on an individual review page.
           On the review page for a movie or show, you'll find information on the title, such as director and year released, in addition to the admin's rating and review, and the like button. At the bottom of each review,
           There is a comment section where signed in users are able to leave their thoughts, and even interact with other users and admin, as the comments update in real-time.

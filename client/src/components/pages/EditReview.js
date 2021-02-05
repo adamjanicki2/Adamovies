@@ -4,6 +4,8 @@ import "./PostReview.css";
 import { get, post } from "../../utilities.js";
 import { navigate } from '@reach/router';
 import BottomBar from "../modules/BottomBar.js";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 class EditReview extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +23,7 @@ class EditReview extends Component {
       release_year: undefined,
       runtime: undefined,
       mpa_rating: '',
+      genre: '',
     };
   }
 
@@ -40,6 +43,7 @@ class EditReview extends Component {
         release_year: single_review.release_year,
         runtime: single_review.runtime,
         mpa_rating: single_review.mpa_rating,
+        genre: single_review.genre,
       };
       this.setState(newState);
     });
@@ -53,7 +57,7 @@ class EditReview extends Component {
   };
 
   checkFilled = () => {
-    return !this.state.title || !this.state.media_type || !this.state.director || !this.state.review_content || !this.state.rating || !this.state.img_url || !this.state.mpa_rating || !this.state.trailer_link || !this.state.release_year;
+    return (this.state.media_type==='movie' && (this.state.runtime===undefined || this.state.runtime===null || this.state.runtime==='')) || this.state.title==='' || this.state.genre==='' || this.state.media_type==='' || this.state.director==='' || this.state.review_content==='' || this.state.rating===null ||this.state.rating===undefined||this.state.rating==='' || this.state.img_url==='' || this.state.mpa_rating==='' || this.state.trailer_link==='' || this.state.release_year===undefined || this.state.release_year===null || this.state.release_year==='';
   };
 
   handleSubmit = () => {
@@ -74,6 +78,7 @@ class EditReview extends Component {
           episode: this.state.episode? this.state.episode : 0,
           runtime: this.state.runtime? this.state.runtime : 0,
           mpa_rating: this.state.mpa_rating,
+          genre: this.state.genre,
         };
     
         post('/api/update_review', body).then((response) => {
@@ -91,6 +96,7 @@ class EditReview extends Component {
     }
     return (
       <div className='bg'>
+        <div className='back-container' onClick={()=>{history.back()}}><FontAwesomeIcon icon={faChevronLeft} size={'2x'}/><h2 className='no-margin'>Back</h2></div>
         <h1 className='u-pageHeader u-textCenter'>Edit Review page for "{this.state.title}"</h1>
         {this.state.media_type !== '' && <div className='Post-container'>
           <div className="Entry-flex">
@@ -192,6 +198,19 @@ class EditReview extends Component {
             className="Review-input"
             maxLength='20'
             placeholder='Director'
+          />
+          </div>
+          <div className="Entry-flex">
+            <h2 className='field-text'>Genre</h2>
+            <input
+            name='genre'
+            required={true}
+            type="text"
+            value={this.state.genre}
+            onChange={this.handleChange}
+            className="Review-input"
+            maxLength='20'
+            placeholder='Genre'
           />
           </div>
           <div className="Entry-flex">

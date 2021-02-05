@@ -5,6 +5,8 @@ import "../../utilities.css";
 import logo from "../../public/img/black180.png";
 import BottomBar from "../modules/BottomBar.js";
 import "./FAQ.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 class PostReview extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +24,7 @@ class PostReview extends Component {
       release_year: undefined,
       runtime: undefined,
       mpa_rating: '',
+      genre: '',
     };
   }
   componentDidMount() {
@@ -36,7 +39,7 @@ class PostReview extends Component {
     this.setState({[event.target.name]: event.target.value});
   }
   checkFilled = () => {
-    return !this.state.title || !this.state.media_type || !this.state.director || !this.state.review_content || !this.state.rating || !this.state.img_url || !this.state.mpa_rating || !this.state.trailer_link || !this.state.release_year;
+    return (this.state.media_type==='movie' && (this.state.runtime===undefined || this.state.runtime===null || this.state.runtime==='')) || this.state.title==='' || this.state.genre==='' || this.state.media_type==='' || this.state.director==='' || this.state.review_content==='' || this.state.rating===null ||this.state.rating===undefined||this.state.rating==='' || this.state.img_url==='' || this.state.mpa_rating==='' || this.state.trailer_link==='' || this.state.release_year===undefined || this.state.release_year===null || this.state.release_year==='';
   };
 
   handleSubmit = () => {
@@ -57,6 +60,7 @@ class PostReview extends Component {
           episode: this.state.episode? this.state.episode : 0,
           runtime: this.state.runtime? this.state.runtime : 0,
           mpa_rating: this.state.mpa_rating,
+          genre: this.state.genre
         };
     
         post('/api/new_review', body).then((response) => {
@@ -73,6 +77,7 @@ class PostReview extends Component {
     }
     return (
       <div className="bg">
+        <div className='back-container' onClick={()=>{history.back()}}><FontAwesomeIcon icon={faChevronLeft} size={'2x'}/><h2 className='no-margin'>Back</h2></div>
         <h1 className="u-pageHeader u-textCenter">Welcome back, {this.state.user.name.split(' ')[0]}!</h1>
         <div className="centered-elements"><select name='media_type' className='dropdown' onChange={this.handleChange}>
           <option value='' selected>Select Review Type</option>
@@ -84,9 +89,10 @@ class PostReview extends Component {
          <br></br><br></br>1. Make sure to fill out all required fields. For movies, all of the fields are required. For shows, the season and episode fields are not required, so you can leave them blank if you choose.
          <br></br>2. Your rating for the review must be between 0 and 100 inclusive.
          <br></br>3. MPAA rating is something like PG-13, R, TV-14, etc.
-         <br></br>4. When finding an image to use for the Image URL, make sure you can visit the image URL address before copy and pasting it. Sometimes they don't work.
-         <br></br>5. Encourage user participation in the comments! It'll seem like you're a youtuber, but it's fun to get feedback on our reviews!
-         <br></br>6. Have fun writing your review!!
+         <br></br>4. For genre, try to pick the best one, it should be something like: Action, Adventure, Drama, Sci-Fi, Thriller, Reality TV, Comedy, etc. If you need to use multiple, separate genres with a slash '/' like so: 'Action/Adventure'.
+         <br></br>5. When finding an image to use for the Image URL, make sure you can visit the image URL address before copy and pasting it. Sometimes they don't work.
+         <br></br>6. Encourage user participation in the comments! It'll seem like you're a youtuber, but it's fun to get feedback on our reviews!
+         <br></br>7. Have fun writing your review!!
          <br></br>
          <br></br>
         </p>
@@ -192,6 +198,19 @@ class PostReview extends Component {
             className="Review-input"
             maxLength='20'
             placeholder='Director'
+          />
+          </div>
+          <div className="Entry-flex">
+            <h2 className='field-text'>Genre</h2>
+            <input
+            name='genre'
+            required={true}
+            type="text"
+            value={this.state.genre}
+            onChange={this.handleChange}
+            className="Review-input"
+            maxLength='20'
+            placeholder='Genre'
           />
           </div>
           <div className="Entry-flex">
