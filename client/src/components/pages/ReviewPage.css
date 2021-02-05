@@ -117,7 +117,7 @@
     margin: 0 0 0 4px;
     padding: 0 0 0 0;
     font-weight: 400;
-    color: black;
+    color: var(--offblack);
 }
 
 .liked-heart{

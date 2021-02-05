@@ -12,7 +12,7 @@
     width: 80%;
     background-color: var(--cream);
     border-radius: 8px;
-    color: black;
+    color: var(--offblack);
     padding-left: 5%;
     padding-right: 5%;
     border: 1px solid var(--grey);

@@ -92,6 +92,7 @@
   width: 36px;
   height: 36px;
   border: 2px solid var(--offwhite);
+  box-shadow: 0 0 20px -10px var(--offwhite);
   }
 
   .button-log {
@@ -102,7 +103,7 @@
     border: var(--grey) 1px solid;
     border-radius: 6px;
     background-color: #e0e0e0;
-    transition: color 0.1s, background 0.1s;
+    box-shadow: 0 0 20px -10px var(--offwhite);
   }
   
   .button-log:hover {

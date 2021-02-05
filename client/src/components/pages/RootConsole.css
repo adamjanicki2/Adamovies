@@ -46,7 +46,7 @@
   }
 
   .tabletitletext{
-    color: black;
+    color: var(--offblack);
     font-size: 100px;
   }
 
