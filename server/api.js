@@ -431,6 +431,14 @@ router.get("/comments_since_timestamp", auth.ensureRoot, (req, res) => {
   })
 });
 
+// router.get("/tempy", (req, res)=>{
+//   User.updateOne({username: ' '}, {username: 'zhangery'}).then((s) =>{
+//     Comment.updateMany({username: ' '}, {username: 'zhangery'}).then((s1)=>{
+//       res.send({msg: 'zhangery updated!'});
+//     })
+//   })
+// })
+
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ error: "API path not found :(" });

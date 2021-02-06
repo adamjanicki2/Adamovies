@@ -63,6 +63,23 @@ class Profile extends Component {
     });
   };
 
+  isValidUsername = (username) => {
+    let letter_count = 0;
+    let space_count = 0;
+    let other_count = 0;
+    let alp = 'qwertyuiopasdfghjklzxcvbnm'
+    for (let char of username.toLowerCase()){
+      if (alp.includes(char)){
+        letter_count++;
+      }else if (char === ' '){
+        space_count++;
+      }else{
+        other_count++;
+      }
+    }
+    return space_count === 0 && letter_count>1;
+  };
+
   changeBio = (event) => {
     this.setState({
       bio: event.target.value,
@@ -72,20 +89,24 @@ class Profile extends Component {
   
   buttonClicked = () => {
     if (this.state.info_updated && this.state.status){
-      post("/api/is_badwords", {text: [this.state.bio,  this.state.username, this.state.fav_mov, this.state.fav_show, this.state.currently_watching]}).then((result) => {
-        if(result.is_bad){
-          window.alert("The use of bad words is not permitted!");
-        }else{
-          post("/api/update_profile", {bio: this.state.bio, updated_uname: this.state.update_uname, googleid: this.state.googleid, new_username: this.state.username, new_m: this.state.fav_mov, new_s: this.state.fav_show, new_c: this.state.currently_watching}).then((updated)=>{
-            if (updated.is_valid){
-              this.setState({status: !this.state.status, info_updated: false});
-            }else{
-              window.alert("That username is already taken!");
-            }
-            
-          });
-        }
-      });
+      if (this.state.update_uname && !this.isValidUsername(this.state.username)){
+        window.alert('Valid usernames must have at least 2 letters and not contain spaces!');
+      }else{
+        post("/api/is_badwords", {text: [this.state.bio,  this.state.username, this.state.fav_mov, this.state.fav_show, this.state.currently_watching]}).then((result) => {
+          if(result.is_bad){
+            window.alert("The use of bad words is not permitted!");
+          }else{
+            post("/api/update_profile", {bio: this.state.bio, updated_uname: this.state.update_uname, googleid: this.state.googleid, new_username: this.state.username, new_m: this.state.fav_mov, new_s: this.state.fav_show, new_c: this.state.currently_watching}).then((updated)=>{
+              if (updated.is_valid){
+                this.setState({status: !this.state.status, info_updated: false});
+              }else{
+                window.alert("That username is already taken!");
+              }
+              
+            });
+          }
+        });
+      }
     }
     else{
       this.setState({status: !this.state.status, info_updated: false, update_uname: false,});
