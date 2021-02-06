@@ -4,6 +4,7 @@ const User = require("./models/user");
 const Review = require("./models/review");
 const Comment = require("./models/comment");
 const Announcement = require("./models/announcement");
+const Draft = require("./models/draft");
 //////////////////////
 const BannedUser = require("./models/banneduser");
 const auth = require("./auth");
@@ -315,6 +316,103 @@ router.post("/unban_user", auth.ensureRoot, (req, res)=> {
   BannedUser.deleteOne({googleid: req.body.user.googleid}).then((success) => {
     res.send({msg: 'success'});
   });
+});
+
+router.post("/new_review_from_draft", auth.ensureAdmin, (req, res) => {
+  //req.body.state, req.body.draftId
+  const data = {
+    admin_name: req.user.name,
+    admin_id: req.user._id,
+    admin_googleid: req.user.googleid,
+    admin_username: req.user.username,
+    admin_picture: convpic('28', req.user.picture),
+    type: req.body.state.media_type,
+    title: req.body.state.title,
+    season: parseInt(req.body.state.season), 
+    episode: parseInt(req.body.state.episode),
+    release_year: parseInt(req.body.state.release_year),
+    rating: parseInt(req.body.state.rating),
+    content: req.body.state.review_content,
+    trailer_link: req.body.state.trailer_link,
+    timestamp: Date.now(),
+    img_url: req.body.state.img_url,
+    director: req.body.state.director,
+    runtime: parseInt(req.body.state.runtime),
+    mpa_rating: req.body.state.mpa_rating,
+    liked_users: [],
+    likes: 0,
+    genre: req.body.state.genre,
+  };
+  Draft.findByIdAndDelete(req.body.draftId).then((deleted) => {
+    const newReview = new Review(data);
+    newReview.save();
+    socketManager.getIo().emit(req.body.state.media_type , data);
+    res.send({msg: 'success'});
+  });
+});
+
+router.post("/save_draft", auth.ensureAdmin, (req, res) => {
+  const data = {
+  title: req.body.state.title,
+  season: req.body.state.season, 
+  episode: req.body.state.episode,
+  release_year: req.body.state.release_year,
+  rating: req.body.state.rating,
+  content: req.body.state.review_content,
+  trailer_link: req.body.state.trailer_link,
+  img_url: req.body.state.img_url,
+  director: req.body.state.director,
+  runtime: req.body.state.runtime, //in minutes
+  mpa_rating: req.body.state.mpa_rating,
+  genre: req.body.state.genre,
+  };
+  Draft.updateOne({_id: req.body.draftId}, data).then((success) => {
+    res.send({msg: 'success'});
+  });
+});
+
+router.post("/delete_draft", auth.ensureAdmin, (req, res) => {
+  Draft.findByIdAndDelete(req.body.draftId).then((success)=>{
+    res.send({msg: 'success'});
+  })
+});
+
+router.get("/get_single_draft", auth.ensureAdmin, (req, res) => {
+  Draft.findById(req.query.draftId).then((draft) => {
+    res.send(draft);
+  });
+});
+
+router.get("/get_user_drafts", auth.ensureAdmin, (req, res) => {
+  Draft.find({admin_id: req.user._id}).then((results) => {
+    res.send(results);
+  });
+});
+
+router.post("/new_draft", auth.ensureAdmin, (req, res) => {
+  const data = {
+    admin_name: req.user.name,
+    admin_id: req.user._id,
+    admin_googleid: req.user.googleid,
+    admin_username: req.user.username,
+    admin_picture: convpic('28', req.user.picture),
+    type: req.body.media_type,
+    content: req.body.content,
+    director: req.body.director,
+    rating: req.body.rating,
+    title: req.body.title,
+    release_year: req.body.release_year,
+    trailer_link: req.body.trailer_link,
+    img_url: req.body.img_url,
+    episode: req.body.episode,
+    season: req.body.season,
+    runtime: req.body.runtime,
+    mpa_rating: req.body.mpa_rating,
+    genre: req.body.genre,
+  };
+  const newDraft = new Draft(data);
+  newDraft.save();
+  res.send(data);
 });
 
 router.get("/comments_since_timestamp", auth.ensureRoot, (req, res) => {

@@ -108,3 +108,75 @@
     font-size: 16px;
     width: 90%;
   }
+
+  .table-container-draft{
+    width:60%;
+    border-style: solid;
+    border-radius: 16px;
+    margin: 0 auto;
+    margin-top:2%;
+    overflow: hidden;
+    margin-bottom: 3%;
+  }
+
+  .styled-table2 {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    width:100%;
+    height:100%;
+    padding-bottom: 20px;
+  }
+  .styled-table2 thead tr {
+    background-color: #3a1160;    
+    text-align: center;
+  }
+  .styled-table2 th,
+  .styled-table2 td {
+      padding: 12px 15px;
+      font-size: 14pt;
+      text-align: center;
+  }
+  
+  .styled-table2 tbody tr {
+    border-bottom: 2px solid var(--grey);
+  }
+  
+  .styled-table2 tbody tr:nth-of-type(odd) {
+    background-color: var(--cream);
+  }
+
+  .styled-table2 tbody tr:nth-of-type(even) {
+    background-color: white;
+  }
+  
+  .styled-table2 tbody tr:last-of-type {
+    border-bottom: 8px solid var(--darkpurple);
+  }
+  
+  .styled-table2 tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+  }
+
+  .tabletitletext2{
+    color: white;
+    font-size: 100px;
+  }
+
+  .Submit-button-draft {
+    font-size: 22px;
+    padding: var(--s) var(--m);
+    color: var(--darkpurple);
+    font-family: "Inter";
+    border: var(--grey) 1px solid;
+    border-radius: var(--xs);
+    background-color: #e0e0e0;
+    transition: color 0.1s, background 0.1s;
+    margin-right: 1%;
+    margin-left: 1%;
+  }
+  
+  .Submit-button-draft:hover {
+    background-color: #fff;
+    color: black;
+  }

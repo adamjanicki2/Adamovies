@@ -25,14 +25,6 @@ class SingleComment extends Component {
         <div className='tinypfpcontainer'><img src={this.props.picture} className='comment-pfp'/><div onClick={() => {this.navigateProfile(this.props.color, this.props.userId)}} className='u-bold comment-username'>{this.props.commenter}: </div></div>
         <div className='comment-block'>{this.props.content}</div>
       </div>
-      // <div className={"Comment-body "+this.props.color}>
-      //   <div className='u-flexInline'>{(this.props.self_id && this.props.admin && this.props.root) && <div className='delete-button' onClick={() => {this.props.handleDeletion(this.props.commentId)}}>Delete</div>} {time_to_display+' |'}</div>
-      //   <img src={this.props.picture} className='comment-pfp'/>
-      //   <div className="u-bold comment-username" onClick={() => {this.navigateProfile(this.props.color, this.props.userId)}}>
-      //     {this.props.commenter+':'} 
-      //   </div>
-      //   <div className='comment-block'>{' '+this.props.content}</div>
-      // </div>
     );
   }
 }

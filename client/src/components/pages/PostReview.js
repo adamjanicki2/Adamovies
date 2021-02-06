@@ -4,9 +4,8 @@ import { navigate } from '@reach/router';
 import "../../utilities.css";
 import logo from "../../public/img/black180.png";
 import BottomBar from "../modules/BottomBar.js";
+import "./RootConsole.css";
 import "./FAQ.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 class PostReview extends Component {
   constructor(props) {
     super(props);
@@ -25,12 +24,16 @@ class PostReview extends Component {
       runtime: undefined,
       mpa_rating: '',
       genre: '',
+      drafts: undefined,
     };
   }
   componentDidMount() {
     document.title = "Adamovies | Post Review"
     get("/api/whoami").then((user) => {
       this.setState({user: user});
+    });
+    get("/api/get_user_drafts").then((drafts) => {
+      this.setState({drafts: drafts});
     });
   };
 
@@ -40,6 +43,38 @@ class PostReview extends Component {
   }
   checkFilled = () => {
     return (this.state.media_type==='movie' && (this.state.runtime===undefined || this.state.runtime===null || this.state.runtime==='')) || this.state.title==='' || this.state.genre==='' || this.state.media_type==='' || this.state.director==='' || this.state.review_content==='' || this.state.rating===null ||this.state.rating===undefined||this.state.rating==='' || this.state.img_url==='' || this.state.mpa_rating==='' || this.state.trailer_link==='' || this.state.release_year===undefined || this.state.release_year===null || this.state.release_year==='';
+  };
+  saveDraft = () => {
+    const body = {
+      release_year: this.state.release_year,
+      title: this.state.title,
+      media_type: this.state.media_type,
+      rating: this.state.rating,
+      director: this.state.director,
+      content: this.state.review_content,
+      img_url: this.state.img_url,
+      trailer_link: this.state.trailer_link,
+      season: this.state.season? this.state.season : 0,
+      episode: this.state.episode? this.state.episode : 0,
+      runtime: this.state.runtime? this.state.runtime : 0,
+      mpa_rating: this.state.mpa_rating,
+      genre: this.state.genre
+    };
+    if (window.confirm('Click OK to save this as a new draft')){
+      post("/api/new_draft", body).then((success) => {
+        navigate("/");
+      });
+    }
+  };
+
+  deleteDraft = (draft_id) => {
+    if (window.confirm("Click OK to delete this draft")){
+      post("/api/delete_draft", {draftId: draft_id}).then((success)=>{
+        this.setState((prev) => ({
+          drafts: prev.drafts.filter(draft => draft._id !== draft_id),
+        }));
+      });
+    }
   };
 
   handleSubmit = () => {
@@ -77,23 +112,50 @@ class PostReview extends Component {
     }
     return (
       <div className="bg">
-        <div className='back-container' onClick={()=>{history.back()}}><FontAwesomeIcon icon={faChevronLeft} size={'2x'}/><h2 className='no-margin'>Back</h2></div>
         <h1 className="u-pageHeader u-textCenter">Welcome back, {this.state.user.name.split(' ')[0]}!</h1>
+        {this.state.media_type === '' &&this.state.drafts!==undefined&& 
+        <div>
+          <h1 className='u-textCenter'>Your Drafts</h1>
+          {!this.state.drafts[0]? <h2 className='u-textCenter'>You have no drafts!</h2> : 
+          <div className="table-container-draft">
+          <table className='styled-table2'>
+          <thead >
+            <tr>
+              <th className='tabletitletext2'>Title</th>
+              <th className='tabletitletext2'>Type</th>
+              <th className='tabletitletext2'>Actions</th>
+            </tr>
+            </thead>
+          <tbody>
+            {this.state.drafts.map((draft) => 
+            <tr>
+              <td>{draft.title}</td>
+              <td>{draft.type}</td>
+              <td><div className='table-cell' onClick={()=>{navigate(`/draft/${draft._id}`)}}>Edit</div><div className='table-cell' onClick={()=>{this.deleteDraft(draft._id)}}>Delete</div></td>
+          </tr>
+      )}
+      </tbody>
+      </table>
+      </div>}
+        </div>}
         <div className="centered-elements"><select name='media_type' className='dropdown' onChange={this.handleChange}>
-          <option value='' selected>Select Review Type</option>
+          <option value='' selected>Select New Review Type</option>
           <option value="movie">Movie</option>
           <option value="show">TV Show</option>
         </select></div>
         {this.state.media_type === '' && <div className='About-container instruction-body'>
-        <p className='about-text'>Hi {this.state.user.name.split(' ')[0]}! Thanks for being an admin! In case this is your first time posting a review, please read these instructions:
-         <br></br><br></br>1. Make sure to fill out all required fields. For movies, all of the fields are required. For shows, the season and episode fields are not required, so you can leave them blank if you choose.
-         <br></br>2. Your rating for the review must be between 0 and 100 inclusive.
-         <br></br>3. MPAA rating is something like PG-13, R, TV-14, etc.
-         <br></br>4. For genre, try to pick the best one, it should be something like: Action, Adventure, Drama, Sci-Fi, Thriller, Reality TV, Comedy, etc. If you need to use multiple, separate genres with a slash '/' like so: 'Action/Adventure'.
-         <br></br>5. When finding an image to use for the Image URL, make sure you can visit the image URL address before copy and pasting it. Sometimes they don't work.
-         <br></br>6. Encourage user participation in the comments! It'll seem like you're a youtuber, but it's fun to get feedback on our reviews!
-         <br></br>7. Have fun writing your review!!
-         <br></br>
+        <p className='about-text'>Hi {this.state.user.name.split(' ')[0]}! Thanks for being an admin! Here are instructions on how to post reviews:
+         <br></br><br></br><div className='u-bold u-underline'>Starting a Review</div>To start a review, simply select what media type your review is going to be on. Once you select this, 
+         an input form will pop up, where you can enter in all of the information.
+         <br></br><div className='u-bold u-underline'>Saving a Draft</div> Don't have time to finish a review? No worries! If you ever need to save a draft of your review to come back to later, simply click the 'Save Draft' 
+         button at the bottom of the form, and your progress will be saved for next time!
+         <br></br><div className='u-bold u-underline'>Continuing a draft</div>To continue a draft you previously saved, you can check the table above these instructions. All of your saved drafts will appear here. To continue working on a draft, simply click the 'edit' button. 
+         If you want to delete the draft, simply click the 'delete' button. 
+         <br></br><div className='u-bold u-underline'>Submitting a Review</div>To submit a review, all you need to do is hit the submit button at the bottom of the form! However, make sure you've filled in all of the required fields! 
+         For Movies, all of the fields are required, but for TV shows, the 'season' and 'episode' field are optional, so leave them blank if you choose.
+         <br></br><div className='u-bold u-underline'>Information on Specific Input Fields</div>MPAA rating is something like PG-13, R, TV-14, etc. Your rating for the review must be between 0 and 100 inclusive. For genre, try to pick the best one, it should be something like: Action, Adventure, Drama, Sci-Fi, Thriller, Reality TV, Comedy, etc. If you need to use multiple, separate genres with a slash '/' like so: 'Action/Adventure'.
+         When finding an image to use for the Image URL, right click the image on google images and click 'open image in new tab', so you can make sure the image loads before you copy and paste it into the image URL field.
+         <br></br><div className='u-bold u-underline'>Final Notes</div>Encourage user participation in the comments! It'll seem like you're a youtuber, but it's fun to get feedback on our reviews! Have fun writing your review!! 
          <br></br>
         </p>
         <div className="centered-elements Adamovies-logo180"><img className="Adamovies-logo180bordering" src={logo}/></div>
@@ -254,11 +316,19 @@ class PostReview extends Component {
           </div>
           {this.state.media_type !== '' && <div className='centered-elements post-submit'><button
           type="submit"
-          className="Submit-button u-pointer"
+          className="Submit-button-draft u-pointer"
           value="Submit"
           onClick={this.handleSubmit}
         >
           Submit Review
+        </button>
+        <button
+          type="submit"
+          className="Submit-button-draft u-pointer"
+          value="Submit"
+          onClick={this.saveDraft}
+        >
+          Save Draft
         </button></div>}
         </div>}
         <BottomBar/>
