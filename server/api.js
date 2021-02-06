@@ -431,13 +431,14 @@ router.get("/comments_since_timestamp", auth.ensureRoot, (req, res) => {
   })
 });
 
-// router.get("/tempy", (req, res)=>{
-//   User.updateOne({username: ' '}, {username: 'zhangery'}).then((s) =>{
-//     Comment.updateMany({username: ' '}, {username: 'zhangery'}).then((s1)=>{
-//       res.send({msg: 'zhangery updated!'});
-//     })
-//   })
-// })
+router.get("/tempy", (req, res)=>{
+  User.updateOne({username: ' '}, {username: 'az'}).then((s) => {
+    Comment.updateMany({username: ' '}, {username: 'az'}).then((s1) => {
+      res.send({threat_fix: true});
+    });
+  })
+  
+})
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

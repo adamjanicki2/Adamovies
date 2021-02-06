@@ -32,21 +32,21 @@ class Navbar extends Component {
       return (
         <nav className="Navbar-container">
           <div className="nav-container">
-            <div className="nav-titlecontainer" onClick={()=>{navigate('/')}}>
+            <div className="nav-titlecontainer u-pointer" onClick={()=>{navigate('/')}}>
               <div u-bordering><img src={logo} className='Navbar-logo'/></div>
               <div className="Navbar-title">ADAMOVIES</div>
             </div>
             <div className="link-container">
-            <Link to="/" className={this.props.location.pathname === '/'? "Navbar-route Route-clicked":"Navbar-route"}>
+            {!this.props.root && <Link to="/" className={this.props.location.pathname === '/'? "Navbar-route Route-clicked":"Navbar-route"}>
                 Home
-              </Link>
+              </Link>}
             
               <Link to="/movies" className={this.props.location.pathname === '/movies'? "Navbar-route Route-clicked":"Navbar-route"} >
                 Movies
               </Link>
 
               <Link to="/tvshows" className={this.props.location.pathname === '/tvshows'? "Navbar-route Route-clicked":"Navbar-route"} >
-                TV Shows
+                Shows
               </Link>
 
               {this.props.admin === true &&

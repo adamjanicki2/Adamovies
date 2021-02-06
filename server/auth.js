@@ -1,7 +1,7 @@
 const { OAuth2Client } = require("google-auth-library");
 const User = require("./models/user");
 const socketManager = require("./server-socket");
-
+const Words = require('./words.js');
 
 const CLIENT_ID = "577990730068-40v41c82e6bd14pj40khj7f2nbqhnasu.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
@@ -33,13 +33,46 @@ function getOrCreateUser(user) {
           favorite_movie: 'Not Set',
           favorite_show: 'Not Set',
           last_login: Date.now(),
-          username: user.name,
+          username: createUsername(),
           bio: "Happy Adamovies user!"
         });
         return newUser.save();
       });
     }
   })
+}
+
+function capitalizeWord(word){
+  return word[0].toUpperCase() + word.slice(1);
+}
+function randomNumber(length_needed){
+  if (length_needed === 0){
+    return '';
+  }else{
+    return Math.floor(Math.random() * (10 ** length_needed)).toString();
+  }
+}
+
+function randomNoun(){
+  const lengths = ['three', 'four', 'five', 'six', 'seven', 'eight'];
+  const length_to_use = lengths[Math.floor(Math.random() * lengths.length)];
+  const nouns_to_choose = Words.nouns[length_to_use];
+  return nouns_to_choose[Math.floor(Math.random() * nouns_to_choose.length)];
+
+}
+
+function randomAdjective(){
+  const lengths = ['three', 'four', 'five', 'six', 'seven', 'eight'];
+  const length_to_use = lengths[Math.floor(Math.random() * lengths.length)];
+  const adjs_to_choose = Words.adjs[length_to_use];
+  return adjs_to_choose[Math.floor(Math.random() * adjs_to_choose.length)];
+}
+
+function createUsername(){
+  const noun = randomNoun();
+  const adj = randomAdjective();
+  const number = randomNumber(16-noun.length-adj.length);
+  return capitalizeWord(adj)+capitalizeWord(noun)+number;
 }
 
 function login(req, res) {

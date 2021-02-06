@@ -139,7 +139,7 @@ class Reviews extends Component {
     return (
       <>
       <div className='bg'>
-        <h1 className="u-pageHeader">{this.props.type === 'movie'? 'Movies' : 'TV Shows'}</h1>
+        <h1 className="u-pageHeader">{this.props.type === 'movie'? 'Movies' : 'Shows'}</h1>
         <div className='centered-elements'><SearchBar defaultText={'Search by title, director, year, genre, MPAA rating, or admin'} onSubmit={this.onSearchSubmit}/></div>
         <div className="centered-elements inputs-top"><select name='sorted_type' className='dropdown-filter' onChange={this.handleChangeSorted}>
           <option value="alphabetically" selected>Sort By: Title (Alphabetically)</option>
