@@ -2,7 +2,7 @@
     border: 2px solid var(--grey);
     box-shadow: 0 0 30px -10px var(--offblack);
     border-radius: 32px;
-    background-color: #fefdf0;
+    background-color: var(--cream);
     width: 580px;
     max-height: 600px;
     margin-left: auto;

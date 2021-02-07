@@ -18,9 +18,9 @@ class BottomBar extends Component {
       return (
         <div className='Bottom-container'>
             <div onClick={()=>{navigate('/faq')}} className='Bottom-links'>FAQ</div>
-            <div> | </div>
+            <div> • </div>
             <div onClick={()=>{navigate('/about')}} className='Bottom-links'>About Adamovies</div>
-            <div> | </div>
+            <div> • </div>
             <a className="Bottom-links" href="/code.js" target="_blank">View Source Code</a>
         </div>
       );
