@@ -24,7 +24,11 @@ class ReviewPage extends Component {
   componentDidMount() {
     get(`/api/get_single_review`, { movieId: this.props.movieId }).then((movie) => {
       get('/api/get_comments_for_review', { review_id: movie._id}).then((comments) => {
-        document.title = "Adamovies | "+movie.title + " ("+movie.release_year+")"
+        let se = movie.season === 0? '': 'S'+movie.season.toString();
+        if (movie.episode !== 0){
+          se+='E'+movie.episode.toString();
+        }
+        document.title = "Adamovies | "+movie.title +' '+se+ " ("+movie.release_year+")"
         // console.log(movie);
         this.setState({review: movie, comments: comments, liked_review: movie.liked_users.includes(this.props.userId)});
       });
@@ -111,7 +115,7 @@ class ReviewPage extends Component {
             <h2 className='no-top'>Review: </h2>
             
         <p className='review-content'>
-            {this.state.review.content}
+            {this.state.review.content.map((paragraph) => <div>{paragraph}<br></br></div>)}
         </p>
         <hr className='review-line'/>
         <div>

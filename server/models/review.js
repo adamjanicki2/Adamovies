@@ -12,7 +12,7 @@ const review = new mongoose.Schema({
   episode: Number,
   release_year: Number,
   rating: Number,
-  content: String,
+  content: Array,
   trailer_link: String,
   timestamp: Number,
   img_url: String,

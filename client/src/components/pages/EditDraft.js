@@ -37,7 +37,7 @@ class EditDraft extends Component {
         episode: single_review.episode,
         rating: single_review.rating,
         director: single_review.director,
-        review_content: single_review.content,
+        review_content: single_review.content.join('\n'),
         img_url: single_review.img_url,
         trailer_link: single_review.trailer_link,
         release_year: single_review.release_year,
@@ -62,7 +62,7 @@ class EditDraft extends Component {
         window.alert('fill in all fields!')
     }else{
         if (window.confirm("Click OK to post review!")){
-            post("/api/new_review_from_draft", {state: this.state, draftId: this.props.draftId}).then((success) => {
+            post("/api/new_review_from_draft", {state: this.state, draftId: this.props.draftId, content: this.state.review_content.split('\n')}).then((success) => {
                 navigate('/')
             });
         }

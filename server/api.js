@@ -326,7 +326,7 @@ router.post("/new_review_from_draft", auth.ensureAdmin, (req, res) => {
     episode: parseInt(req.body.state.episode),
     release_year: parseInt(req.body.state.release_year),
     rating: parseInt(req.body.state.rating),
-    content: req.body.state.review_content,
+    content: req.body.content,
     trailer_link: req.body.state.trailer_link,
     timestamp: Date.now(),
     img_url: req.body.state.img_url,

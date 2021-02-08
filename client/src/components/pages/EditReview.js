@@ -37,7 +37,7 @@ class EditReview extends Component {
         episode: single_review.episode,
         rating: single_review.rating,
         director: single_review.director,
-        review_content: single_review.content,
+        review_content: single_review.content.join('\n'),
         img_url: single_review.img_url,
         trailer_link: single_review.trailer_link,
         release_year: single_review.release_year,
@@ -64,6 +64,7 @@ class EditReview extends Component {
     if (this.checkFilled()) {
       window.alert("Fill in all fields!")
     }else{
+      // console.log(this.state.review_content.split('\n'));
       if (window.confirm("Click OK to submit your edited review!")){
         const body = {
           review_id: this.props.reviewId,
@@ -71,7 +72,7 @@ class EditReview extends Component {
           title: this.state.title,
           rating: this.state.rating,
           director: this.state.director,
-          content: this.state.review_content,
+          content: this.state.review_content.split('\n'),
           img_url: this.state.img_url,
           trailer_link: this.state.trailer_link,
           season: this.state.season? this.state.season : 0,

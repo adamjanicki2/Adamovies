@@ -40,7 +40,6 @@ class PostReview extends Component {
   };
 
   handleChange = (event) => {
-    //console.log(event.target.name+" updated to "+event.target.value);
     this.setState({[event.target.name]: event.target.value});
   }
   checkFilled = () => {
@@ -53,7 +52,7 @@ class PostReview extends Component {
       media_type: this.state.media_type,
       rating: this.state.rating,
       director: this.state.director,
-      content: this.state.review_content,
+      content: this.state.review_content.split('\n'),
       img_url: this.state.img_url,
       trailer_link: this.state.trailer_link,
       season: this.state.season? this.state.season : 0,
@@ -90,7 +89,7 @@ class PostReview extends Component {
           media_type: this.state.media_type,
           rating: this.state.rating,
           director: this.state.director,
-          content: this.state.review_content,
+          content: this.state.review_content.split('\n'),
           img_url: this.state.img_url,
           trailer_link: this.state.trailer_link,
           season: this.state.season? this.state.season : 0,
