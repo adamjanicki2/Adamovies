@@ -6,6 +6,8 @@ import logo from "../../public/img/black180.png";
 import BottomBar from "../modules/BottomBar.js";
 import "./RootConsole.css";
 import "./FAQ.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 class PostReview extends Component {
   constructor(props) {
     super(props);
@@ -131,7 +133,8 @@ class PostReview extends Component {
             <tr>
               <td>{draft.title}</td>
               <td>{draft.type}</td>
-              <td><div className='table-cell' onClick={()=>{navigate(`/draft/${draft._id}`)}}>Edit</div><div className='table-cell' onClick={()=>{this.deleteDraft(draft._id)}}>Delete</div></td>
+              <td><div><FontAwesomeIcon onClick={()=>{navigate(`/draft/${draft._id}`)}} icon={faEdit} size={'1x'} className='edit-icon'/><FontAwesomeIcon onClick={()=>{this.deleteDraft(draft._id)}}className='trash-icon'icon={faTrashAlt} size={'1x'}/></div></td>
+              {/* <td><div className='table-cell' onClick={()=>{navigate(`/draft/${draft._id}`)}}>Edit</div><div className='table-cell' onClick={()=>{this.deleteDraft(draft._id)}}>Delete</div></td> */}
           </tr>
       )}
       </tbody>

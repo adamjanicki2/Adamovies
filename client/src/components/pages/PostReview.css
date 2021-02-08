@@ -180,3 +180,13 @@
     background-color: #fff;
     color: black;
   }
+
+  .edit-icon{
+    margin-left: 1%;
+    margin-right: 1%;
+    cursor: pointer;
+  }
+
+  .edit-icon:hover{
+    opacity: 0.6;
+  }
