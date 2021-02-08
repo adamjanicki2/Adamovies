@@ -1,5 +1,5 @@
 .table-container{
-    width:84%;
+    width: 70%;
     border-style: solid;
     border-radius: 16px;
     margin: 0 auto;
@@ -14,14 +14,14 @@
     padding-bottom: 20px;
   }
   .styled-table thead tr {
-    background-color: #00D6FF;    
-    text-align: center;
+    background-color: #3a1160;   
+    text-align: left;
   }
   .styled-table th,
   .styled-table td {
       padding: 12px 15px;
       font-size: 14pt;
-      text-align: center;
+      text-align: left;
   }
   
   .styled-table tbody tr {
@@ -46,8 +46,11 @@
   }
 
   .tabletitletext{
-    color: var(--offblack);
+    color: white;
     font-size: 100px;
+  }
+  .table-cell{
+    width: fit-content;
   }
 
   .table-cell:hover {
@@ -63,4 +66,56 @@
     width: 20px;
     height: 20px;
     border: 2px solid #000;
+}
+
+.trash-icon{
+  margin-right: 1%;
+  margin-left: 1%;
+  color: black;
+}
+
+.trash-icon:hover{
+  color:var(--heartred);
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.arrow-up {
+  margin-left: 1%;
+  margin-right: 1%;
+  color: #2ecc71;
+}
+.arrow-up:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+.arrow-down{
+  margin-left: 1%;
+  margin-right: 1%;
+  color: #ea3c53;
+}
+.arrow-down:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.refresh-icon{
+  margin-left: 1%;
+  margin-right: 1%;
+  color: #00D6FF;
+}
+.refresh-icon:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.lock-icon{
+  cursor: pointer;
+  color: var(--yellow);
+  margin-left: 1%;
+  margin-right: 1%;
+}
+.lock-icon:hover{
+  opacity: 0.6;
+
 }

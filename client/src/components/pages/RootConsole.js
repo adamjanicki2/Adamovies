@@ -5,7 +5,8 @@ import "../modules/SingleComment.css";
 import { get, post, convertPicture, convertDate } from "../../utilities.js";
 import { navigate } from '@reach/router';
 import BottomBar from '../modules/BottomBar.js';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faTrashAlt, faArrowUp, faArrowDown, faSyncAlt, faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 class RootConsole extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +37,29 @@ class RootConsole extends Component {
       post("/api/update_timestamp");
     });
   }
+
+
+
+  refreshUsername = (user, i) => {
+    if (window.confirm("Click OK to refresh username for "+user.username)){
+      post("/api/refresh_username", {user: user}).then((new_) => {
+        let all_users_copy = this.state.all_users;
+        all_users_copy[i].username = new_.new_username;
+        this.setState({all_users: all_users_copy});
+      });
+    }
+  }
+
+  lockUser = (user, i) => {
+    const lock = user.locked? 'unlock':'lock';
+    if (window.confirm('Click OK to '+lock+' username for '+user.username)){
+      post('/api/lock_user', {user: user}).then((success) => {
+        let all_users_copy = this.state.all_users;
+        all_users_copy[i].locked = !user.locked;
+        this.setState({all_users: all_users_copy});
+      });
+    }
+  };
 
   navigateProfile = (admin_id, self_id) => {
     if(admin_id === self_id){
@@ -90,7 +114,7 @@ class RootConsole extends Component {
     return (
       <div className='bg'>
         <h1 className='u-pageHeader u-textCenter'>New Comments</h1>
-        <div className="table-container">
+        {this.state.new_comments===[]? <div className="table-container">
         <table className='styled-table'>
         <thead >
           <tr>
@@ -101,13 +125,13 @@ class RootConsole extends Component {
         <tbody>
           {this.state.new_comments.map((comment) => 
           <tr>
-            <td className='table-cell' onClick={()=>{navigate(`/review/${comment[0]}`)}}>{comment[2]}</td>
+            <td><div className='table-cell' onClick={()=>{navigate(`/review/${comment[0]}`)}}>{comment[2]}</div></td>
             <td>{comment[1]}</td>
         </tr>
     )}
     </tbody>
     </table>
-    </div>
+    </div> : <h2 className='u-textCenter'>No new comments!</h2>}
         <h1 className='u-pageHeader u-textCenter'>Announcements</h1>
         <div className="table-container">
         <table className='styled-table'>
@@ -115,17 +139,13 @@ class RootConsole extends Component {
           <tr>
             <th className='tabletitletext'>Admin Username</th>
             <th className='tabletitletext'>Title</th>
-            <th className='tabletitletext'>Timestamp</th>
-            <th className='tabletitletext'>Action</th>
           </tr>
           </thead>
         <tbody>
           {this.state.all_announcements.map((announcement, i) => 
           <tr>
-            <td className='table-cell' onClick={()=>{this.navigateProfile(announcement.admin_id, this.props.userId)}}><img src={convertPicture('20', announcement.admin_picture)} className='root-pfp'/> {announcement.admin_username}</td>
-            <td>{announcement.title}</td>
-            <td>{convertDate(announcement.timestamp)}</td>
-            <td className='table-cell' onClick={()=>{this.deleteAnnouncment(announcement._id, i)}}>Delete</td>
+            <td><div className='table-cell' onClick={()=>{this.navigateProfile(announcement.admin_id, this.props.userId)}}><img src={convertPicture('20', announcement.admin_picture)} className='root-pfp'/> {announcement.admin_username}</div></td>
+            <td><div><FontAwesomeIcon onClick={()=>{this.deleteAnnouncment(announcement._id, i)}} className='trash-icon'icon={faTrashAlt} size={'1x'}/>{announcement.title} ({convertDate(announcement.timestamp)})</div></td>
         </tr>
     )}
     </tbody>
@@ -137,44 +157,40 @@ class RootConsole extends Component {
         <thead >
           <tr>
             <th className='tabletitletext'>Name</th>
-            <th className='tabletitletext'>Username</th>
-            <th className='tabletitletext'>Make Admin</th>
-            <th className='tabletitletext'>Ban User</th>
+            <th className='tabletitletext'>Actions</th>
           </tr>
           </thead>
         <tbody>
           {this.state.all_users.map((user, i) => 
           <tr>
-            <td className='table-cell'onClick={()=>{navigate(`/user/${user._id}`)}}><img src={convertPicture('20', user.picture)} className='root-pfp'/> {user.name}</td>
-            <td>{user.username}</td>
-            <td className='table-cell' onClick={()=>{this.changeAdmin(user, i)}}>{user.admin? 'Disable Admin' : 'Enable Admin'}</td>
-            <td className='table-cell' onClick={()=>{this.banUser(user, i)}}>Ban {user.username}</td>
+            <td ><div className='table-cell'onClick={()=>{navigate(`/user/${user._id}`)}}><img src={convertPicture('20', user.picture)} className='root-pfp'/> {user.name+` (${user.username})`}</div></td>
+            <td><div><FontAwesomeIcon className={user.admin? 'arrow-down':'arrow-up'} onClick={()=>{this.changeAdmin(user, i)}} icon={user.admin? faArrowDown : faArrowUp} /><FontAwesomeIcon className='refresh-icon' icon={faSyncAlt} size={'1x'} onClick={()=>{this.refreshUsername(user, i)}} /><FontAwesomeIcon onClick={()=>{this.lockUser(user, i)}} className='lock-icon'size={'1x'} icon={user.locked? faLockOpen : faLock}/><FontAwesomeIcon onClick={()=>{this.banUser(user, i)}} className='trash-icon'icon={faTrashAlt} size={'1x'}/></div></td>
         </tr>
     )}
     </tbody>
     </table>
     </div>
     <h1 className='u-pageHeader u-textCenter'>Banned Users</h1>
-    <div className="table-container">
+    {this.state.all_bannedusers === []?<div className="table-container">
         <table className='styled-table'>
         <thead >
           <tr>
             <th className='tabletitletext'>Name</th>
-            <th className='tabletitletext'>Google ID</th>
+            {/* <th className='tabletitletext'>Google ID</th> */}
             <th className='tabletitletext'>Action</th>
           </tr>
           </thead>
         <tbody>
           {this.state.all_bannedusers.map((user, i) => 
           <tr>
-            <td>{user.name}</td>
-            <td>{user.googleid}</td>
+            <td>{user.name} ({user.googleid})</td>
+            {/* <td>{user.googleid}</td> */}
             <td className='table-cell' onClick={()=>{this.unbanUser(user, i)}}>Unban {user.name}</td>
         </tr>
     )}
     </tbody>
     </table>
-    </div>
+    </div> : <h2 className='u-textCenter'>No banned users!</h2>}
 
     <BottomBar/>
       </div>

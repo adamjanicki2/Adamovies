@@ -13,6 +13,7 @@ const socketManager = require("./server-socket");
 
 const badwords = require('bad-words');
 const filter = new badwords();
+const Words = require('./words.js');
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -202,8 +203,10 @@ router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
             Comment.updateMany({user_id: req.user._id}, {username: req.body.new_username}).then((_success) => {
               if (req.user.admin){
                 Review.updateMany({admin_id: req.user._id}, {admin_username: req.body.new_username}).then((_success) => {
-                  res.send({is_valid: true});
-                })
+                  Announcement.updateMany({admin_id: req.user._id}, {admin_username: req.body.new_username}).then((s_4) => {
+                    res.send({is_valid: true});
+                  });
+                });
               }else{
                 res.send({is_valid: true});
               }
@@ -431,14 +434,68 @@ router.get("/comments_since_timestamp", auth.ensureRoot, (req, res) => {
   })
 });
 
-router.get("/tempy", (req, res)=>{
-  User.updateOne({username: ' '}, {username: 'az'}).then((s) => {
-    Comment.updateMany({username: ' '}, {username: 'az'}).then((s1) => {
-      res.send({threat_fix: true});
+function capitalizeWord(word){
+  return word[0].toUpperCase() + word.slice(1);
+}
+function randomNumber(length_needed){
+  if (length_needed === 0){
+    return '';
+  }else{
+    return Math.floor(Math.random() * (10 ** length_needed)).toString();
+  }
+}
+
+function randomNoun(){
+  const lengths = ['three', 'four', 'five', 'six', 'seven', 'eight'];
+  const length_to_use = lengths[Math.floor(Math.random() * lengths.length)];
+  const nouns_to_choose = Words.nouns[length_to_use];
+  return nouns_to_choose[Math.floor(Math.random() * nouns_to_choose.length)];
+
+}
+
+function randomAdjective(){
+  const lengths = ['three', 'four', 'five', 'six', 'seven', 'eight'];
+  const length_to_use = lengths[Math.floor(Math.random() * lengths.length)];
+  const adjs_to_choose = Words.adjs[length_to_use];
+  return adjs_to_choose[Math.floor(Math.random() * adjs_to_choose.length)];
+}
+
+function createUsername(){
+  const noun = randomNoun();
+  const adj = randomAdjective();
+  const number = randomNumber(16-noun.length-adj.length);
+  return capitalizeWord(adj)+capitalizeWord(noun)+number;
+}
+
+router.post("/refresh_username", auth.ensureRoot, (req, res) => {
+  const new_username = createUsername();
+  User.updateOne({_id: req.body.user._id}, {username: new_username}).then((s1) => {
+    Comment.updateMany({user_id: req.body.user._id}, {username: new_username}).then((s2) => {
+      if(req.body.user.admin){
+        Review.updateMany({admin_id: req.body.user._id}, {admin_username: new_username}).then((s3) => {
+          Announcement.updateMany({admin_id: req.body.user._id}, {admin_username: new_username}).then((s4) => {
+            res.send({new_username: new_username});
+          });
+        });
+      }else{
+        res.send({new_username: new_username});
+      }
     });
+  });
+});
+
+router.post("/lock_user", auth.ensureRoot, (req, res) => {
+  User.updateOne({_id: req.body.user._id}, {locked: !req.body.user.locked}).then((s) => {
+    res.send({msg: 'success'});
+  });
+});
+
+router.get("/tempy", (req, res) => {
+  User.updateMany({}, {locked: false}).then((s_) =>{
+    res.send({hello: 'world'});
   })
-  
-})
+});
+
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

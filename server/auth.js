@@ -34,7 +34,8 @@ function getOrCreateUser(user) {
           favorite_show: 'Not Set',
           last_login: Date.now(),
           username: createUsername(),
-          bio: "Happy Adamovies user!"
+          bio: "Happy Adamovies user!",
+          locked: false,
         });
         return newUser.save();
       });

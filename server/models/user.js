@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema({
   last_login: Number,
   username: String,
   bio: String,
+  locked: Boolean,
 });
 
 module.exports = mongoose.model("user", UserSchema);
