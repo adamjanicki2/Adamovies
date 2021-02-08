@@ -70,6 +70,7 @@
 
   .profile-uname{
     font-size: 42pt;
+    margin-bottom: 0;
   }
 
   .Profile-subContainer {
@@ -114,4 +115,16 @@
     background-color: var(--cream);
     height: fit-content;
     padding-bottom: 0;
+  }
+
+  .name-button-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .icon-profile-edit{
+    margin-top: 2%;
   }

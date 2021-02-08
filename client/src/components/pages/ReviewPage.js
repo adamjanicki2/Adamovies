@@ -98,7 +98,7 @@ class ReviewPage extends Component {
               {this.state.review.runtime !==0 && <h2 className='marginsubtext'>{this.convertRuntime(this.state.review.runtime)}</h2>}
               
             </div>
-            <div><a className="u-linked" href={this.state.review.trailer_link} target="_blank">View Trailer</a> {this.props.admin && <a className="u-linked u-pointer" onClick={()=>{navigate(`/edit_review/${this.state.review._id}`)}}>Edit Review</a>}</div>
+            <div><a className="u-linked" href={this.state.review.trailer_link} target="_blank">View Trailer</a> {this.props.root && <a className="u-linked u-pointer" onClick={()=>{navigate(`/edit_review/${this.state.review._id}`)}}>Edit Review</a>}</div>
         </div>
         <hr className='review-line'/>
         

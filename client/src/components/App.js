@@ -83,7 +83,7 @@ class App extends Component {
           {this.state.userId && <Profile path='/myprofile' userId={this.state.userId}/>}
           <OtherProfile path="/user/:userId"/>
           {this.state.admin === true && <PostReview path="/post_review" userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>}
-          {this.state.admin === true && <EditReview path='/edit_review/:reviewId' userId={this.state.userId}/>}
+          {this.state.root === true && <EditReview path='/edit_review/:reviewId' userId={this.state.userId}/>}
           {this.state.root === true && <RootConsole path='/root_console' userId={this.state.userId} root={this.state.root} timestamp={this.state.timestamp}/>}
           {this.state.admin === true && <EditDraft path={'/draft/:draftId'} userId={this.state.userId} admin={this.state.admin}/>}
           <FAQ path='/faq'/>

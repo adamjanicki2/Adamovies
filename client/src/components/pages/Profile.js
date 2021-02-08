@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import "../../utilities.css";
 import "./Profile.css";
 import BottomBar from "../modules/BottomBar.js";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faLock, faEdit } from '@fortawesome/free-solid-svg-icons';
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -16,6 +18,7 @@ class Profile extends Component {
       fav_mov: null,
       fav_show: null,
       status: false,
+      user_status: false,
       info_updated: false,
       update_uname: false,
       bio: null,
@@ -59,7 +62,6 @@ class Profile extends Component {
   changeUsername = (event) => {
     this.setState({
       username: event.target.value,
-      info_updated: true,
       update_uname: true,
     });
   };
@@ -90,29 +92,48 @@ class Profile extends Component {
   
   buttonClicked = () => {
     if (this.state.info_updated && this.state.status){
-      if (this.state.update_uname && !this.isValidUsername(this.state.username)){
-        window.alert('Valid usernames must have at least 2 letters and not contain spaces!');
-      }else{
-        post("/api/is_badwords", {text: [this.state.bio,  this.state.username, this.state.fav_mov, this.state.fav_show, this.state.currently_watching]}).then((result) => {
+        post("/api/is_badwords", {text: [this.state.bio, this.state.fav_mov, this.state.fav_show, this.state.currently_watching]}).then((result) => {
           if(result.is_bad){
             window.alert("The use of bad words is not permitted!");
           }else{
-            post("/api/update_profile", {bio: this.state.bio, updated_uname: this.state.update_uname, googleid: this.state.googleid, new_username: this.state.username, new_m: this.state.fav_mov, new_s: this.state.fav_show, new_c: this.state.currently_watching}).then((updated)=>{
-              if (updated.is_valid){
+            post("/api/update_profile", {bio: this.state.bio, googleid: this.state.googleid, new_m: this.state.fav_mov, new_s: this.state.fav_show, new_c: this.state.currently_watching}).then((updated)=>{
                 this.setState({status: !this.state.status, info_updated: false});
-              }else{
-                window.alert("That username is already taken!");
-              }
-              
             });
           }
         });
-      }
     }
     else{
-      this.setState({status: !this.state.status, info_updated: false, update_uname: false,});
+      this.setState({status: !this.state.status, info_updated: false});
     }
   };
+
+  usernameButtonClicked = () => {
+    if(this.state.locked === false)
+    {if (this.state.update_uname && this.state.user_status){
+      if (this.isValidUsername(this.state.username)){
+        post("/api/is_badwords", {text: [this.state.username]}).then((result) => {
+          if(result.is_bad){
+            window.alert("The use of bad words is not permitted!");
+          }else{
+            post("/api/edit_username", {googleid: this.state.googleid, username: this.state.username}).then((answer) => {
+              if (answer.is_taken === true){
+                window.alert("That username is already taken!");
+              }else{
+                window.alert('Username changed !');
+                this.setState({user_status: !this.state.user_status, update_uname: false});
+              }
+            });
+          }
+        });
+      }else{
+        window.alert("Valid usernames must contain no spaces and at least two letters!");
+      }
+    }else{
+      this.setState({user_status: !this.state.user_status, update_uname: false});
+    }}else{
+      window.alert("You're not allowed to change your username!");
+    }
+  }
 
   render() {
     if (!this.state.name){
@@ -124,15 +145,15 @@ class Profile extends Component {
           <h1 className='u-textCenter'>{this.state.name.split(' ')[0]}'s Profile</h1>
           {this.state.admin && <h1 className="u-textCenter">Thanks for being an admin!</h1>}
           <img src={this.state.picture} className='Profile-picture'/>
-          <div className='username-box'>{(this.state.status && this.state.locked===false)? <input 
+          <div className='username-box'>{(this.state.user_status && this.state.locked===false)? <div className='name-button-container'><input 
             type="text"
             placeholder="username"
             value={this.state.username? this.state.username : ''}
             onChange={this.changeUsername}
             className="Input-input u-textCenter"
             maxLength="16"
-          />
-          : <h1 className='u-textCenter profile-uname'>{this.state.username}</h1>}</div>
+          /><FontAwesomeIcon onClick={this.usernameButtonClicked} size={'2x'} icon={faLock} className='edit-icon icon-profile-edit'/></div>
+          : <div className='name-button-container'><h1 className='u-textCenter profile-uname'>{this.state.username}</h1><FontAwesomeIcon onClick={this.usernameButtonClicked} size={'2x'} className='edit-icon icon-profile-edit'icon={faEdit}/></div>}</div>
           
           <hr className='profile-line'/>
           <div className='entire-container'>
@@ -190,7 +211,7 @@ class Profile extends Component {
             value="Submit"
             onClick={this.buttonClicked}
             >
-            {this.state.status? 'Save Changes': 'Edit Profile'}
+            {this.state.status? <div>Save Changes <FontAwesomeIcon size={'1x'} icon={faLock}/></div>: <div>Edit Profile <FontAwesomeIcon size={'1x'} icon={faEdit}/></div>}
           </button>
           </div>
         </div>

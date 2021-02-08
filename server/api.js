@@ -73,7 +73,30 @@ router.post("/like_review", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-router.post("/update_review", auth.ensureAdmin, (req, res) => {
+router.post("/edit_username", auth.ensureLoggedIn, (req, res) => {
+//googleid, username
+  User.findOne({username: req.body.username}).then((found) => {
+    if (found === null || found.googleid === req.user.googleid){
+      User.updateOne({_id: req.user._id}, {username: req.body.username}).then((s1) => {
+        Comment.updateMany({user_id: req.user._id}, {username: req.body.username}).then((s2) => {
+          if(req.user.admin === true){
+            Announcement.updateMany({admin_id: req.user._id}, {admin_username: req.body.username}).then((s3)=>{
+              Review.updateMany({admin_id: req.user._id}, {admin_username: req.body.username}).then((s4) => {
+                res.send({is_taken: false});
+              });
+            });
+          }else{
+            res.send({is_taken: false})
+          }
+        });
+      });
+    }else{
+      res.send({is_taken: true});
+    }
+  });
+});
+
+router.post("/update_review", auth.ensureRoot, (req, res) => {
   const data = {
     content: req.body.content,
     director: req.body.director,
@@ -190,35 +213,6 @@ router.post("/new_review", auth.ensureAdmin, (req, res) => {
 });
 
 router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
-  if (req.body.updated_uname){
-    User.findOne({username: req.body.new_username}).then((existing_user) => {
-      if (!existing_user || existing_user.googleid === req.body.googleid){
-        User.updateOne({googleid: req.body.googleid}, 
-          {username: req.body.new_username,
-            currently_watching: req.body.new_c,
-            favorite_movie: req.body.new_m,
-            favorite_show: req.body.new_s,
-            bio: req.body.bio,
-          }).then((updated) => {
-            Comment.updateMany({user_id: req.user._id}, {username: req.body.new_username}).then((_success) => {
-              if (req.user.admin){
-                Review.updateMany({admin_id: req.user._id}, {admin_username: req.body.new_username}).then((_success) => {
-                  Announcement.updateMany({admin_id: req.user._id}, {admin_username: req.body.new_username}).then((s_4) => {
-                    res.send({is_valid: true});
-                  });
-                });
-              }else{
-                res.send({is_valid: true});
-              }
-            });
-          });
-      }else{
-        //invalid uname
-        res.send({is_valid: false});
-      }
-    });
-  }
-  else{
     User.updateOne({googleid: req.body.googleid}, 
       {currently_watching: req.body.new_c,
         favorite_movie: req.body.new_m,
@@ -227,9 +221,6 @@ router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
       }).then((updated) => {
         res.send({is_valid: true});
       });
-  }
-    
-  
 });
 
 router.post("/is_badwords", (req, res) => {
@@ -251,7 +242,7 @@ router.get("/recent_reviews", (req, res) => {
 });
 
 router.get("/get_all_other_users", auth.ensureRoot, (req, res) => {
-  User.find({_id: {$ne: req.user._id}}, {username: 1, name: 1, admin: 1, picture: 1, googleid: 1}).then((all_users) => {
+  User.find({_id: {$ne: req.user._id}}, {username: 1, name: 1, admin: 1, picture: 1, googleid: 1, locked: 1,}).then((all_users) => {
     res.send(all_users);
   });
 })

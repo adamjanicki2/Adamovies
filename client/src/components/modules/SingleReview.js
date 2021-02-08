@@ -3,7 +3,7 @@ import { Link, navigate } from "@reach/router";
 import "./SingleReview.css";
 import { convertDate, get, convertPicture } from "../../utilities.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faHeart, faComment, faFilm, faTv } from '@fortawesome/free-solid-svg-icons';
+import {  faHeart, faComment, faFilm, faTv, faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 class SingleReview extends Component {
   constructor(props) {
     super(props);
@@ -42,16 +42,10 @@ class SingleReview extends Component {
         </div>
         </div>
         <div className='Review-linkcontainer'>
-        {/* <Link to={`/review/${this.props.review._id}`} className="u-linked">
-            Read {this.props.review.admin_username}'s Review
-        </Link> */}
-        <img className='reviewcard-pfp' src={this.props.review.admin_picture}/>
-        <h3 className='no-margin admin-link' onClick={()=>{this.navigateAdmin(this.props.review.admin_id,this.props.userId)}}>{this.props.review.admin_username}</h3>
-        {/* <a className="u-linked"href={this.props.review.trailer_link} target="_blank">View Trailer</a> */}
-        {this.props.admin === true && <Link to={`/edit_review/${this.props.review._id}`} className="u-linked">
-          Edit Review
-        </Link>}
-        {this.props.root === true && <div onClick={()=>{this.props.delete_review(this.props.review._id)}}className='u-linked u-pointer'>Delete Review</div>}
+          <img className='reviewcard-pfp' src={this.props.review.admin_picture}/>
+          <h3 className='no-margin admin-link' onClick={()=>{this.navigateAdmin(this.props.review.admin_id,this.props.userId)}}>{this.props.review.admin_username}</h3>
+          {this.props.root && <FontAwesomeIcon onClick={()=>{navigate(`/edit_review/${this.props.review._id}`)}}icon={faEdit} size={'1x'} className='edit-icon'/>}
+          {this.props.root && <FontAwesomeIcon onClick={()=>{this.props.delete_review(this.props.review._id)}} className='trash-icon'icon={faTrashAlt} size={'1x'}/>}
         </div>
       </div>
     );
