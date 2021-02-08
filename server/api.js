@@ -490,13 +490,6 @@ router.post("/lock_user", auth.ensureRoot, (req, res) => {
   });
 });
 
-router.get("/tempy", (req, res) => {
-  User.updateMany({}, {locked: false}).then((s_) =>{
-    res.send({hello: 'world'});
-  })
-});
-
-
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ error: "API path not found :(" });
