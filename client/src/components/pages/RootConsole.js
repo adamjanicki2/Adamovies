@@ -114,7 +114,7 @@ class RootConsole extends Component {
     return (
       <div className='bg'>
         <h1 className='u-pageHeader u-textCenter'>New Comments</h1>
-        {this.state.new_comments===[]? <div className="table-container">
+        {this.state.new_comments.length !== undefined && this.state.new_comments.length > 0? <div className="table-container">
         <table className='styled-table'>
         <thead >
           <tr>

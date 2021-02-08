@@ -39,10 +39,10 @@
     color: #000;
     font-family: "Inter";
     font-size: 24px;
-    border: var(--grey) 3px solid;
-    border-radius: 6px;
+    border: var(--grey) 1px solid;
+    border-radius: var(--xs);
     background-color: #fff;
-    transition: color 0.1s, background 0.1s;
+    box-shadow: 0 0 20px -10px var(--offblack);
     cursor: pointer;
     opacity: .75;
   }
