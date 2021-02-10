@@ -5,12 +5,15 @@ import "./Profile.css";
 import BottomBar from "../modules/BottomBar.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import MiniReview from "../modules/MiniReview.js";
+
 import "./ReviewPage.css";
 class OtherProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: undefined,
+      user_reviews: undefined,
     };
   }
 
@@ -25,10 +28,13 @@ class OtherProfile extends Component {
         user.picture = picture_to_use;
         this.setState({user: user});
     });
+    get("/api/reviews_for_user", {userId: this.props.userId}).then((user_revs) => {
+      this.setState({user_reviews: user_revs});
+    });
   }
 
   render() {
-    if (!this.state.user){
+    if (!this.state.user || this.state.user_reviews === undefined){
         return (<div></div>);
     }
     return (
@@ -38,7 +44,7 @@ class OtherProfile extends Component {
           {this.state.user.admin && <h1 className="u-textCenter">(Admin)</h1>}
           <img src={this.state.user.picture} className='Profile-picture'/>
           <h1 className='u-textCenter profile-uname'>{this.state.user.username}</h1>
-          <hr className='profile-line'/>
+          {/* <hr className='profile-line'/> */}
           <div className='entire-container'>
           <div className="Bio-container">
           <div className="Profile-subContainer u-textCenter">
@@ -67,6 +73,9 @@ class OtherProfile extends Component {
           </div>
         </div>
         </div>
+        {this.state.user.admin && <hr className='profile-line'/>}
+        {this.state.user.admin && <h1 className='u-textCenter u-pageHeaderInter'>{this.state.user.username}'s Reviews</h1>}
+        {this.state.user.admin && <div>{this.state.user_reviews[0] !== undefined? <div className='Mini-reviews-container'>{this.state.user_reviews.map((review)=> <MiniReview review={review}/>)}</div> : <h1 className='u-textCenter'>{this.state.user.username} has no reviews!</h1>}</div>}
         <BottomBar/>
         </div>
         </>

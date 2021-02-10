@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 import "./SingleReview.css";
 import { convertDate, get, convertPicture } from "../../utilities.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

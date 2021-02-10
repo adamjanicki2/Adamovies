@@ -475,6 +475,12 @@ router.post("/refresh_username", auth.ensureRoot, (req, res) => {
   });
 });
 
+router.get("/reviews_for_user", (req, res) => {
+  Review.find({admin_id: req.query.userId}).sort({title: 1}).sort({season: 1}).sort({episode: 1}).then((results) => {
+    res.send(results);
+  });
+});
+
 router.post("/lock_user", auth.ensureRoot, (req, res) => {
   User.updateOne({_id: req.body.user._id}, {locked: !req.body.user.locked}).then((s) => {
     res.send({msg: 'success'});

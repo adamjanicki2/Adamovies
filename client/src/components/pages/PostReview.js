@@ -130,7 +130,7 @@ class PostReview extends Component {
           <tbody>
             {this.state.drafts.map((draft) => 
             <tr>
-              <td>{draft.title}</td>
+              <td><div className='table-cell' onClick={()=>{navigate(`/draft/${draft._id}`)}}>{draft.title}</div></td>
               <td>{draft.type}</td>
               <td><div><FontAwesomeIcon onClick={()=>{navigate(`/draft/${draft._id}`)}} icon={faEdit} size={'1x'} className='edit-icon'/><FontAwesomeIcon onClick={()=>{this.deleteDraft(draft._id)}}className='trash-icon'icon={faTrashAlt} size={'1x'}/></div></td>
           </tr>

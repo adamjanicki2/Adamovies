@@ -5,6 +5,7 @@ import "./Profile.css";
 import BottomBar from "../modules/BottomBar.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faLock, faEdit } from '@fortawesome/free-solid-svg-icons';
+import MiniReview from "../modules/MiniReview.js";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +24,7 @@ class Profile extends Component {
       update_uname: false,
       bio: null,
       locked: null,
+      user_reviews: undefined,
     };
   }
 
@@ -35,6 +37,9 @@ class Profile extends Component {
       }
       document.title = "Adamovies | My Profile"
       this.setState({name: user.name, googleid: user.googleid, username: user.username, picture: picture_to_use, admin: user.admin, currently_watching: user.currently_watching, fav_show: user.favorite_show, fav_mov: user.favorite_movie, bio: user.bio, locked: user.locked});
+    });
+    get("/api/reviews_for_user", {userId: this.props.userId}).then((user_reviews) => {
+      this.setState({user_reviews: user_reviews});
     });
   }
 
@@ -139,6 +144,9 @@ class Profile extends Component {
     if (!this.state.name){
         return (<h1 className='u-textCenter'>Sign In to view profile!</h1>);
     }
+    if (this.state.user_reviews === undefined){
+      return (<div></div>);
+    }
     return (
         <>
         <div className='bg'>
@@ -154,8 +162,6 @@ class Profile extends Component {
             maxLength="16"
           /><FontAwesomeIcon onClick={this.usernameButtonClicked} size={'2x'} icon={faLock} className='edit-icon icon-profile-edit'/></div>
           : <div className='name-button-container'><h1 className='u-textCenter profile-uname'>{this.state.username}</h1><FontAwesomeIcon onClick={this.usernameButtonClicked} size={'2x'} className='edit-icon icon-profile-edit'icon={faEdit}/></div>}</div>
-          
-          <hr className='profile-line'/>
           <div className='entire-container'>
           <div className="Bio-container">
           <div className="Profile-subContainer u-textCenter">
@@ -215,6 +221,9 @@ class Profile extends Component {
           </button>
           </div>
         </div>
+        {this.state.admin && <hr className='profile-line'/>}
+        {this.state.admin && <h1 className='u-textCenter u-pageHeaderInter'>My Reviews</h1>}
+        {this.state.admin && <div>{this.state.user_reviews[0] !== undefined? <div className='Mini-reviews-container'>{this.state.user_reviews.map((review)=> <MiniReview review={review}/>)}</div> : <h1 className='u-textCenter'>You have no reviews!</h1>}</div>}
         <BottomBar />
       </div>
         </>

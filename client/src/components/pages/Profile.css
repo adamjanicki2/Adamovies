@@ -61,11 +61,13 @@
   }
 
   .profile-line {
-    border: 3px solid var(--offblack);
+    border: 1px solid var(--offblack);
     border-radius: 5px;
     width:88%;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
   }
 
   .profile-uname{
@@ -128,3 +130,12 @@
   .icon-profile-edit{
     margin-top: 2%;
   }
+
+  .Mini-reviews-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: 2%;
+    padding-right: 2%;
+    justify-content: center;
+}

@@ -11,10 +11,10 @@ Features:
 - Likes: Reviews can be liked if a user is logged in.
 - Comments: Reviews can be commented on in real-time (sockets) if a user is logged in.
 - Announcements: admin users can post announcements to the homepage in real-time to notify users of new reviews or content.
-- User profiles: users who log in will have the chance to customize their profile; profiles can be viewed by clicking on a user's username from the comments section.
+- User profiles: users who log in will have the chance to customize their profile; profiles can be viewed by clicking on a user's username from the comments section. Admin users will have their reviews displayed on their profile pages.
 - FAQ: page to answer common user questions.
 - About: page to describe what Adamovies is to new users.
 - Admin console: Admin users will have a special page for creating new reviews, and viewing their review drafts. When writing a review, admins have the option to publish the review to the site, or to save the review as a draft and comeback later. The console allows for admins to save as many drafts as they'd like.
 
 
-## Adamovies is now [live!](https://www.adamovies.com) Stop by to come try it out for yourself!
+## Adamovies is now [LIVE!](https://www.adamovies.com) Stop by to come try it out for yourself!
