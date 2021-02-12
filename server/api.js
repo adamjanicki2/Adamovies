@@ -242,7 +242,7 @@ router.get("/recent_reviews", (req, res) => {
 });
 
 router.get("/get_all_other_users", auth.ensureRoot, (req, res) => {
-  User.find({_id: {$ne: req.user._id}}, {username: 1, name: 1, admin: 1, picture: 1, googleid: 1, locked: 1,}).then((all_users) => {
+  User.find({_id: {$ne: req.user._id}}, {username: 1, name: 1, admin: 1, picture: 1, googleid: 1, locked: 1, can_comment: 1}).then((all_users) => {
     res.send(all_users);
   });
 })
@@ -483,6 +483,12 @@ router.get("/reviews_for_user", (req, res) => {
 
 router.post("/lock_user", auth.ensureRoot, (req, res) => {
   User.updateOne({_id: req.body.user._id}, {locked: !req.body.user.locked}).then((s) => {
+    res.send({msg: 'success'});
+  });
+});
+
+router.post("/edit_comment_permissions", auth.ensureRoot, (req, res) => {
+  User.updateOne({_id: req.body.user._id}, {can_comment: !req.body.user.can_comment}).then((s) => {
     res.send({msg: 'success'});
   });
 });

@@ -120,7 +120,8 @@ class ReviewPage extends Component {
         <hr className='review-line'/>
         <div>
           <div className='comment-bubble'><FontAwesomeIcon className='comment-icon-reviewpage' icon={faComment} size={'2x'}/><h2 className='likes-text'>{this.state.comments.length}</h2></div>
-            {this.props.userId? <div className="Comment-bar"><NewComment movieId={this.state.review._id} title={this.state.review.title}className='Comment-bar'/></div> : <div></div>}
+            {(this.props.userId && this.props.user_can_comment === true) && <div className="Comment-bar"><NewComment movieId={this.state.review._id} title={this.state.review.title}className='Comment-bar'/></div>}
+            {this.props.user_can_comment === false && <h3>Your comment permissions have been revoked!</h3>}
             {comments_list}
         </div>
         </div>

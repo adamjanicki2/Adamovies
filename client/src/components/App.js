@@ -27,13 +27,14 @@ class App extends Component {
       admin: null,
       root: null,
       timestamp: null,
+      can_comment: undefined,
     };
   }
 
   componentDidMount() {
     get("/api/whoami").then((user) => {
       if (user._id) {
-        this.setState({ userId: user._id, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login});
+        this.setState({ userId: user._id, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login, can_comment: user.can_comment});
       }
     });
   }
@@ -45,14 +46,14 @@ class App extends Component {
         window.alert("You've been banned from having an Adamovies account. This means you can no longer comment or have a profile.");
       }else{
         console.log(`Logged in as ${user.name}`);
-        this.setState({ userId: user._id , user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login});
+        this.setState({ userId: user._id , user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login, can_comment: user.can_comment});
         post("/api/initsocket", { socketid: socket.id });
       }
     });
   };
 
   handleLogout = () => {
-    this.setState({ userId: undefined, user_name: "", user_picture: null, admin: null, root: null , timestamp: null});
+    this.setState({ userId: undefined, user_name: "", user_picture: null, admin: null, root: null , timestamp: null, can_comment: undefined});
     post("/api/logout");
     navigate('/');
   };
@@ -79,7 +80,7 @@ class App extends Component {
           <Reviews path='/movies' userId={this.state.userId} admin={this.state.admin} root={this.state.root} type={'movie'}/>
           <Reviews path='/tvshows' userId={this.state.userId} admin={this.state.admin} root={this.state.root} type={'show'}/>
           <Home path="/" userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>
-          <ReviewPage path='/review/:movieId' userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>
+          <ReviewPage path='/review/:movieId' userId={this.state.userId} admin={this.state.admin} root={this.state.root} user_can_comment={this.state.can_comment}/>
           {this.state.userId && <Profile path='/myprofile' userId={this.state.userId}/>}
           <OtherProfile path="/user/:userId"/>
           {this.state.admin === true && <PostReview path="/post_review" userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>}

@@ -119,3 +119,13 @@
   opacity: 0.6;
 
 }
+
+.mic-icon{
+  margin-left: 1%;
+  margin-right: 1%;
+  color: #f79862;
+}
+.mic-icon:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}

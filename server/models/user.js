@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema({
   username: String,
   bio: String,
   locked: Boolean,
+  can_comment: Boolean,
 });
 
 module.exports = mongoose.model("user", UserSchema);

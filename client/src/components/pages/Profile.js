@@ -124,7 +124,7 @@ class Profile extends Component {
               if (answer.is_taken === true){
                 window.alert("That username is already taken!");
               }else{
-                window.alert('Username changed !');
+                window.alert('Username changed!');
                 this.setState({user_status: !this.state.user_status, update_uname: false});
               }
             });

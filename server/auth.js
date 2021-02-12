@@ -36,6 +36,7 @@ function getOrCreateUser(user) {
           username: createUsername(),
           bio: "Happy Adamovies user!",
           locked: false,
+          can_comment: true,
         });
         return newUser.save();
       });

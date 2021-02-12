@@ -6,7 +6,7 @@ import { get, post, convertPicture, convertDate } from "../../utilities.js";
 import { navigate } from '@reach/router';
 import BottomBar from '../modules/BottomBar.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faTrashAlt, faArrowUp, faArrowDown, faSyncAlt, faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import {  faTrashAlt, faArrowUp, faArrowDown, faSyncAlt, faLock, faLockOpen, faMicrophone, faMicrophoneSlash } from '@fortawesome/free-solid-svg-icons';
 class RootConsole extends Component {
   constructor(props) {
     super(props);
@@ -49,6 +49,17 @@ class RootConsole extends Component {
       });
     }
   }
+
+  changeCommentPermissions = (user, i) => {
+    const comm = user.can_comment? 'disable' : 'enable';
+    if (window.confirm('Click OK to '+comm+' comment permissions for '+user.username)){
+      post("/api/edit_comment_permissions", {user: user}).then((s) => {
+        let all_users_copy = this.state.all_users;
+        all_users_copy[i].can_comment = !user.can_comment;
+        this.setState({all_users: all_users_copy});
+      });
+    }
+  };
 
   lockUser = (user, i) => {
     const lock = user.locked? 'unlock':'lock';
@@ -164,7 +175,7 @@ class RootConsole extends Component {
           {this.state.all_users.map((user, i) => 
           <tr>
             <td ><div className='table-cell'onClick={()=>{navigate(`/user/${user._id}`)}}><img src={convertPicture('20', user.picture)} className='root-pfp'/> {user.name+` (${user.username})`}</div></td>
-            <td><div><FontAwesomeIcon className={user.admin? 'arrow-down':'arrow-up'} onClick={()=>{this.changeAdmin(user, i)}} icon={user.admin? faArrowDown : faArrowUp} /><FontAwesomeIcon className='refresh-icon' icon={faSyncAlt} size={'1x'} onClick={()=>{this.refreshUsername(user, i)}} /><FontAwesomeIcon onClick={()=>{this.lockUser(user, i)}} className='lock-icon'size={'1x'} icon={user.locked? faLockOpen : faLock}/><FontAwesomeIcon onClick={()=>{this.banUser(user, i)}} className='trash-icon'icon={faTrashAlt} size={'1x'}/></div></td>
+            <td><div><FontAwesomeIcon className={user.admin? 'arrow-down':'arrow-up'} onClick={()=>{this.changeAdmin(user, i)}} icon={user.admin? faArrowDown : faArrowUp} /><FontAwesomeIcon className='refresh-icon' icon={faSyncAlt} size={'1x'} onClick={()=>{this.refreshUsername(user, i)}} /><FontAwesomeIcon className='mic-icon' icon={user.can_comment? faMicrophoneSlash : faMicrophone} size={'1x'} onClick={()=>{this.changeCommentPermissions(user, i)}} /><FontAwesomeIcon onClick={()=>{this.lockUser(user, i)}} className='lock-icon'size={'1x'} icon={user.locked? faLockOpen : faLock}/><FontAwesomeIcon onClick={()=>{this.banUser(user, i)}} className='trash-icon'icon={faTrashAlt} size={'1x'}/></div></td>
         </tr>
     )}
     </tbody>
