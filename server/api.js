@@ -493,6 +493,63 @@ router.post("/edit_comment_permissions", auth.ensureRoot, (req, res) => {
   });
 });
 
+//FOR STATS PAGE:
+router.get('/num_users', (req, res) => {
+  User.find({}).then((users) => {
+    res.send({total: users.length, admin: users.filter(elt => elt.admin === true).length});
+  });
+});
+
+router.get('/num_reviews', (req, res) => {
+  Review.find({}).sort({rating: 1}).then((all_reviews) => {
+    let summed = 0;
+    let likes = 0;
+    let maxLikes = {likes: -1}
+    for (const review of all_reviews){
+      summed += review.rating;
+      likes += review.likes;
+      if (review.likes > maxLikes.likes){
+        maxLikes = {title: review.title, season: review.season, episode: review.episode, likes: review.likes};
+      }
+    }
+    res.send({total: all_reviews.length, likes: likes, avg_rating: Math.floor(summed/all_reviews.length), maxLikes: maxLikes, minRating: all_reviews[0], maxRating: all_reviews[all_reviews.length - 1]})
+  });
+});
+
+router.get("/num_announcements", (req, res) => {
+  Announcement.find({}).then((a) => {
+    res.send({total: a.length});
+  });
+});
+
+function find_mode(arr){
+  let mapping = {};
+  for (const elt of arr){
+    if (mapping[elt.review_id] === undefined){
+      mapping[elt.review_id] = 0;
+    }
+    mapping[elt.review_id] += 1;
+  }
+  let max_count = 0;
+  let max_elt = '';
+  for (const prop in mapping){
+    if (mapping[prop] > max_count){
+      max_count = mapping[prop];
+      max_elt = `${prop.replace('\n', '')}`;
+    }
+  }
+  return [max_elt, max_count];
+}
+
+router.get("/num_comments", (req, res) => {
+  Comment.find({}, {review_id: 1}).then((all_comments) => {
+    const max_review = find_mode(all_comments);
+    Review.findOne({_id: max_review[0]}).then((review) => {
+      res.send({total: all_comments.length, maxCommented: review, maxAmount: max_review[1]});
+    });
+  });
+});
+
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ error: "API path not found :(" });

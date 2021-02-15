@@ -17,6 +17,7 @@ import Reviews from "./pages/Reviews.js"
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
+import Stats from "./pages/Stats.js";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -89,6 +90,7 @@ class App extends Component {
           {this.state.admin === true && <EditDraft path={'/draft/:draftId'} userId={this.state.userId} admin={this.state.admin}/>}
           <FAQ path='/faq'/>
           <About path='/about'/>
+          <Stats path='/statistics'/>
           <NotFound default />
         </Router>
         </div>
