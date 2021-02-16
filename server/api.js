@@ -504,15 +504,17 @@ router.get('/num_reviews', (req, res) => {
   Review.find({}).sort({rating: 1}).then((all_reviews) => {
     let summed = 0;
     let likes = 0;
+    let word_count = 0;
     let maxLikes = {likes: -1}
     for (const review of all_reviews){
       summed += review.rating;
       likes += review.likes;
+      word_count += review.content.join(" ").split(" ").length;
       if (review.likes > maxLikes.likes){
         maxLikes = {title: review.title, season: review.season, episode: review.episode, likes: review.likes};
       }
     }
-    res.send({total: all_reviews.length, likes: likes, avg_rating: Math.floor(summed/all_reviews.length), maxLikes: maxLikes, minRating: all_reviews[0], maxRating: all_reviews[all_reviews.length - 1]})
+    res.send({wordCount: word_count, total: all_reviews.length, likes: likes, avg_rating: Math.floor(summed/all_reviews.length), maxLikes: maxLikes, minRating: all_reviews[0], maxRating: all_reviews[all_reviews.length - 1]})
   });
 });
 

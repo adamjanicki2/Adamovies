@@ -44,7 +44,7 @@ class Stats extends Component {
         <ul>
             <li className='stats-text'>We have <span className='u-bold'>{this.state.users.total}</span> Registered users</li>
             <li className='stats-text'><span className='u-bold'>{this.state.users.admin}</span> of those users are admins</li>
-            <li className='stats-text'>There are <span className='u-bold'>{this.state.reviews.total}</span> admin reviews</li>
+            <li className='stats-text'>There are <span className='u-bold'>{this.state.reviews.total}</span> admin reviews totaling <span className='u-bold'>{this.state.reviews.wordCount}</span> words</li>
             <li className='stats-text'>Adamovies users have left <span className='u-bold'>{this.state.comments.total}</span> comments</li>
             <li className='stats-text'>Reviews have received <span className='u-bold'>{this.state.reviews.likes}</span> total likes</li>
             <li className='stats-text'>The most liked review is <span className='u-bold'>{this.state.reviews.maxLikes.title+`${this.state.reviews.maxLikes.season !== 0? ` S${this.state.reviews.maxLikes.season}`+`${this.state.reviews.maxLikes.episode !== 0? `E${this.state.reviews.maxLikes.episode}` : ''}` : ''}`}</span> with <span className='u-bold'>{this.state.reviews.maxRating.likes}</span> likes</li>
