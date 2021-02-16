@@ -23,6 +23,8 @@ class BottomBar extends Component {
             <div> • </div>
             <div onClick={()=>{navigate('/statistics')}} className='Bottom-links'>Stats</div>
             <div> • </div>
+            <a className="Bottom-links" href="mailto:adamoviessite@gmail.com" target="_blank">Contact</a>
+            <div> • </div>
             <a className="Bottom-links" href="/code.js" target="_blank">View Source Code</a>
         </div>
       );
