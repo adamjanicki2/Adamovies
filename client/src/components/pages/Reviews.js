@@ -19,7 +19,7 @@ class Reviews extends Component {
   }
 
   componentDidMount() {
-    document.title = this.props.type === 'movie'? 'Adamovies | Movies' : 'Adamovies | TV Shows';
+    document.title = this.props.type === 'movie'? 'Movies | Adamovies' : 'TV Shows | Adamovies';
     get("/api/get_reviews", {type: this.props.type}).then((reviews) => {
       this.setState({reviews: reviews, reviews_to_display: [...reviews],});
     });

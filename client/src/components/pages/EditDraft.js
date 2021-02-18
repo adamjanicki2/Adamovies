@@ -28,7 +28,7 @@ class EditDraft extends Component {
   }
 
   componentDidMount() {
-    document.title = "Adamovies | Edit Draft";
+    document.title = "Edit Draft | Adamovies";
     get("/api/get_single_draft", {draftId: this.props.draftId}).then((single_review) => {
       const newState = {
         title: single_review.title,

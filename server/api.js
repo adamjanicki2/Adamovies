@@ -511,7 +511,7 @@ router.get('/num_reviews', (req, res) => {
       likes += review.likes;
       word_count += review.content.join(" ").split(" ").length;
       if (review.likes > maxLikes.likes){
-        maxLikes = {title: review.title, season: review.season, episode: review.episode, likes: review.likes};
+        maxLikes = {_id: review._id, title: review.title, season: review.season, episode: review.episode, likes: review.likes};
       }
     }
     res.send({wordCount: word_count, total: all_reviews.length, likes: likes, avg_rating: Math.floor(summed/all_reviews.length), maxLikes: maxLikes, minRating: all_reviews[0], maxRating: all_reviews[all_reviews.length - 1]})
@@ -547,7 +547,7 @@ router.get("/num_comments", (req, res) => {
   Comment.find({}, {review_id: 1}).then((all_comments) => {
     const max_review = find_mode(all_comments);
     Review.findOne({_id: max_review[0]}).then((review) => {
-      res.send({total: all_comments.length, maxCommented: review, maxAmount: max_review[1]});
+      res.send({total: all_comments.length, maxCommented: review, maxAmount: max_review[1], _id: max_review[0]});
     });
   });
 });

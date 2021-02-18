@@ -35,7 +35,7 @@ class Profile extends Component {
         const SIZE_ = '450'; //dimensions of pfp, change this number to change the size, make sure to change width/h in navbar.css
         picture_to_use = convertPicture(SIZE_, user.picture);
       }
-      document.title = "Adamovies | My Profile"
+      document.title = "My Profile | Adamovies";
       this.setState({name: user.name, googleid: user.googleid, username: user.username, picture: picture_to_use, admin: user.admin, currently_watching: user.currently_watching, fav_show: user.favorite_show, fav_mov: user.favorite_movie, bio: user.bio, locked: user.locked});
     });
     get("/api/reviews_for_user", {userId: this.props.userId}).then((user_reviews) => {

@@ -30,7 +30,7 @@ class PostReview extends Component {
     };
   }
   componentDidMount() {
-    document.title = "Adamovies | Post Review"
+    document.title = "Post Review | Adamovies";
     get("/api/whoami").then((user) => {
       this.setState({user: user});
     });

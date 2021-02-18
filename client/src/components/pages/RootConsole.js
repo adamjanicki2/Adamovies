@@ -19,7 +19,7 @@ class RootConsole extends Component {
   }
 
   componentDidMount() {
-    document.title = 'Adamovies | Root Console';
+    document.title = 'Root Console | Adamovies';
     get('/api/get_all_other_users').then((all_users) =>{
         this.setState({all_users: all_users});
     });

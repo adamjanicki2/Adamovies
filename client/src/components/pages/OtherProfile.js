@@ -24,7 +24,8 @@ class OtherProfile extends Component {
         const SIZE_ = '450'; //dimensions of pfp, change this number to change the size, make sure to change width/h in navbar.css
         picture_to_use = convertPicture(SIZE_, user.picture);
       }
-        document.title = "Adamovies | User: "+user.username
+        const type_user = user.admin? 'Admin: ' : 'User: ';
+        document.title = type_user+user.username+" | Adamovies";
         user.picture = picture_to_use;
         this.setState({user: user});
     });

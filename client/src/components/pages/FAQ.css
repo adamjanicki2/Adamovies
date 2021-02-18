@@ -71,3 +71,12 @@
     border: 1px solid var(--grey);
     box-shadow: 0 0 30px -10px;
 }
+
+.movie-link{
+    text-decoration: underline;
+    color: var(--offblack);
+}
+
+.movie-link:hover{
+    color: #0269a4;
+}

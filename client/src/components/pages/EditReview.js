@@ -28,7 +28,7 @@ class EditReview extends Component {
   }
 
   componentDidMount() {
-    document.title = "Adamovies | Edit Review";
+    document.title = "Edit Review | Adamovies";
     get("/api/get_single_review", {movieId: this.props.reviewId}).then((single_review) => {
       const newState = {
         title: single_review.title,

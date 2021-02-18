@@ -28,7 +28,7 @@ class ReviewPage extends Component {
         if (movie.episode !== 0){
           se+='E'+movie.episode.toString();
         }
-        document.title = "Adamovies | "+movie.title +' '+se+ " ("+movie.release_year+")"
+        document.title = movie.title +' '+se+ " ("+movie.release_year+") | Adamovies";
         // console.log(movie);
         this.setState({review: movie, comments: comments, liked_review: movie.liked_users.includes(this.props.userId)});
       });
