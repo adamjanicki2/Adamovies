@@ -14,6 +14,7 @@ Features:
 - User profiles: users who log in will have the chance to customize their profile; profiles can be viewed by clicking on a user's username from the comments section. Admin users will have their reviews displayed on their profile pages.
 - FAQ: page to answer common user questions.
 - About: page to describe what Adamovies is to new users.
+- Stats: page containing statistics about the site, such as number of reviews posted, highest rated movie, etc.
 - Admin console: Admin users will have a special page for creating new reviews, and viewing their review drafts. When writing a review, admins have the option to publish the review to the site, or to save the review as a draft and comeback later. The console allows for admins to save as many drafts as they'd like.
 
 
