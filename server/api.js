@@ -157,6 +157,7 @@ router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
           picture_to_use = req.user.picture;
         }
       }
+      
       const data = {
         user_name: req.user.name,
         user_id: req.user._id,
@@ -551,7 +552,6 @@ router.get("/num_comments", (req, res) => {
     });
   });
 });
-
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

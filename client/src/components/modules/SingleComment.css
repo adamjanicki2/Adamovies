@@ -64,3 +64,8 @@
     justify-content: center;
     align-items: center;
 }
+
+.boldedname{
+    padding-left: 4px;
+    padding-right: 4px;
+}
