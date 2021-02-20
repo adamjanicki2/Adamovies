@@ -75,9 +75,9 @@ router.post("/like_review", auth.ensureLoggedIn, (req, res) => {
 
 router.post("/edit_username", auth.ensureLoggedIn, (req, res) => {
 //googleid, username
-  User.findOne({username: req.body.username}).then((found) => {
+  User.findOne({username_lower: req.body.username.toLowerCase()}).then((found) => {
     if (found === null || found.googleid === req.user.googleid){
-      User.updateOne({_id: req.user._id}, {username: req.body.username}).then((s1) => {
+      User.updateOne({_id: req.user._id}, {username: req.body.username, username_lower: req.body.username.toLowerCase()}).then((s1) => {
         Comment.updateMany({user_id: req.user._id}, {username: req.body.username}).then((s2) => {
           if(req.user.admin === true){
             Announcement.updateMany({admin_id: req.user._id}, {admin_username: req.body.username}).then((s3)=>{
@@ -460,7 +460,7 @@ function createUsername(){
 
 router.post("/refresh_username", auth.ensureRoot, (req, res) => {
   const new_username = createUsername();
-  User.updateOne({_id: req.body.user._id}, {username: new_username}).then((s1) => {
+  User.updateOne({_id: req.body.user._id}, {username: new_username, username_lower: new_username.toLowerCase()}).then((s1) => {
     Comment.updateMany({user_id: req.body.user._id}, {username: new_username}).then((s2) => {
       if(req.body.user.admin){
         Review.updateMany({admin_id: req.body.user._id}, {admin_username: new_username}).then((s3) => {
@@ -551,6 +551,7 @@ router.get("/num_comments", (req, res) => {
     });
   });
 });
+
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

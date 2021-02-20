@@ -22,7 +22,7 @@ function getOrCreateUser(user) {
     }else{
       return User.findOne({ googleid: user.sub }).then((existingUser) => {
         if (existingUser) return existingUser;
-    
+        const newUname = createUsername();
         const newUser = new User({
           name: user.name,
           googleid: user.sub,
@@ -33,7 +33,8 @@ function getOrCreateUser(user) {
           favorite_movie: 'Not Set',
           favorite_show: 'Not Set',
           last_login: Date.now(),
-          username: createUsername(),
+          username: newUname,
+          username_lower: newUname.toLowerCase(),
           bio: "Happy Adamovies user!",
           locked: false,
           can_comment: true,

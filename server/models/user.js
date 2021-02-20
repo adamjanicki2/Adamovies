@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
   favorite_show: String,
   last_login: Number,
   username: String,
+  username_lower: String,
   bio: String,
   locked: Boolean,
   can_comment: Boolean,
