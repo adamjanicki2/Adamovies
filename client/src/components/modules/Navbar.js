@@ -56,6 +56,7 @@ class Navbar extends Component {
               {this.props.root === true && <Link to="/root_console" className={this.props.location.pathname === '/root_console'? "Navbar-route Route-clicked":"Navbar-route"} >
                 Root
               </Link>}
+              {(this.props.root === true && this.props.new_comments != 0 && this.props.new_comments != undefined) && <div className='root-notis'>{this.props.new_comments}</div>}
             </div>
             <div className="log-container">
               {this.props.userId && <div className='pfpname-container' onClick={() => {navigate('/myprofile')}}>

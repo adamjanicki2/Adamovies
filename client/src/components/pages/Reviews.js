@@ -69,16 +69,34 @@ class Reviews extends Component {
 
   updateQuery = (newQuery) => {
     const lower = newQuery.toLowerCase();
+    const noSpaces = newQuery.toLowerCase().replace(" ", "");
+    const noJunk = newQuery.toLowerCase().replace(":,./?!@#$%^&*()+=;{}[]", "");
+    const noBoth = newQuery.toLowerCase().replace(" :,./?!@#$%^&*()+=;{}[]", "");
+    const checkArr = [noSpaces, lower, noJunk, noBoth];
     const newReviews_list = lower === '' || lower === 'all'? [...this.state.reviews] : 
     this.state.reviews.filter(review => 
-      review.title.toLowerCase() === lower ||
+      checkArr.includes(review.title.toLowerCase()) ||
       review.title.toLowerCase().split(' ').includes(lower) ||
-      review.director.toLowerCase() === lower ||
+      review.title.toLowerCase().split(' ').includes(noSpaces) ||
+      review.title.toLowerCase().split(' ').includes(noJunk) ||
+      review.title.toLowerCase().split(' ').includes(noBoth) ||
+      review.title.toLowerCase().replace(":,./?!@#$%^&*()+=;{}[]", "").split(' ').includes(lower) ||
+      review.title.toLowerCase().replace(":,./?!@#$%^&*()+=;{}[]", "").split(' ').includes(noSpaces) ||
+      review.title.toLowerCase().replace(":,./?!@#$%^&*()+=;{}[]", "").split(' ').includes(noJunk) ||
+      review.title.toLowerCase().replace(":,./?!@#$%^&*()+=;{}[]", "").split(' ').includes(noBoth) ||
+      checkArr.includes(review.director.toLowerCase()) ||
       review.director.toLowerCase().split(' ').includes(lower) ||
-      review.mpa_rating.toLowerCase() === lower ||
-      review.release_year.toString() === newQuery ||
+      review.director.toLowerCase().split(' ').includes(noSpaces) ||
+      review.director.toLowerCase().split(' ').includes(noJunk) ||
+      review.director.toLowerCase().split(' ').includes(noBoth) ||
+      checkArr.includes(review.mpa_rating) ||
+      checkArr.includes(review.release_year.toString()) ||
       review.genre.toLowerCase().split('/').includes(lower) ||
-      review.admin_username.toLowerCase() === lower);
+      review.genre.toLowerCase().split('/').includes(noSpaces) ||
+      review.genre.toLowerCase().split('/').includes(noJunk) ||
+      review.genre.toLowerCase().split('/').includes(noBoth) ||
+      checkArr.includes(review.rating.toString()) ||
+      checkArr.includes(review.admin_username));
     this.setState({reviews_to_display: this.sortReviews(newReviews_list, this.state.sort_option)});
   };
 

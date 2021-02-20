@@ -29,7 +29,19 @@
     font-size: 24px;
     font-weight: 300;
   }
-
+  .root-notis{
+    color: white;
+    opacity: 1.0;
+    text-decoration: none;
+    font-size: 24px;
+    margin-left: 3%;
+    margin-right: 16px;
+    background-color: #f44444;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    border-radius: 25%;
+    box-shadow: 0 0 10px -10px var(--offblack);
+  }
   .Navbar-route {
     color: var(--offwhite);
     opacity: 0.95;
