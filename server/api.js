@@ -5,6 +5,7 @@ const Review = require("./models/review");
 const Comment = require("./models/comment");
 const Announcement = require("./models/announcement");
 const Draft = require("./models/draft");
+const Mention = require("./models/mention");
 //////////////////////
 const BannedUser = require("./models/banneduser");
 const auth = require("./auth");
@@ -54,7 +55,9 @@ router.get("/get_single_user", (req, res) => {
 
 router.post("/delete_comment", auth.ensureRoot, (req, res) => {
   Comment.findByIdAndDelete(req.body.comment_id).then((deleted) => {
-    res.send({msg: 'Deleted comment '+req.body.comment_id});
+    Mention.deleteMany({comment_id: req.body.comment_id}).then((deletedagain) => {
+      res.send({msg: 'Deleted comment '+req.body.comment_id});
+    });
   });
 });
 
@@ -136,6 +139,33 @@ router.get("/get_comments_for_review", (req, res) => {
   });
 });
 
+function createMentions(ats, newComment, req, currentTime) {
+  if (ats.size !== 0){
+    ats.forEach(function(mention) {
+      User.findOne({username_lower: mention.substring(1).toLowerCase()}).then((found) => {
+          if (found !== null && found !== undefined){
+            const mention_data = {
+              recipient_username: found.username,
+              recipient_username_lower: found.username.toLowerCase(),
+              recipient_id: found._id,
+              sender_id: req.user._id,
+              sender_username: req.user.username,
+              timestamp: currentTime,
+              review_id: req.body.review_id,
+              title: req.body.title,
+              comment_id: newComment._id,
+              sender_picture: convpic("18", req.user.picture),
+              comment_content: newComment.content,
+            };
+            const newMention = new Mention(mention_data);
+            socketManager.getIo().emit("mention "+mention_data.recipient_id, mention_data);
+            newMention.save();
+          }
+      });
+    });
+  }
+}
+
 router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
   if (filter.isProfane(req.body.content)) {
     res.send({msg: 'bad language!'});
@@ -157,7 +187,13 @@ router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
           picture_to_use = req.user.picture;
         }
       }
-      
+      const currentTime = Date.now();
+      let ats = new Set();
+      for (const chunk of req.body.content.split(" ")){
+        if(chunk.includes("@")){
+          ats.add(chunk);
+        }
+      }      
       const data = {
         user_name: req.user.name,
         user_id: req.user._id,
@@ -166,13 +202,14 @@ router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
         content: req.body.content,
         picture: picture_to_use,
         title: req.body.title,
-        timestamp: Date.now(),
+        timestamp: currentTime,
         username: existing_user.username,
       };
-      const newComment = new Comment(data);
-      newComment.save();
-      socketManager.getIo().emit(req.body.review_id, data);
-      res.send(data);
+      Comment.create(data).then((newComment) => {
+        socketManager.getIo().emit(req.body.review_id, data);
+        createMentions(ats, newComment, req, currentTime);
+        res.send(newComment);
+      });
     });
   }
 });
@@ -180,6 +217,12 @@ router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
 router.post("/update_timestamp", auth.ensureLoggedIn, (req, res) => {
   User.updateOne({_id: req.user._id}, {last_login: Date.now()}).then((r) => {
     res.send({msg: 'success'});
+  });
+});
+
+router.get("/new_mentions", auth.ensureLoggedIn, (req, res) => {
+  Mention.find({recipient_id: req.user._id, timestamp: {$gt: req.query.timestamp}}).sort({timestamp: 1}).then((new_mentions) => {
+    res.send(new_mentions);
   });
 });
 
@@ -243,7 +286,7 @@ router.get("/recent_reviews", (req, res) => {
 });
 
 router.get("/get_all_other_users", auth.ensureRoot, (req, res) => {
-  User.find({_id: {$ne: req.user._id}}, {username: 1, name: 1, admin: 1, picture: 1, googleid: 1, locked: 1, can_comment: 1}).then((all_users) => {
+  User.find({_id: {$ne: req.user._id}}, {_id: 1, username: 1, name: 1, admin: 1, picture: 1, googleid: 1, locked: 1, can_comment: 1}).then((all_users) => {
     res.send(all_users);
   });
 })
@@ -300,9 +343,11 @@ router.post("/ban_user", auth.ensureRoot, (req,res) => {
   //req.body.user
   User.findByIdAndDelete(req.body.user._id).then((success) => {
     Comment.deleteMany({user_googleid: req.body.user.googleid}).then((success_) => {
-      const newBanned = new BannedUser({name: req.body.user.name, googleid: req.body.user.googleid});
-      newBanned.save();
-      res.send({msg: 'successfully banned user'});
+      Mention.deleteMany({sender_id: req.body.user._id}).then((success__) => {
+        const newBanned = new BannedUser({name: req.body.user.name, googleid: req.body.user.googleid});
+        newBanned.save();
+        res.send({msg: 'successfully banned user'});
+      });
     });
   })
 });

@@ -182,7 +182,7 @@ class RootConsole extends Component {
     </table>
     </div>
     <h1 className='u-pageHeader u-textCenter'>Banned Users</h1>
-    {this.state.all_bannedusers === []?<div className="table-container">
+    {this.state.all_bannedusers !== []?<div className="table-container">
         <table className='styled-table'>
         <thead >
           <tr>

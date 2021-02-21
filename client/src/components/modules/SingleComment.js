@@ -22,7 +22,6 @@ class SingleComment extends Component {
     const time_to_display = convertDate(this.props.timestamp);
     let text_to_display = [];
     let mentioned = false;
-    console.log(this.props.self_id)
     if (this.props.content.includes("@") && this.props.self_id !== undefined){
       let content_copy = this.props.content;
       const ats = this.props.content.split(" ").filter((word) => word.toLowerCase() === '@'+this.props.self_username.toLowerCase())
@@ -38,7 +37,6 @@ class SingleComment extends Component {
           text_to_display.push(<span className='u-bold boldedname'>{'@'+this.props.self_username}</span>);
         }
       }
-      console.log(text_to_display);
     }
     return (
       <div className={"Comment-body "+this.props.color}>

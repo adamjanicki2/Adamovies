@@ -6,6 +6,7 @@ import BottomBar from "../modules/BottomBar.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faLock, faEdit } from '@fortawesome/free-solid-svg-icons';
 import MiniReview from "../modules/MiniReview.js";
+import Notifications from "../modules/Notifications.js";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +26,7 @@ class Profile extends Component {
       bio: null,
       locked: null,
       user_reviews: undefined,
+      mentions: undefined,
     };
   }
 
@@ -36,11 +38,15 @@ class Profile extends Component {
         picture_to_use = convertPicture(SIZE_, user.picture);
       }
       document.title = "My Profile | Adamovies";
-      this.setState({name: user.name, googleid: user.googleid, username: user.username, picture: picture_to_use, admin: user.admin, currently_watching: user.currently_watching, fav_show: user.favorite_show, fav_mov: user.favorite_movie, bio: user.bio, locked: user.locked});
+      get("/api/new_mentions", {timestamp: this.props.last_login}).then((mentions) => {
+        this.setState({mentions: mentions, name: user.name, googleid: user.googleid, username: user.username, picture: picture_to_use, admin: user.admin, currently_watching: user.currently_watching, fav_show: user.favorite_show, fav_mov: user.favorite_movie, bio: user.bio, locked: user.locked});
+        post("/api/update_timestamp");
+      });
     });
     get("/api/reviews_for_user", {userId: this.props.userId}).then((user_reviews) => {
       this.setState({user_reviews: user_reviews});
     });
+    
   }
 
   changeCurrently = (event) => {
@@ -144,7 +150,7 @@ class Profile extends Component {
     if (!this.state.name){
         return (<h1 className='u-textCenter'>Sign In to view profile!</h1>);
     }
-    if (this.state.user_reviews === undefined){
+    if (this.state.user_reviews === undefined || this.state.mentions === undefined){
       return (<div></div>);
     }
     return (
@@ -221,6 +227,9 @@ class Profile extends Component {
           </button>
           </div>
         </div>
+        <hr className='profile-line'/>
+        <h1 className='u-textCenter u-pageHeaderInter'>New Mentions</h1>
+        {this.state.mentions.length === 0? <h1 className='u-textCenter'>No new mentions!</h1> : <Notifications mentions={this.state.mentions} self_id={this.props.userId}/>}
         {this.state.admin && <hr className='profile-line'/>}
         {this.state.admin && <h1 className='u-textCenter u-pageHeaderInter'>My Reviews</h1>}
         {this.state.admin && <div>{this.state.user_reviews[0] !== undefined? <div className='Mini-reviews-container'>{this.state.user_reviews.map((review)=> <MiniReview review={review}/>)}</div> : <h1 className='u-textCenter'>You have no reviews!</h1>}</div>}

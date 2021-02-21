@@ -33,14 +33,14 @@
     color: white;
     opacity: 1.0;
     text-decoration: none;
-    font-size: 24px;
-    margin-left: 3%;
-    margin-right: 16px;
+    font-size: 16px;
+    margin-left: -0.5%;
+    margin-bottom: 4%;
     background-color: #f44444;
-    padding-left: 2.5%;
-    padding-right: 2.5%;
+    padding-left: 1%;
+    padding-right: 1%;
     border-radius: 25%;
-    box-shadow: 0 0 10px -10px var(--offblack);
+    box-shadow: 0 0 10px -10px #f44444;
   }
   .Navbar-route {
     color: var(--offwhite);
@@ -169,4 +169,19 @@
   transition: all .25s ease-in-out;
   color: #fff;
   opacity: 1.0;
+}
+
+.badge-app{
+  color: white;
+  opacity: 1.0;
+  text-decoration: none;
+  font-size: 16px;
+  margin-left: -10%;
+  margin-right: 16px;
+  background-color: #f44444;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  margin-bottom: 8%;
+  border-radius: 25%;
+  box-shadow: 0 0 10px -10px #f44444;
 }

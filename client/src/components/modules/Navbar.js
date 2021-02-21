@@ -62,6 +62,7 @@ class Navbar extends Component {
               {this.props.userId && <div className='pfpname-container' onClick={() => {navigate('/myprofile')}}>
                 <img src={picture_to_use} className='Navbar-pfp'/>
                 <h2 className="Navbar-name">{this.props.name.split(" ")[0]}</h2>
+                {(this.props.new_mentions != 0 && this.props.new_mentions != undefined) && <div className='badge-app'>{this.props.new_mentions}</div>}
               </div>}
               {this.props.userId !== undefined? (
                 <GoogleLogout

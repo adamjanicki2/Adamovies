@@ -31,19 +31,23 @@ class App extends Component {
       can_comment: undefined,
       new_comments: undefined,
       username: undefined,
+      last_login: undefined,
+      new_mentions: undefined,
     };
   }
 
   componentDidMount() {
     get("/api/whoami").then((user) => {
       if (user._id) {
-        this.setState({ userId: user._id, username: user.username, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login, can_comment: user.can_comment})
+        this.setState({ last_login: user.last_login, userId: user._id, username: user.username, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login, can_comment: user.can_comment})
           if (user.root){
             get("/api/comments_since_timestamp", {timestamp: user.last_login}).then((comment_data) => {
               this.setState({new_comments: comment_data.data.length});
             });
           }
-        
+          get("/api/new_mentions", {timestamp: user.last_login}).then((new_mentions) => {
+            this.setState({new_mentions: new_mentions.length});
+          });
       }
     });
   }
@@ -55,19 +59,22 @@ class App extends Component {
         window.alert("You've been banned from having an Adamovies account. This means you can no longer comment or have a profile.");
       }else{
         console.log(`Logged in as ${user.name}`);
-        this.setState({ userId: user._id , username: user.username, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login, can_comment: user.can_comment})
+        this.setState({ last_login: user.last_login, userId: user._id , username: user.username, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login, can_comment: user.can_comment})
           if (user.root){
             get("/api/comments_since_timestamp", {timestamp: user.last_login}).then((comment_data) => {
               this.setState({new_comments: comment_data.data.length});
             });
           }
+          get("/api/new_mentions", {timestamp: user.last_login}).then((new_mentions) => {
+            this.setState({new_mentions: new_mentions.length});
+          });
         post("/api/initsocket", { socketid: socket.id });
       }
     });
   };
 
   handleLogout = () => {
-    this.setState({ userId: undefined, user_name: "", username: undefined, user_picture: null, admin: null, root: null , timestamp: null, can_comment: undefined, new_comments: undefined});
+    this.setState({ last_login: undefined, userId: undefined, user_name: "", username: undefined, user_picture: null, admin: null, root: null , timestamp: null, can_comment: undefined, new_comments: undefined, new_mentions: undefined});
     post("/api/logout");
     navigate('/');
   };
@@ -88,6 +95,7 @@ class App extends Component {
             picture={this.state.user_picture}
             location={locationProps.location}
             new_comments={this.state.new_comments}
+            new_mentions={this.state.new_mentions}
           />
           )}
         </Location>
@@ -96,7 +104,7 @@ class App extends Component {
           <Reviews path='/tvshows' userId={this.state.userId} admin={this.state.admin} root={this.state.root} type={'show'}/>
           <Home path="/" userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>
           <ReviewPage path='/review/:movieId' username={this.state.username} userId={this.state.userId} admin={this.state.admin} root={this.state.root} user_can_comment={this.state.can_comment}/>
-          {this.state.userId && <Profile path='/myprofile' userId={this.state.userId}/>}
+          {this.state.userId && <Profile path='/myprofile' userId={this.state.userId} last_login={this.state.last_login}/>}
           <OtherProfile path="/user/:userId"/>
           {this.state.admin === true && <PostReview path="/post_review" userId={this.state.userId} admin={this.state.admin} root={this.state.root}/>}
           {this.state.root === true && <EditReview path='/edit_review/:reviewId' userId={this.state.userId}/>}
