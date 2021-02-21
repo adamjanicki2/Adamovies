@@ -604,6 +604,13 @@ router.get("/num_comments", (req, res) => {
   });
 });
 
+//TEMPORARY ROUTE, UPDATE SOON!!!!!
+router.post("/update_email", auth.ensureLoggedIn, (req, res) => {
+  User.updateOne({ _id: req.user._id}, {email: req.body.email}).then((success) => {
+    res.send({msg: "email updated!"})
+  });
+});
+
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ error: "API path not found :(" });

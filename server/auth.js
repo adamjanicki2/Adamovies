@@ -27,6 +27,7 @@ function getOrCreateUser(user) {
           name: user.name,
           googleid: user.sub,
           picture: user.picture,
+          email: user.email,
           admin: false,
           root: false,
           currently_watching: 'Not Set',
