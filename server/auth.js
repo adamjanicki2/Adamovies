@@ -49,12 +49,13 @@ function getOrCreateUser(user) {
 function capitalizeWord(word){
   return word[0].toUpperCase() + word.slice(1);
 }
+
 function randomNumber(length_needed){
-  if (length_needed === 0){
-    return '';
-  }else{
-    return Math.floor(Math.random() * (10 ** length_needed)).toString();
+  let randomNumber = "";
+  for (let i = 0; i < length_needed; i++){
+    randomNumber = randomNumber + Math.floor(Math.random() * 10).toString();
   }
+  return randomNumber;
 }
 
 function randomNoun(){
