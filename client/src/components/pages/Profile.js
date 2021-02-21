@@ -97,8 +97,12 @@ class Profile extends Component {
     let letter_count = 0;
     let space_count = 0;
     let other_count = 0;
-    let alp = 'qwertyuiopasdfghjklzxcvbnm'
+    const forbidden = ",/?;:'[]{}|+=-()*&^%#@~`<>";
+    const alp = 'qwertyuiopasdfghjklzxcvbnm'
     for (let char of username.toLowerCase()){
+      if (forbidden.includes(char)){
+        return false;
+      }
       if (alp.includes(char)){
         letter_count++;
       }else if (char === ' '){
@@ -153,7 +157,7 @@ class Profile extends Component {
           }
         });
       }else{
-        window.alert("Valid usernames must contain no spaces and at least two letters!");
+        window.alert("Valid usernames must contain no spaces, at least two letters, and no special symbols!");
       }
     }else{
       this.setState({user_status: !this.state.user_status, update_uname: false});
