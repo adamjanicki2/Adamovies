@@ -34,9 +34,15 @@ class ReviewPage extends Component {
       });
     });
     socket.on(this.props.movieId, (data) => {
-      this.setState((previous_state) => ({
-        comments: previous_state.comments.concat(data),
-      }));
+      if (data.deleted){
+        this.setState((previous_state) => ({
+          comments: previous_state.comments.filter((ment) => ment._id !== data.deleted),
+        }));
+      }else{
+        this.setState((previous_state) => ({
+          comments: previous_state.comments.concat(data),
+        }));
+      }
     });
   }
   navigateProfile = (admin_id, self_id) => {
@@ -55,11 +61,7 @@ class ReviewPage extends Component {
   };
 
   handleDeletion = (commentId) => {
-    post("/api/delete_comment", {comment_id: commentId}).then((success) => {
-      get("/api/get_comments_for_review", {review_id: this.props.movieId}).then((comments) =>{
-        this.setState({comments: comments});
-      })
-    })
+    post("/api/delete_comment", {comment_id: commentId, review_id: this.props.movieId});
   };
   
   likeReview = (review_id, has_liked, user_id) => {

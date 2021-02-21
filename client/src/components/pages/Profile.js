@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faLock, faEdit } from '@fortawesome/free-solid-svg-icons';
 import MiniReview from "../modules/MiniReview.js";
 import Notifications from "../modules/Notifications.js";
+import { socket } from "../../client-socket.js";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -30,8 +31,23 @@ class Profile extends Component {
     };
   }
 
+  initializeMentionSocket = (uid) => {
+    socket.on("mention "+uid, (data) => {
+      if (data.deleted){
+        this.setState((previous_state) => ({
+          mentions: previous_state.mentions.filter((elt) => elt._id !== data.deleted),
+        }));
+      }else{
+        this.setState((previous_state) => ({
+          mentions: previous_state.mentions.concat(data),
+        }));
+      }
+    });
+  };
+
   componentDidMount() {
     get("/api/whoami").then((user) => {
+      this.initializeMentionSocket(user._id);
       let picture_to_use = null;
       if (user.picture !== null){
         const SIZE_ = '450'; //dimensions of pfp, change this number to change the size, make sure to change width/h in navbar.css
@@ -148,7 +164,7 @@ class Profile extends Component {
 
   render() {
     if (!this.state.name){
-        return (<h1 className='u-textCenter'>Sign In to view profile!</h1>);
+        return (<div></div>);
     }
     if (this.state.user_reviews === undefined || this.state.mentions === undefined){
       return (<div></div>);

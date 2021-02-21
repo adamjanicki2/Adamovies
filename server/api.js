@@ -55,8 +55,14 @@ router.get("/get_single_user", (req, res) => {
 
 router.post("/delete_comment", auth.ensureRoot, (req, res) => {
   Comment.findByIdAndDelete(req.body.comment_id).then((deleted) => {
-    Mention.deleteMany({comment_id: req.body.comment_id}).then((deletedagain) => {
-      res.send({msg: 'Deleted comment '+req.body.comment_id});
+    socketManager.getIo().emit(req.body.review_id, {deleted: req.body.comment_id});
+    Mention.find({comment_id: req.body.comment_id}).then((comment_mentions) => {
+      for (const m of comment_mentions){
+        socketManager.getIo().emit("mention "+m.recipient_id, {deleted: m._id});
+      }
+      Mention.deleteMany({comment_id: req.body.comment_id}).then((deletedagain) => {
+        res.send({msg: 'Deleted comment '+req.body.comment_id});
+      });
     });
   });
 });
@@ -157,9 +163,9 @@ function createMentions(ats, newComment, req, currentTime) {
               sender_picture: convpic("18", req.user.picture),
               comment_content: newComment.content,
             };
-            const newMention = new Mention(mention_data);
-            socketManager.getIo().emit("mention "+mention_data.recipient_id, mention_data);
-            newMention.save();
+            Mention.create(mention_data).then((created_mention) => {
+              socketManager.getIo().emit("mention "+mention_data.recipient_id, created_mention);
+            });
           }
       });
     });
@@ -206,7 +212,7 @@ router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
         username: existing_user.username,
       };
       Comment.create(data).then((newComment) => {
-        socketManager.getIo().emit(req.body.review_id, data);
+        socketManager.getIo().emit(req.body.review_id, newComment);
         createMentions(ats, newComment, req, currentTime);
         res.send(newComment);
       });

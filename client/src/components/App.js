@@ -36,9 +36,22 @@ class App extends Component {
     };
   }
 
+  initializeMentionSocket = (uid) => {
+    socket.on("mention "+uid, (data) => {
+      let delta = data.deleted? -1 : 1;
+      if (this.state.new_mentions + delta < 0){
+        delta = 0;
+      }
+      this.setState((previous_state) => ({
+        new_mentions: previous_state.new_mentions + delta,
+      }));
+    });
+  };
+
   componentDidMount() {
     get("/api/whoami").then((user) => {
       if (user._id) {
+        this.initializeMentionSocket(user._id);
         this.setState({ last_login: user.last_login, userId: user._id, username: user.username, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login, can_comment: user.can_comment})
           if (user.root){
             get("/api/comments_since_timestamp", {timestamp: user.last_login}).then((comment_data) => {
@@ -59,6 +72,7 @@ class App extends Component {
         window.alert("You've been banned from having an Adamovies account. This means you can no longer comment or have a profile.");
       }else{
         console.log(`Logged in as ${user.name}`);
+        this.initializeMentionSocket(user._id);
         this.setState({ last_login: user.last_login, userId: user._id , username: user.username, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login, can_comment: user.can_comment})
           if (user.root){
             get("/api/comments_since_timestamp", {timestamp: user.last_login}).then((comment_data) => {
@@ -74,6 +88,7 @@ class App extends Component {
   };
 
   handleLogout = () => {
+    socket.off("mention "+this.state.userId);
     this.setState({ last_login: undefined, userId: undefined, user_name: "", username: undefined, user_picture: null, admin: null, root: null , timestamp: null, can_comment: undefined, new_comments: undefined, new_mentions: undefined});
     post("/api/logout");
     navigate('/');
