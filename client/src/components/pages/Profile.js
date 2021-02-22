@@ -176,7 +176,6 @@ class Profile extends Component {
     return (
         <>
         <div className='bg'>
-          <h1 className='u-textCenter'>{this.state.name.split(' ')[0]}'s Profile</h1>
           {this.state.admin && <h1 className="u-textCenter">Thanks for being an admin!</h1>}
           <img src={this.state.picture} className='Profile-picture'/>
           <div className='username-box'>{(this.state.user_status && this.state.locked===false)? <div className='name-button-container'><input 

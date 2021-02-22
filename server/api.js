@@ -15,6 +15,7 @@ const socketManager = require("./server-socket");
 const badwords = require('bad-words');
 const filter = new badwords();
 const Words = require('./words.js');
+const helpers = require("./helpers.js");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -27,20 +28,6 @@ router.get("/whoami", (req, res) => {
     });
   }
 });
-
-function convpic(SIZE_, picture){
-  if (picture.split('/')[picture.split('/').length - 2] === 's96-c'){
-    let arr = picture.split('/');
-    arr[arr.length - 2] = arr[arr.length - 2][0]+SIZE_+arr[arr.length - 2].substring(3);
-    return arr.join('/');
-  }else if (picture.split('=')[picture.split('=').length - 1] === 's96-c'){
-    let arr = picture.split('=');
-    arr[arr.length-1] = arr[arr.length - 1][0]+SIZE_+arr[arr.length - 1].substring(3);
-    return arr.join('=');
-  }else{
-    return picture;
-  }
-}
 
 router.post("/initsocket", (req, res) => {
   if (req.user) socketManager.addUser(req.user, socketManager.getSocketFromSocketID(req.body.socketid));
@@ -160,7 +147,7 @@ function createMentions(ats, newComment, req, currentTime) {
               review_id: req.body.review_id,
               title: req.body.title,
               comment_id: newComment._id,
-              sender_picture: convpic("18", req.user.picture),
+              sender_picture: helpers.convpic("18", req.user.picture),
               comment_content: newComment.content,
             };
             Mention.create(mention_data).then((created_mention) => {
@@ -238,7 +225,7 @@ router.post("/new_review", auth.ensureAdmin, (req, res) => {
     admin_id: req.user._id,
     admin_googleid: req.user.googleid,
     admin_username: req.user.username,
-    admin_picture: convpic('28', req.user.picture),
+    admin_picture: helpers.convpic('28', req.user.picture),
     type: req.body.media_type,
     content: req.body.content,
     director: req.body.director,
@@ -308,7 +295,7 @@ router.post("/new_announcement", auth.ensureAdmin, (req, res) => {
     admin_name: req.user.name,
     admin_id: req.user._id,
     admin_username: req.user.username,
-    admin_picture: convpic('18', req.user.picture),
+    admin_picture: helpers.convpic('18', req.user.picture),
     title: req.body.title,
     content: req.body.content,
     timestamp: Date.now(),
@@ -371,7 +358,7 @@ router.post("/new_review_from_draft", auth.ensureAdmin, (req, res) => {
     admin_id: req.user._id,
     admin_googleid: req.user.googleid,
     admin_username: req.user.username,
-    admin_picture: convpic('28', req.user.picture),
+    admin_picture: helpers.convpic('28', req.user.picture),
     type: req.body.state.media_type,
     title: req.body.state.title,
     season: parseInt(req.body.state.season), 
@@ -441,7 +428,7 @@ router.post("/new_draft", auth.ensureAdmin, (req, res) => {
     admin_id: req.user._id,
     admin_googleid: req.user.googleid,
     admin_username: req.user.username,
-    admin_picture: convpic('28', req.user.picture),
+    admin_picture: helpers.convpic('28', req.user.picture),
     type: req.body.media_type,
     content: req.body.content,
     director: req.body.director,
@@ -477,41 +464,8 @@ router.get("/comments_since_timestamp", auth.ensureRoot, (req, res) => {
   })
 });
 
-function capitalizeWord(word){
-  return word[0].toUpperCase() + word.slice(1);
-}
-function randomNumber(length_needed){
-  let randomNumber = "";
-  for (let i = 0; i < length_needed; i++){
-    randomNumber = randomNumber + Math.floor(Math.random() * 10).toString();
-  }
-  return randomNumber;
-}
-
-function randomNoun(){
-  const lengths = ['three', 'four', 'five', 'six', 'seven', 'eight'];
-  const length_to_use = lengths[Math.floor(Math.random() * lengths.length)];
-  const nouns_to_choose = Words.nouns[length_to_use];
-  return nouns_to_choose[Math.floor(Math.random() * nouns_to_choose.length)];
-
-}
-
-function randomAdjective(){
-  const lengths = ['three', 'four', 'five', 'six', 'seven', 'eight'];
-  const length_to_use = lengths[Math.floor(Math.random() * lengths.length)];
-  const adjs_to_choose = Words.adjs[length_to_use];
-  return adjs_to_choose[Math.floor(Math.random() * adjs_to_choose.length)];
-}
-
-function createUsername(){
-  const noun = randomNoun();
-  const adj = randomAdjective();
-  const number = randomNumber(16-noun.length-adj.length);
-  return capitalizeWord(adj)+capitalizeWord(noun)+number;
-}
-
 router.post("/refresh_username", auth.ensureRoot, (req, res) => {
-  const new_username = createUsername();
+  const new_username = helpers.createUsername();
   User.updateOne({_id: req.body.user._id}, {username: new_username, username_lower: new_username.toLowerCase()}).then((s1) => {
     Comment.updateMany({user_id: req.body.user._id}, {username: new_username}).then((s2) => {
       if(req.body.user.admin){
@@ -604,12 +558,6 @@ router.get("/num_comments", (req, res) => {
   });
 });
 
-//TEMPORARY ROUTE, UPDATE SOON!!!!!
-router.post("/update_email", auth.ensureLoggedIn, (req, res) => {
-  User.updateOne({ _id: req.user._id}, {email: req.body.email}).then((success) => {
-    res.send({msg: "email updated!"})
-  });
-});
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

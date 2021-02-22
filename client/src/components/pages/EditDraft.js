@@ -83,7 +83,7 @@ class EditDraft extends Component {
     return (
       <div className='bg'>
         <div className='back-container' onClick={()=>{history.back()}}><FontAwesomeIcon icon={faChevronLeft} size={'2x'}/><h2 className='no-margin'>Back</h2></div>
-        <h1 className='u-pageHeader u-textCenter'>Edit Draft page for "{this.state.title}"</h1>
+        <h1 className='u-pageHeaderInter u-textCenter'>Edit Draft page for "{this.state.title}"</h1>
         {this.state.media_type !== '' && <div className='Post-container'>
           <div className="Entry-flex">
             <h2 className='field-text'>Title</h2>
@@ -91,7 +91,7 @@ class EditDraft extends Component {
             type="text"
             name='title'
             required={true}
-            placeholder={this.state.media_type === "movie"? "Movie Title" : "Show Title"}
+            placeholder={this.state.media_type === "movie"? "Inception" : "The Mandalorian"}
             value={this.state.title}
             onChange={this.handleChange}
             className="Review-input"
@@ -123,7 +123,7 @@ class EditDraft extends Component {
           />
           </div>}
           {this.state.media_type === 'movie' && <div className="Entry-flex">
-            <h2 className='field-text'>Runtime (min)</h2>
+            <h2 className='field-text'>Runtime</h2>
             <input 
             type="number"
             name='runtime'
@@ -131,7 +131,7 @@ class EditDraft extends Component {
             onChange={this.handleChange}
             className="Review-input"
             min="0" max="300"
-            placeholder='0'
+            placeholder='169'
           />
           </div>}
           <div className="Entry-flex">
@@ -144,7 +144,7 @@ class EditDraft extends Component {
             onChange={this.handleChange}
             className="Review-input"
             min="0" max="100"
-            placeholder='0'
+            placeholder='97'
           />
           </div>
           <div className="Entry-flex">
@@ -157,7 +157,7 @@ class EditDraft extends Component {
             onChange={this.handleChange}
             className="Review-input"
             maxLength='5'
-            placeholder='MPAA Rating'
+            placeholder={this.state.media_type === 'movie'? "PG-13" : "TV-14"}
           />
           </div>
           <div className="Entry-flex">
@@ -170,7 +170,7 @@ class EditDraft extends Component {
             onChange={this.handleChange}
             className="Review-input"
             min="0" max="2100"
-            placeholder='0'
+            placeholder={this.state.media_type === 'movie'? "1993" : "2015"}
           />
           </div>
           <div className="Entry-flex">
@@ -183,7 +183,7 @@ class EditDraft extends Component {
             onChange={this.handleChange}
             className="Review-input"
             maxLength='20'
-            placeholder='Director'
+            placeholder={this.state.media_type === 'movie'? "Mary Harron" : "Sam Esmail"}
           />
           </div>
           <div className="Entry-flex">
@@ -196,7 +196,7 @@ class EditDraft extends Component {
             onChange={this.handleChange}
             className="Review-input"
             maxLength='20'
-            placeholder='Genre'
+            placeholder={this.state.media_type === 'movie'? "Action/Sci-fi" : "Crime/Drama"}
           />
           </div>
           <div className="Entry-flex">
@@ -209,7 +209,7 @@ class EditDraft extends Component {
             onChange={this.handleChange}
             className="Review-input"
             maxLength='500'
-            placeholder='Image URL'
+            placeholder="https://url.com/pic.jpg"
           />
           </div>
           <div className="Entry-flex">
@@ -222,7 +222,7 @@ class EditDraft extends Component {
             onChange={this.handleChange}
             className="Review-input"
             maxLength='200'
-            placeholder='Trailer Link'
+            placeholder='https://youtube.com/...'
           />
           </div>
           <div className='Review-flex'>

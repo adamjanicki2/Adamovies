@@ -71,9 +71,6 @@ class App extends Component {
       if (user.banned){
         window.alert("You've been banned from having an Adamovies account. This means you can no longer comment or have a profile.");
       }else{
-        post("/api/update_email", { email: res.profileObj.email });
-        // console.log(res.profileObj);
-        // console.log(`Logged in as ${user.name}`);
         this.initializeMentionSocket(user._id);
         this.setState({ last_login: user.last_login, userId: user._id , username: user.username, user_name: user.name, user_picture: user.picture, admin: user.admin, root: user.root, timestamp: user.last_login, can_comment: user.can_comment})
           if (user.root){

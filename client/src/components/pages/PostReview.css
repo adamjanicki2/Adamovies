@@ -3,7 +3,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 2%;
     border-radius: 48px;
     background-color: var(--cream);
@@ -22,8 +22,8 @@
     flex-direction: column;
     /* border: 2px solid red; */
     width: fit-content;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    /* align-items: center; */
     margin-left:3%;
     margin-right: 3%;
 }
@@ -40,15 +40,15 @@
 .Review-input {
     flex-grow: 1;
     font-family: "Inter";
-    border: var(--grey) 2px solid;
+    border: var(--offblack) 1px solid;
     border-radius: var(--xs);
-    transition: box-shadow 0.1s;
-    font-size: 22px;
-    width: 90%;
+    box-shadow: 0 0 20px -10px var(--offblack);
+    font-size: 18px;
+    font-weight: 300;
+    /* width: 90%; */
   }
   
   .Review-input:focus-within {
-    border-color: var(--primary--dim);
     box-shadow: 0 0 0 var(--xs) rgba(0, 123, 255, 0.25);
   }
 
@@ -73,7 +73,7 @@
     border: var(--grey) 1px solid;
     border-radius: var(--xs);
     background-color: #e0e0e0;
-    transition: color 0.1s, background 0.1s;
+    box-shadow: 0 0 12px -10px var(--offblack);
   }
   
   .Submit-button:hover {
@@ -96,17 +96,23 @@
   }
 
   .field-text {
-    color: var(--darkpurple);
+    color: var(--offblack);
+    font-weight: 300;
+    font-size: 29px;
   }
 
   .Content-input {
     flex-grow: 1;
     font-family: "Inter";
-    border: var(--grey) 2px solid;
+    border: var(--offblack) 1px solid;
     border-radius: var(--xs);
-    transition: box-shadow 0.1s;
+    box-shadow: 0 0 20px -10px var(--offblack);
     font-size: 16px;
+    font-weight: 300;
     width: 90%;
+  }
+  .Content-input:focus-within {
+    box-shadow: 0 0 0 var(--xs) rgba(0, 123, 255, 0.25);
   }
 
   .table-container-draft{
@@ -171,7 +177,7 @@
     border: var(--grey) 1px solid;
     border-radius: var(--xs);
     background-color: #e0e0e0;
-    transition: color 0.1s, background 0.1s;
+    box-shadow: 0 0 12px -10px var(--offblack);
     margin-right: 1%;
     margin-left: 1%;
   }
