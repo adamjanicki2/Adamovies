@@ -129,3 +129,30 @@
   cursor: pointer;
   opacity: 0.6;
 }
+
+.emails-container {
+  background-color: var(--cream);
+  box-shadow: 0 0 30px -10px var(--offblack);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  max-width: 70%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 2%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 3%;
+}
+
+.email-title-text{
+  font-weight: 200;
+  font-size: 24px;
+}
+.email-title-text:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}

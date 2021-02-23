@@ -15,6 +15,8 @@ class RootConsole extends Component {
       all_announcements: undefined,
       all_bannedusers: undefined,
       new_comments: undefined,
+      reviews_since: undefined,
+      last_time: undefined,
     };
   }
 
@@ -35,6 +37,10 @@ class RootConsole extends Component {
     get("/api/comments_since_timestamp", {timestamp: this.props.timestamp}).then((new_comments) => {
       this.setState({new_comments: new_comments.data});
       post("/api/update_timestamp");
+    });
+
+    get("/api/reviews_since_email").then((reviews)=>{
+      this.setState({reviews_since: reviews.reviews, last_time: convertDate(reviews.last).split(" ")[0]});
     });
   }
 
@@ -118,12 +124,38 @@ class RootConsole extends Component {
     }
   };
 
+  sendEmail = () => {
+    if (this.state.reviews_since.length !== undefined && this.state.reviews_since.length === 0){
+      window.alert("No new reviews to send!");
+    }else{
+      if (window.confirm("Click OK to send digest email")){
+        post("/api/send_email").then((_) => {
+          navigate("/");
+        });
+      }
+    }
+  };
+
   render() {
-    if (!this.state.all_users || !this.props.root || !this.state.all_announcements || !this.state.all_bannedusers || !this.state.new_comments){
+    if (!this.state.all_users || !this.props.root || !this.state.all_announcements || !this.state.all_bannedusers || !this.state.new_comments || !this.state.reviews_since){
         return (<div></div>);
     }
     return (
       <div className='bg'>
+        <h1 className='u-pageHeader u-textCenter'>Send Digest</h1>
+        <div className='emails-container'>
+          <h1 className='u-textCenter'>New Reviews Since {this.state.last_time}</h1>
+          <ul>{this.state.reviews_since.map((review, i) => <li><div className='email-title-text'onClick={()=>{navigate(`/review/${review._id}`)}}>{review.title+`${review.season !== 0? `${review.episode !== 0? ` S${review.season}E${review.episode}`: ` S${review.season}`}` : ''}`}</div></li>)}</ul>
+          <button
+          type="submit"
+          className="Submit-button-draft u-pointer"
+          value="Submit"
+          onClick={this.sendEmail}
+        >
+          Send Digest
+        </button>
+        <div> </div>
+        </div>
         <h1 className='u-pageHeader u-textCenter'>New Comments</h1>
         {this.state.new_comments.length !== undefined && this.state.new_comments.length > 0? <div className="table-container">
         <table className='styled-table'>
@@ -182,7 +214,7 @@ class RootConsole extends Component {
     </table>
     </div>
     <h1 className='u-pageHeader u-textCenter'>Banned Users</h1>
-    {this.state.all_bannedusers !== []?<div className="table-container">
+    {this.state.all_bannedusers.length !== undefined && this.state.all_bannedusers.length > 0?<div className="table-container">
         <table className='styled-table'>
         <thead >
           <tr>

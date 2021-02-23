@@ -32,6 +32,7 @@
     "express-session": "^1.17.1",
     "google-auth-library": "^6.1.3",
     "mongoose": "^5.11.9",
+    "nodemailer": "^6.4.18",
     "nodemon": "^2.0.6",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",

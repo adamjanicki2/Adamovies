@@ -6,8 +6,9 @@ const Comment = require("./models/comment");
 const Announcement = require("./models/announcement");
 const Draft = require("./models/draft");
 const Mention = require("./models/mention");
-//////////////////////
 const BannedUser = require("./models/banneduser");
+const Email = require("./models/email");
+///////////////////////////
 const auth = require("./auth");
 const router = express.Router();
 const socketManager = require("./server-socket");
@@ -255,6 +256,7 @@ router.post("/update_profile", auth.ensureLoggedIn, (req, res) => {
         favorite_movie: req.body.new_m,
         favorite_show: req.body.new_s,
         bio: req.body.bio,
+        email_on: req.body.email_on,
       }).then((updated) => {
         res.send({is_valid: true});
       });
@@ -558,6 +560,28 @@ router.get("/num_comments", (req, res) => {
   });
 });
 
+router.post("/send_email", auth.ensureRoot, (req, res) => {
+  Email.findOne({}).then((email_) => {
+    Review.find({timestamp: {$gt: email_.last_sent}}).then((new_reviews) => {
+      User.find({email_on: true}, {email: 1}).then((user_to_send) => {
+        Email.updateOne({}, {last_sent: Date.now()}).then((__) => {
+          const user_list = user_to_send.map((user_) => user_.email);
+          const commaSeparatedUsers = user_list.join(", ");
+          auth.sendEmail(commaSeparatedUsers, new_reviews);
+          res.send({success: "Email sent to: "+commaSeparatedUsers});
+        });
+      });
+    });
+  });
+});
+
+router.get("/reviews_since_email", auth.ensureRoot, (req, res) => {
+  Email.findOne({}).then((_) => {
+    Review.find({timestamp: {$gt: _.last_sent}}).then((reviews) => {
+      res.send({reviews: reviews, last: _.last_sent});
+    });
+  });
+});
 
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

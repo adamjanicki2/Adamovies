@@ -28,6 +28,7 @@ class Profile extends Component {
       locked: null,
       user_reviews: undefined,
       mentions: undefined,
+      email_on: undefined,
     };
   }
 
@@ -55,7 +56,7 @@ class Profile extends Component {
       }
       document.title = "My Profile | Adamovies";
       get("/api/new_mentions", {timestamp: this.props.last_login}).then((mentions) => {
-        this.setState({mentions: mentions, name: user.name, googleid: user.googleid, username: user.username, picture: picture_to_use, admin: user.admin, currently_watching: user.currently_watching, fav_show: user.favorite_show, fav_mov: user.favorite_movie, bio: user.bio, locked: user.locked});
+        this.setState({email_on: user.email_on, mentions: mentions, name: user.name, googleid: user.googleid, username: user.username, picture: picture_to_use, admin: user.admin, currently_watching: user.currently_watching, fav_show: user.favorite_show, fav_mov: user.favorite_movie, bio: user.bio, locked: user.locked});
         post("/api/update_timestamp");
       });
     });
@@ -114,6 +115,13 @@ class Profile extends Component {
     return space_count === 0 && letter_count>1;
   };
 
+  changeEmailPreferences = (event) => {
+    this.setState((previous_state) => ({
+      email_on: !previous_state.email_on,
+      info_updated: true,
+    }));
+  };
+
   changeBio = (event) => {
     this.setState({
       bio: event.target.value,
@@ -127,7 +135,7 @@ class Profile extends Component {
           if(result.is_bad){
             window.alert("The use of bad words is not permitted!");
           }else{
-            post("/api/update_profile", {bio: this.state.bio, googleid: this.state.googleid, new_m: this.state.fav_mov, new_s: this.state.fav_show, new_c: this.state.currently_watching}).then((updated)=>{
+            post("/api/update_profile", {email_on: this.state.email_on, bio: this.state.bio, googleid: this.state.googleid, new_m: this.state.fav_mov, new_s: this.state.fav_show, new_c: this.state.currently_watching}).then((updated)=>{
                 this.setState({status: !this.state.status, info_updated: false});
             });
           }
@@ -198,7 +206,7 @@ class Profile extends Component {
             onChange={this.changeCurrently}
             className="Input-input"
             maxLength="30"
-          /> : <h2>{this.state.currently_watching}</h2>}
+          /> : <h2 className='no-bottom'>{this.state.currently_watching}</h2>}
           </div>
           <div className="Profile-subContainer u-textCenter">
             <h4 className="Profile-subTitle">Favorite Movie</h4>
@@ -209,7 +217,7 @@ class Profile extends Component {
             onChange={this.changeMov}
             className="Input-input"
             maxLength="30"
-          /> : <h2>{this.state.fav_mov}</h2>}
+          /> : <h2 className='no-bottom'>{this.state.fav_mov}</h2>}
           </div>
           <div className="Profile-subContainer u-textCenter">
             <h4 className="Profile-subTitle">Favorite TV Show</h4>
@@ -220,7 +228,7 @@ class Profile extends Component {
             onChange={this.changeShow}
             className="Input-input"
             maxLength="30"
-          /> : <h2>{this.state.fav_show}</h2>}
+          /> : <h2 className='no-bottom'>{this.state.fav_show}</h2>}
           </div>
           <div className="Profile-subContainer u-textCenter">
             <h1 className="Profile-subTitle">Bio</h1>
@@ -231,9 +239,10 @@ class Profile extends Component {
             onChange={this.changeBio}
             className="Input-input"
             maxLength="80"
-          /> : <h2>{this.state.bio}</h2>}
+          /> : <h2 className='no-bottom'>{this.state.bio}</h2>}
           </div>
         </div>
+        {this.state.status? <div className='email-input-container'><h3 className='email-text'>Send me weekly email on new reviews: </h3><input type="checkbox" checked={this.state.email_on} value="email_on" onChange={this.changeEmailPreferences}></input></div> : <h3 className='email-text u-textCenter'>Email Preferences: {this.state.email_on? "On" : "Off"}</h3>}
 
         <div className='button-container'>
           <button

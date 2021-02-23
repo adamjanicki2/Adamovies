@@ -52,7 +52,16 @@ function capitalizeWord(word){
     }
   }
 
+  function convertDate(stamp){
+    const d = new Date(stamp);
+    const AMPM = d.toLocaleTimeString().split(' ')[1]
+    const minutes = d.toLocaleTimeString().split(' ')[0].split(":")[0] + ':' + d.toLocaleTimeString().split(' ')[0].split(":")[1]
+    const date = d.toLocaleDateString().split("/");
+    return date[0]+"/"+date[1]+"/"+date[2] + ' ' + minutes+AMPM;
+  }
+
   module.exports = {
       createUsername,
       convpic,
+      convertDate,
   }

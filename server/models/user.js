@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema({
   locked: Boolean,
   can_comment: Boolean,
   email: String,
+  email_on: Boolean,
 });
 
 module.exports = mongoose.model("user", UserSchema);

@@ -3,6 +3,8 @@ const User = require("./models/user");
 const socketManager = require("./server-socket");
 const Words = require('./words.js');
 const helpers = require("./helpers.js");
+const Nodemailer = require("nodemailer");
+require("dotenv").config();
 
 const CLIENT_ID = "577990730068-40v41c82e6bd14pj40khj7f2nbqhnasu.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
@@ -40,6 +42,7 @@ function getOrCreateUser(user) {
           bio: "Happy Adamovies user!",
           locked: false,
           can_comment: true,
+          email_on: false,
         });
         return newUser.save();
       });
@@ -104,6 +107,33 @@ function ensureRoot(req, res, next) {
   
   next();
 }
+
+//FOR EMAILING:
+const email = process.env.EMAIL;
+const password = process.env.EMAIL_PASSWORD;
+const mailer = Nodemailer.createTransport({
+  auth: { user: email, pass: password },
+  service: "gmail",
+});
+
+function sendEmail(commaSeparatedUsers, newReviews){
+  const review_links = newReviews.map((review, i) => '<a href="https://www.adamovies.com/review/'+review._id+'" target="_blank">'+review.title+`${review.season !== 0? `${review.episode !== 0? ` S${review.season}E${review.episode}`: ` S${review.season}`}` : ''}`+'</a>').join(", ");
+  const emailSettings = {
+    from: email,
+    to: email,
+    subject: "Latest Reviews from Adamovies! ("+helpers.convertDate(Date.now()).split(" ")[0]+")",
+    bcc: commaSeparatedUsers,
+    html: "<div>Hi Adamovies user! <br></br>Here's what's new this week on Adamovies: "+review_links+". <br></br>If you're interested in becoming an admin, comment @BulkyEndymion38 on a review to ask! I hope you enjoy these reviews! :) <br></br>Thanks!<br>-Adam,<br>for the Adamovies admin team",
+  };
+  mailer.sendMail(emailSettings, function(err, success) {
+    if (err){
+      console.log("Error: "+err);
+    }
+    
+  });
+}
+
+
 module.exports = {
   login,
   logout,
@@ -111,4 +141,5 @@ module.exports = {
   ensureLoggedIn,
   ensureAdmin,
   ensureRoot,
+  sendEmail,
 };
