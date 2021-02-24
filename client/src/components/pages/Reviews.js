@@ -68,10 +68,12 @@ class Reviews extends Component {
   };
 
   updateQuery = (newQuery) => {
+    // const replacements = /:|;|"|'|,|.|?|!|@|#|$|%|^|&|*|(|)|_|-|+|=|/g;
+    const replacements = /[:;.,+=_-?!&%#(){}|]/g;
     const lower = newQuery.toLowerCase();
     const noSpaces = newQuery.toLowerCase().replace(" ", "");
-    const noJunk = newQuery.toLowerCase().replace(":,./?!@#$%^&*()+=;{}[]", "");
-    const noBoth = newQuery.toLowerCase().replace(" :,./?!@#$%^&*()+=;{}[]", "");
+    const noJunk = newQuery.toLowerCase().replace(replacements, "");
+    const noBoth = newQuery.toLowerCase().replace(replacements, "").replace(" ", "");
     const checkArr = [noSpaces, lower, noJunk, noBoth];
     const newReviews_list = lower === '' || lower === 'all'? [...this.state.reviews] : 
     this.state.reviews.filter(review => 
@@ -80,10 +82,10 @@ class Reviews extends Component {
       review.title.toLowerCase().split(' ').includes(noSpaces) ||
       review.title.toLowerCase().split(' ').includes(noJunk) ||
       review.title.toLowerCase().split(' ').includes(noBoth) ||
-      review.title.toLowerCase().replace(":,./?!@#$%^&*()+=;{}[]", "").split(' ').includes(lower) ||
-      review.title.toLowerCase().replace(":,./?!@#$%^&*()+=;{}[]", "").split(' ').includes(noSpaces) ||
-      review.title.toLowerCase().replace(":,./?!@#$%^&*()+=;{}[]", "").split(' ').includes(noJunk) ||
-      review.title.toLowerCase().replace(":,./?!@#$%^&*()+=;{}[]", "").split(' ').includes(noBoth) ||
+      review.title.toLowerCase().replace(replacements, "").split(' ').includes(lower) ||
+      review.title.toLowerCase().replace(replacements, "").split(' ').includes(noSpaces) ||
+      review.title.toLowerCase().replace(replacements, "").split(' ').includes(noJunk) ||
+      review.title.toLowerCase().replace(replacements, "").split(' ').includes(noBoth) ||
       checkArr.includes(review.director.toLowerCase()) ||
       review.director.toLowerCase().split(' ').includes(lower) ||
       review.director.toLowerCase().split(' ').includes(noSpaces) ||
