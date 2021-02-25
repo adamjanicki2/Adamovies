@@ -117,13 +117,13 @@ const mailer = Nodemailer.createTransport({
 });
 
 function sendEmail(commaSeparatedUsers, newReviews){
-  const review_links = newReviews.map((review, i) => '<a href="https://www.adamovies.com/review/'+review._id+'" target="_blank">'+review.title+`${review.season !== 0? `${review.episode !== 0? ` S${review.season}E${review.episode}`: ` S${review.season}`}` : ''}`+'</a>').join(", ");
+  const review_links = newReviews.map((review, i) => '<li><a href="https://www.adamovies.com/review/'+review._id+'" target="_blank">'+review.title+`${review.season !== 0? `${review.episode !== 0? ` S${review.season}E${review.episode}`: ` S${review.season}`}` : ''}`+'</a></li>').join(" ");
   const emailSettings = {
     from: email,
     to: email,
     subject: "Latest Reviews from Adamovies! ("+helpers.convertDate(Date.now()).split(" ")[0]+")",
     bcc: commaSeparatedUsers,
-    html: "<div>Hi Adamovies user! <br></br>Here's what's new this week on Adamovies: "+review_links+". <br></br>If you're interested in becoming an admin, comment @BulkyEndymion38 on a review to ask! I hope you enjoy these reviews! :) <br></br>Thanks!<br>-Adam,<br>for the Adamovies admin team",
+    html: "<div>Hi Adamovies user! <br></br>Here's what's new this week on Adamovies: "+ `<ul>${review_links}</ul>` +"If you're interested in becoming an admin, comment @BulkyEndymion38 on a review to ask! I hope you enjoy these reviews! :) <br></br>Thanks!<br>-Adam,<br>for the Adamovies admin team </div>",
   };
   mailer.sendMail(emailSettings, function(err, success) {
     if (err){
