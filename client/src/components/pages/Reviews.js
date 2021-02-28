@@ -68,8 +68,7 @@ class Reviews extends Component {
   };
 
   updateQuery = (newQuery) => {
-    // const replacements = /:|;|"|'|,|.|?|!|@|#|$|%|^|&|*|(|)|_|-|+|=|/g;
-    const replacements = /[:,.&+-_%@!?]/g;
+    const replacements = /[:,.?!&+%@-]/g;
     const lower = newQuery.toLowerCase();
     const noSpaces = newQuery.toLowerCase().replace(" ", "");
     const noJunk = newQuery.toLowerCase().replace(replacements, "");

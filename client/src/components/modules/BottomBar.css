@@ -2,7 +2,6 @@
     width: 100%;
     height: fit-content;
     background-color: var(--darkpurple);
-    border-radius: 6px 6px 0px 0px;
     display: inline-flex;
     flex-wrap: wrap;
     flex-direction: row;
