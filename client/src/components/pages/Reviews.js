@@ -98,7 +98,7 @@ class Reviews extends Component {
       review.genre.toLowerCase().split('/').includes(noJunk) ||
       review.genre.toLowerCase().split('/').includes(noBoth) ||
       checkArr.includes(review.rating.toString()) ||
-      checkArr.includes(review.admin_username));
+      checkArr.includes(review.admin_username.toLowerCase()));
     this.setState({reviews_to_display: this.sortReviews(newReviews_list, this.state.sort_option)});
   };
 
