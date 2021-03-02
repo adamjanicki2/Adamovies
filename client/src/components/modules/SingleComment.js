@@ -3,7 +3,7 @@ import { navigate } from "@reach/router";
 import "./SingleComment.css";
 import { convertDate } from "../../utilities.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import {  faTrashAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 class SingleComment extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +42,7 @@ class SingleComment extends Component {
       <div className={"Comment-body "+this.props.color}>
         {(this.props.self_id && this.props.admin && this.props.root) && <div className='delete-button'><FontAwesomeIcon onClick={() => {this.props.handleDeletion(this.props.commentId)}} className='trash-icon'icon={faTrashAlt} size={'1x'}/></div>}
         <div>{time_to_display} | </div>
-        <div className='tinypfpcontainer'><img src={this.props.picture} className='comment-pfp'/><div onClick={() => {this.navigateProfile(this.props.color, this.props.userId)}} className='u-bold comment-username'>{this.props.commenter}: </div></div>
+        <div className='tinypfpcontainer'><img src={this.props.picture} className='comment-pfp'/><div onClick={() => {this.navigateProfile(this.props.color, this.props.userId)}} className='u-bold comment-username'>{this.props.commenter}</div>{this.props.user_admin === true && <div className="check-background-comment"><FontAwesomeIcon size={"1x"} className="check-icon"icon={faCheckCircle}/></div>}:</div>
         {!mentioned && <div className='comment-block'>{this.props.content}</div>}
         {mentioned && <div className='comment-block'>{text_to_display}</div>}
       </div>

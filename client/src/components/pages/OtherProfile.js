@@ -4,7 +4,7 @@ import "../../utilities.css";
 import "./Profile.css";
 import BottomBar from "../modules/BottomBar.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import {  faChevronLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import MiniReview from "../modules/MiniReview.js";
 
 import "./ReviewPage.css";
@@ -44,7 +44,7 @@ class OtherProfile extends Component {
         <div className='back-container' onClick={()=>{history.back()}}><FontAwesomeIcon icon={faChevronLeft} size={'2x'}/><h2 className='no-margin'>Back</h2></div>
           {this.state.user.admin && <h1 className="u-textCenter">(Admin)</h1>}
           <img src={this.state.user.picture} className='Profile-picture'/>
-          <h1 className='u-textCenter profile-uname'>{this.state.user.username}</h1>
+          <div className="user-check-container-other"><h1 className='u-textCenter profile-uname'>{this.state.user.username}</h1>{this.state.user.admin && <div className='check-background'><FontAwesomeIcon icon={faCheckCircle} size={'3x'} className='check-icon'/></div>}</div>
           {/* <hr className='profile-line'/> */}
           <div className='entire-container'>
           <div className="Bio-container">

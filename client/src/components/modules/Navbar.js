@@ -33,7 +33,7 @@ class Navbar extends Component {
         <nav className="Navbar-container">
           <div className="nav-container">
             <div className="nav-titlecontainer u-pointer" onClick={()=>{navigate('/')}}>
-              <div u-bordering><img src={logo} className='Navbar-logo'/></div>
+              <div><img src={logo} className='Navbar-logo'/></div>
               <div className="Navbar-title">ADAMOVIES</div>
             </div>
             <div className="link-container">

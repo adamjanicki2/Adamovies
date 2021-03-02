@@ -9,6 +9,7 @@
     box-shadow: 0 0 30px -10px var(--grey);
     margin: 0 0 var(--s);
     padding: 4px;
+    width: fit-content;
 }
 
 
@@ -71,3 +72,11 @@
     color: #1c94e4;
 
 }
+  
+  .check-icon{
+    color: #20a4f4;
+  }
+  
+  .check-background-comment{
+      margin-left: 4px;
+  }

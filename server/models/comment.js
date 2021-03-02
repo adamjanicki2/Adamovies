@@ -10,5 +10,6 @@ const comment = new mongoose.Schema({
   picture: String,
   timestamp: Number,
   username: String,
+  is_admin: Boolean,
 });
 module.exports = mongoose.model("comment", comment);

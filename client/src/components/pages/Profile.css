@@ -73,6 +73,7 @@
   .profile-uname{
     font-size: 42pt;
     margin-bottom: 0;
+    margin-top: 0;
   }
 
   .Profile-subContainer {
@@ -156,4 +157,30 @@
 .no-bottom{
   margin-bottom: 0;
   padding-bottom: 0;
+}
+
+.user-check-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-check-container-other{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2%;
+}
+
+.check-icon{
+  color: #20a4f4;
+}
+.check-background{
+  color: white;
+  border-radius: 50%;
+  margin-left: 8px;
 }

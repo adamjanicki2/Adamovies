@@ -4,7 +4,7 @@ import "../../utilities.css";
 import "./Profile.css";
 import BottomBar from "../modules/BottomBar.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faLock, faEdit } from '@fortawesome/free-solid-svg-icons';
+import {  faLock, faEdit, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import MiniReview from "../modules/MiniReview.js";
 import Notifications from "../modules/Notifications.js";
 import { socket } from "../../client-socket.js";
@@ -194,7 +194,7 @@ class Profile extends Component {
             className="Input-input u-textCenter"
             maxLength="16"
           /><FontAwesomeIcon onClick={this.usernameButtonClicked} size={'2x'} icon={faLock} className='edit-icon icon-profile-edit'/></div>
-          : <div className='name-button-container'><h1 className='u-textCenter profile-uname'>{this.state.username}</h1><FontAwesomeIcon onClick={this.usernameButtonClicked} size={'2x'} className='edit-icon icon-profile-edit'icon={faEdit}/></div>}</div>
+          : <div className='name-button-container'><div className="user-check-container"><h1 className='u-textCenter profile-uname'>{this.state.username}</h1>{this.state.admin && <div className='check-background'><FontAwesomeIcon icon={faCheckCircle} size={'3x'} className='check-icon'/></div>}</div><FontAwesomeIcon onClick={this.usernameButtonClicked} size={'2x'} className='edit-icon icon-profile-edit'icon={faEdit}/></div>}</div>
           <div className='entire-container'>
           <div className="Bio-container">
           <div className="Profile-subContainer u-textCenter">

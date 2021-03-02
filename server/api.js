@@ -198,6 +198,7 @@ router.post("/new_comment", auth.ensureLoggedIn, (req, res) => {
         title: req.body.title,
         timestamp: currentTime,
         username: existing_user.username,
+        is_admin: req.user.admin,
       };
       Comment.create(data).then((newComment) => {
         socketManager.getIo().emit(req.body.review_id, newComment);
@@ -288,7 +289,9 @@ router.get("/get_all_other_users", auth.ensureRoot, (req, res) => {
 
 router.post("/update_user_admin", auth.ensureRoot, (req, res) => {
   User.updateOne({_id: req.body.user_id}, {admin: req.body.new_admin_status}).then((success) => {
-    res.send({msg: 'success'});
+    Comment.updateMany({user_id: req.body.user_id}, {is_admin: req.body.new_admin_status}).then((_) => {
+      res.send({msg: 'success'});
+    });
   });
 });
 
