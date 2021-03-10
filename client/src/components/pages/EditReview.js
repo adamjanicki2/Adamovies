@@ -197,7 +197,7 @@ class EditReview extends Component {
             value={this.state.director}
             onChange={this.handleChange}
             className="Review-input"
-            maxLength='20'
+            maxLength='40'
             placeholder={this.state.media_type === 'movie'? "Mary Harron" : "Sam Esmail"}
           />
           </div>
