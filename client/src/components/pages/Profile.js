@@ -205,7 +205,7 @@ class Profile extends Component {
             value={this.state.currently_watching? this.state.currently_watching : ''}
             onChange={this.changeCurrently}
             className="Input-input"
-            maxLength="30"
+            maxLength="40"
           /> : <h2 className='no-bottom'>{this.state.currently_watching}</h2>}
           </div>
           <div className="Profile-subContainer u-textCenter">
