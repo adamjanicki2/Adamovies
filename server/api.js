@@ -586,6 +586,12 @@ router.get("/reviews_since_email", auth.ensureRoot, (req, res) => {
   });
 });
 
+router.get("/random_review", (req, res) => {
+  Review.aggregate([{$sample: {size: 1}}]).then((random_review) => {
+    res.send(random_review[0]);
+  });
+});
+
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ error: "API path not found :(" });

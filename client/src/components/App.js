@@ -127,7 +127,7 @@ class App extends Component {
           <FAQ path='/faq'/>
           <About path='/about'/>
           <Stats path='/statistics'/>
-          <NotFound default />
+          <NotFound userId={this.state.userId} default />
         </Router>
         </div>
       </>
