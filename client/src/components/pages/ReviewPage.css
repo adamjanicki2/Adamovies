@@ -47,15 +47,6 @@
     border-radius: 5px;
     text-align: center;
 }
-
-.Review-subContainer {
-    flex-grow: 1;
-    flex-basis: 0;
-  }
-  
-  .Review-subContainer + .Review-subContainer {
-    margin-left: var(--m);
-  }
   
   .Review-subTitle {
     font-weight: 333;
@@ -86,9 +77,6 @@
     justify-content: center;
 }
 
-.admin-name{
-
-}
 .admin-name:hover{
     cursor: pointer;
     text-decoration: underline;

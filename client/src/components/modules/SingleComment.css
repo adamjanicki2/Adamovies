@@ -38,10 +38,6 @@
     border: 2px solid var(--offblack);
 }
 
-.comment-username {
-
-}
-
 .comment-username:hover {
     cursor: pointer;
     color: #0269a4;

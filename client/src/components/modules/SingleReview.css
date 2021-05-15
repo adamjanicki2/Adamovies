@@ -22,9 +22,6 @@
     box-shadow: 0 0 50px -10px  #555;
 }
 
-.Title-link{
-
-}
 .Title-link:hover{
     transform: scale(1.044);
     transition: all .5s ease-in-out;

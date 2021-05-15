@@ -35,21 +35,6 @@
   width: 50%;
 }
 
-.clear-button {
-  color: var(--darkpurple);
-  font-size: 14px;
-  font-family: "Inter";
-  border: var(--grey) 1px solid;
-  border-radius: var(--xs) ;
-  background-color: #e0e0e0;
-  transition: color 0.1s, background 0.1s;
-}
-
-.clear-button:hover {
-  background-color: var(--offwhite2);
-  color: black;
-}
-
 .clear-container{
   width: fit-content;
   margin-right: auto;
