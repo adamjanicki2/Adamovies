@@ -1,4 +1,4 @@
-
+import React from "react";
 function formatParams(params) {
   return Object.keys(params)
     .map((key) => key + "=" + encodeURIComponent(params[key]))
@@ -61,4 +61,32 @@ export function post(endpoint, params = {}) {
     .catch((error) => {
       throw `POST request to ${endpoint} failed with error:\n${error}`;
     });
+}
+
+//input boxes for submitting reviews
+export function inputBox(type, name, value, onChange, className, placeholder, required, min = '0', max = '0', maxLength = '0') {
+  if (type === 'text') {
+    return <input 
+        type={type}
+        name={name}
+        required={required}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className={className}
+        maxLength={maxLength}
+    />;
+  }
+  //type is number
+  return <input 
+          type={type}
+          name={name}
+          required={required}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          className={className}
+          min={min}
+          max={max}
+        />;
 }

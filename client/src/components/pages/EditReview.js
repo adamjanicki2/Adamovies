@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../utilities.css";
 import "./PostReview.css";
-import { get, post } from "../../utilities.js";
+import { get, post,inputBox } from "../../utilities.js";
 import { navigate } from '@reach/router';
 import BottomBar from "../modules/BottomBar.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -100,145 +100,79 @@ class EditReview extends Component {
         <div className='back-container' onClick={()=>{history.back()}}><FontAwesomeIcon icon={faChevronLeft} size={'2x'}/><h2 className='no-margin'>Back</h2></div>
         <h1 className='u-pageHeaderInter u-textCenter'>Edit Review page for "{this.state.title}"</h1>
         {this.state.media_type !== '' && <div className='Post-container'>
-          <div className="Entry-flex">
+        <div className="Entry-flex">
             <h2 className='field-text'>Title</h2>
-            <input 
-            type="text"
-            name='title'
-            required={true}
-            placeholder={this.state.media_type === "movie"? "Inception" : "The Mandalorian"}
-            value={this.state.title}
-            onChange={this.handleChange}
-            className="Review-input"
-            maxLength="40"
-          />
+            {inputBox('text', 'title', this.state.title, this.handleChange,
+            "Review-input", this.state.media_type === "movie"? "Inception" : "The Mandalorian", 
+            true, undefined, undefined, "40")}
           </div>
+
           {this.state.media_type === 'show' && <div className="Entry-flex">
             <h2 className='field-text'>Season</h2>
-            <input 
-            type="number"
-            name='season'
-            value={this.state.season}
-            onChange={this.handleChange}
-            className="Review-input"
-            min="0" max="100"
-            placeholder='0'
-          />
+            {inputBox('number', 'season', this.state.season, this.handleChange,
+            "Review-input", '0', 
+            false, '0', '100')}
           </div>}
+
           {this.state.media_type === 'show' && <div className="Entry-flex">
             <h2 className='field-text'>Episode</h2>
-            <input 
-            type="number"
-            name='episode'
-            value={this.state.episode}
-            onChange={this.handleChange}
-            className="Review-input"
-            min="0" max="100"
-            placeholder='0'
-          />
+            {inputBox('number', 'episode', this.state.episode, this.handleChange, 
+            "Review-input", '0', false, '0', '100')}
           </div>}
+
           {this.state.media_type === 'movie' && <div className="Entry-flex">
             <h2 className='field-text'>Runtime</h2>
-            <input 
-            type="number"
-            name='runtime'
-            value={this.state.runtime}
-            onChange={this.handleChange}
-            className="Review-input"
-            min="0" max="300"
-            placeholder='169'
-          />
+            {inputBox('number', 'runtime', this.state.runtime,
+            this.handleChange, 'Review-input', '169', '0', '300')}
           </div>}
+
           <div className="Entry-flex">
             <h2 className='field-text'>Rating</h2>
-            <input
-            name='rating'
-            required={true}
-            type="number"
-            value={this.state.rating}
-            onChange={this.handleChange}
-            className="Review-input"
-            min="0" max="100"
-            placeholder='97'
-          />
+            {inputBox('number', 'rating', this.state.rating, this.handleChange,
+            'Review-input', '97', true, '0', '100')}
           </div>
+
           <div className="Entry-flex">
             <h2 className='field-text'>MPAA Rating</h2>
-            <input
-            name='mpa_rating'
-            required={true}
-            type="text"
-            value={this.state.mpa_rating}
-            onChange={this.handleChange}
-            className="Review-input"
-            maxLength='5'
-            placeholder={this.state.media_type === 'movie'? "PG-13" : "TV-14"}
-          />
+            {inputBox('text', 'mpa_rating', this.state.mpa_rating, this.handleChange,
+            'Review-input', this.state.media_type === 'movie'? "PG-13" : "TV-14",
+            true, undefined, undefined, '5')}
           </div>
+          
           <div className="Entry-flex">
             <h2 className='field-text'>Release Year</h2>
-            <input
-            name='release_year'
-            required={true}
-            type="number"
-            value={this.state.release_year}
-            onChange={this.handleChange}
-            className="Review-input"
-            min="0" max="2100"
-            placeholder={this.state.media_type === 'movie'? "1993" : "2015"}
-          />
+            {inputBox('number', 'release_year', this.state.release_year,
+            this.handleChange, 'Review-input', this.state.media_type === 'movie'? "1993" : "2015",
+            true, '0', '2100')}
           </div>
+
           <div className="Entry-flex">
             <h2 className='field-text'>Director</h2>
-            <input
-            name='director'
-            required={true}
-            type="text"
-            value={this.state.director}
-            onChange={this.handleChange}
-            className="Review-input"
-            maxLength='40'
-            placeholder={this.state.media_type === 'movie'? "Mary Harron" : "Sam Esmail"}
-          />
+            {inputBox('text', 'director', this.state.director, 
+            this.handleChange, 'Review-input', this.state.media_type === 'movie'? "Mary Harron" : "Sam Esmail",
+            true, undefined, undefined, '40'
+            )}
           </div>
+
           <div className="Entry-flex">
             <h2 className='field-text'>Genre</h2>
-            <input
-            name='genre'
-            required={true}
-            type="text"
-            value={this.state.genre}
-            onChange={this.handleChange}
-            className="Review-input"
-            maxLength='20'
-            placeholder={this.state.media_type === 'movie'? "Action/Sci-fi" : "Crime/Drama"}
-          />
+            {inputBox('text', 'genre', this.state.genre, 
+            this.handleChange, 'Review-input', this.state.media_type === 'movie'? "Action/Sci-fi" : "Crime/Drama",
+            true, undefined, undefined, '20')}
           </div>
+
           <div className="Entry-flex">
             <h2 className='field-text'>Image URL</h2>
-            <input
-            name='img_url'
-            required={true}
-            type="text"
-            value={this.state.img_url}
-            onChange={this.handleChange}
-            className="Review-input"
-            maxLength='500'
-            placeholder="https://url.com/pic.jpg"
-          />
+            {inputBox('text', 'img_url', this.state.img_url, 
+            this.handleChange, 'Review-input', "https://url.com/pic.jpg", true,
+            undefined, undefined, '500')}
           </div>
+
           <div className="Entry-flex">
             <h2 className='field-text'>Trailer Link</h2>
-            <input
-            name='trailer_link'
-            required={true}
-            type="text"
-            value={this.state.trailer_link}
-            onChange={this.handleChange}
-            className="Review-input"
-            maxLength='200'
-            placeholder='https://youtube.com/...'
-          />
+            {inputBox('text', 'trailer_link', this.state.trailer_link, 
+            this.handleChange, 'Review-input', 'https://youtube.com/...',
+            true, undefined, undefined, '200')}
           </div>
           <div className='Review-flex'>
             <h2 className='field-text'>Review</h2>
